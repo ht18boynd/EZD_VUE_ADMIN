@@ -36,52 +36,39 @@
                   <h5>Create</h5>
                 </div>
                 <div class="card-body">
-                  <form
-                    class="was-validated"
-                    novalidate
-                    @submit.prevent="createNewGame"
-                  >
+                  <form class="was-validated" novalidate  @submit.prevent="createNewGame" enctype="multipart/form-data">
                     <div class="mb-3">
-                      <label class="form-label" for="validationCustom01">
-                        Name Of Game :</label
-                      >
+                      <label class="form-label" for="nameOfGame">Name Of Game:</label>
                       <input
                         class="form-control"
-                        id="validationCustom01"
+                        id="nameOfGame"
                         type="text"
                         v-model="nameGame"
                         required
                       />
-                      <div class="invalid-feedback">
-                        Please provide a Name of Game
-                      </div>
+                      <div class="invalid-feedback">Please provide a Name of Game.</div>
                       <div class="valid-feedback">Looks good!</div>
                     </div>
                     <div class="mb-3">
-                      <label class="form-label" for="validationCustom05"
-                        >Image :
-                      </label>
+                      <label class="form-label" for="gameImage">Image:</label>
                       <input
                         class="form-control"
-                        id="validationCustom05"
+                        id="gameImage"
                         type="file"
-                        v-on:change="selectedFile = $event.target.files[0]"
+                        @change="onFileChange"
                         required
                       />
-                      <div class="invalid-feedback">
-                        Please provide an Image.
-                      </div>
+                      <div class="invalid-feedback">Please provide an Image.</div>
                       <div class="valid-feedback">Looks good!</div>
                     </div>
-
                     <div class="col-md-2">
                       <button
-                        class="btn btn-primary"
-                        type="submit"
-                        :disabled="!isFormValid"
-                      >
-                        Create
-                      </button>
+                      class="btn btn-primary"
+                      type="submit"
+                      :disabled="!isFormValid"
+                    >
+                      Create
+                    </button>
                     </div>
                   </form>
                 </div>
@@ -93,13 +80,13 @@
                   <h5>Edit Game</h5>
                 </div>
                 <div class="card-body">
-                  <form v-if="editingGame" class="was-validated" novalidate>
+                  <form  class="was-validated" novalidate>
                     <div class="mb-3">
                       <label class="form-label" for="validationCustom01">
                         Name Of Game :</label
                       >
                       <input
-                        v-model="editingGame.nameGame"
+                       
                         class="form-control"
                         id="validationCustom01"
                         type="text"
@@ -115,7 +102,7 @@
                         >Image :
                       </label>
                       <input
-                        @change="onFileChange"
+                      
                         class="form-control"
                         id="validationCustom05"
                         type="file"
@@ -127,7 +114,7 @@
                       <div class="valid-feedback">Looks good!</div>
                     </div>
 
-                    <button @click="saveChanges" class="btn btn-primary">
+                    <button  class="btn btn-primary">
                       Save Changes
                     </button>
                   </form>
@@ -153,7 +140,7 @@
                       <th>
                         <div>
                           <button
-                            @click="deleteSelectedGames"
+                           
                             type="button"
                             class="btn btn-pill btn-primary btn-air-primary active"
                           >
@@ -164,41 +151,35 @@
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="game in gamelist" :key="game.idGame">
+                    <tr v-for="game in gamelist" :key="game.id">
                       <td data-label="ID" class="stats-item">
-                        {{ game.idGame }}
+                        {{ game.id }}
                       </td>
                       <td data-label="Game Name" class="stats-item">
                         {{ game.nameGame }}
                       </td>
                       <td data-label="Image" class="stats-item">
-                        <a @click="showImagePreview(game)">
-                          <img
-                            class="img-100 rounded-circle"
-                            :src="getImageFromBase64(game.base64Image)"
-                            :alt="game.nameGame"
-                          />
-                        </a>
+                        <img
+                          class="img-100 rounded-circle"
+                          :src="game.imageName"
+                          :alt="game.nameGame"
+                          @click="showImage(game.nameGame, game.imageName)"
+                        />
                       </td>
+                      
                       <td>
-                        <a href="#" @click="editGame(game)">
+                        <a href="#">
                           <i class="icon-pencil-alt"></i>Edit
                         </a>
                       </td>
                       <td>
-                        <a href="#" @click="deleteGame(game.idGame)">
+                        <a  @click="deleteGame(game.id)">
                           <i class="icon-trash"></i>Delete
                         </a>
                       </td>
-                      <td>
-                        <input
-                          type="checkbox"
-                          v-model="selectedGames"
-                          :value="game.idGame"
-                        />
-                      </td>
                     </tr>
                   </tbody>
+                  
                 </table>
               </div>
             </div>
@@ -217,107 +198,25 @@ export default {
   name: "gameCollector",
   data() {
     return {
-      gamelist: [],
-      nameGame: "",
-      selectedFile: null,
-      imagePreviewURL: "",
-      editingGame: "",
-      selectedGames: [], // mảng lưu dữ liệu game muốn xóa
+     gamelist:[],  
+     nameGame:'',
+     selectedFile:null,
+     editingGame: "",
+    
+
     };
   },
   methods: {
-    async deleteSelectedGames() {
-      if (this.selectedGames.length === 0) {
-        Swal.fire("Vui lòng chọn ít nhất một trò chơi để xóa.", "", "warning");
-        return;
-      }
 
-      try {
-        await GameService.deleteMultipleGames(this.selectedGames);
-
-        // Loại bỏ các trò chơi đã xóa khỏi danh sách
-        this.gamelist = this.gamelist.filter(
-          (game) => !this.selectedGames.includes(game.idGame)
-        );
-
-        // Xóa danh sách trò chơi đã chọn
-        this.selectedGames = [];
-
-        // Cập nhật lại danh sách sau khi xóa
-        await this.getAllGames();
-      } catch (error) {
-        console.error("Lỗi khi xóa trò chơi: ", error);
-        Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
-      }
-    },
-    async deleteGame(id) {
-      try {
-        const response = await GameService.deleteGame(id);
-        if (response.status === 200) {
-          // Loại bỏ trò chơi khỏi danh sách sau khi xóa
-          this.gamelist = this.gamelist.filter((game) => game.idGame !== id);
-
-          // Cập nhật lại danh sách sau khi xóa
-          await this.getAllGames();
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Delete Success!",
-            showConfirmButton: false,
-            timer: 1200,
-          });
-        } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Delete Error!",
-            showConfirmButton: false,
-            timer: 1200,
-          });
-        }
-      } catch (error) {
-        console.error("Lỗi khi xóa trò chơi: ", error);
-        Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
-      }
-    },
-
-    async editGame(game) {
-      this.editingGame = { ...game };
-    },
+  
     onFileChange(event) {
-      const file = event.target.files[0];
-      if (file) {
-        this.editingGame.newImage = file;
-      }
+      this.selectedFile = event.target.files[0];
     },
-    async saveChanges() {
-      const game = this.editingGame;
+    async createNewGame() { try {
+        const response = await GameService.addNewGame(this.selectedFile, this.nameGame);
 
-      try {
-        await GameService.editGame(game.idGame, game.newImage, game.nameGame);
-        await this.getAllGames();
-        this.editingGame = null;
-        Swal.fire({
-          position: "top-end",
-          icon: "success",
-          title: "Edit Success!",
-          showConfirmButton: false,
-          timer: 1500,
-        });
-      } catch (error) {
-        console.error("Lỗi khi chỉnh sửa trò chơi: ", error);
-        Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
-      }
-    },
-
-    async createNewGame() {
-      const nameGame = this.nameGame;
-      const file = this.selectedFile;
-
-      try {
-        const response = await GameService.addNewGame(file, nameGame);
         if (response.status === 200) {
-          await this.getAllGames();
+          await this.getAllGames(); // Assuming you have an `getAllGames` method to refresh the game list
           this.nameGame = "";
           this.selectedFile = null;
           Swal.fire({
@@ -341,38 +240,43 @@ export default {
         Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
       }
     },
-
-    async getAllGames() {
+    async deleteGame(id) {
       try {
-        const response = await GameService.getAllGames();
-        this.gamelist = response.data.sort((a, b) => b.idGame - a.idGame);
+        // Gọi method deleteGame từ GameService
+        await GameService.deleteGame(id);
+        
+        // Sử dụng SweetAlert2 để hiển thị thông báo xóa thành công
+        await Swal.fire({
+          icon: 'success',
+          title: 'Xóa thành công',
+          text: 'Game đã được xóa thành công!',
+        });
+        
+        // Sau khi xóa thành công, cập nhật danh sách game
+        await this.getAllGames();
       } catch (error) {
-        console.error("Lỗi khi lấy danh sách trò chơi: ", error);
+        console.error('Lỗi khi xóa game:', error);
       }
     },
-    getImageFromBase64(base64Data) {
-      const binaryData = atob(base64Data);
-      const byteArray = new Uint8Array(binaryData.length);
-      for (let i = 0; i < binaryData.length; i++) {
-        byteArray[i] = binaryData.charCodeAt(i);
-      }
-      const blob = new Blob([byteArray], { type: "image/png" });
-      return URL.createObjectURL(blob);
-    },
-
-    showImagePreview(game) {
-      this.imagePreviewURL = this.getImageFromBase64(game.base64Image);
-      this.ganeName = game.nameGame;
-      this.showSweetAlert(game);
-    },
-    showSweetAlert() {
+    showImage(name, imageUrl) {
       Swal.fire({
-        title: this.ganeName,
-        imageUrl: this.imagePreviewURL,
+        title: name,
+        imageUrl: imageUrl,
         imageWidth: 400,
         imageHeight: 400,
       });
     },
+    async getAllGames() {
+      try {
+        const response = await GameService.getAllGames();
+        this.gamelist = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách trò chơi: ", error);
+      }
+    },
+   
+
+   
   },
   async created() {
     await this.getAllGames();
@@ -381,10 +285,7 @@ export default {
     isFormValid() {
       return this.nameGame && this.selectedFile;
     },
-    isEditFormValid() {
-      const game = this.editingGame;
-      return game && game.nameGame && (game.newImage || !game.newImage);
-    },
-  },
+
+  }
 };
 </script>

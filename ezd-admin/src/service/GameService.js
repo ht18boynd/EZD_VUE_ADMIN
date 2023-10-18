@@ -12,15 +12,12 @@ class GameService {
         return await axios.delete(url);
     }
 
-    async deleteMultipleGames(gameIds) {
-        const url = `${GAME_API_BASE_URL}delete-multiple`;
-        return await axios.delete(url, { data: gameIds });
-    }
+ 
     async addNewGame(file, nameGame) {
         const formData = new FormData();
-        formData.append('file', file);
+        formData.append('imageName', file);
         formData.append('nameGame', nameGame);
-        return await axios.post(GAME_API_BASE_URL + 'uploadFile', formData);
+        return await axios.post(GAME_API_BASE_URL + 'add', formData);
     }
 
     async editGame(id, file, nameGame) {
