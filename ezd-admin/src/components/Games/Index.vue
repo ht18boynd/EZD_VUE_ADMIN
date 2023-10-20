@@ -1,6 +1,6 @@
 <template>
   <!-- Page Sidebar Ends-->
-  <div class="page-body">
+  <div class="page-body" style="background-image: url(assets/gif/bg1.gif)">
     <div class="container-fluid">
       <div class="page-title">
         <div class="row">
@@ -22,7 +22,6 @@
             </ol>
           </div>
         </div>
-        
       </div>
     </div>
     <!-- Container-fluid starts-->
@@ -31,104 +30,167 @@
         <!-- Zero Configuration  Starts-->
         <div class="col-sm-12">
           <div class="row">
-           
-            <div class="col-sm-6">
+            <!--Edit Game-->
+            <div class="col-sm-12">
               <div class="card">
-                <div class="card-header">
-                  <h5>Edit Game</h5>
+                <div class="card-header" @click="showEditForm = !showEditForm">
+                  <h6 style="color: rgb(117, 22, 22); font-style: italic">
+                    Edit Game :
+                  </h6>
                 </div>
-                <div class="card-body">
+                <div class="card-body" v-if="showEditForm ">
                   <form
-                    class="was-validated"
-                    novalidate
-                    @submit.prevent="editGame"
-                  >
-                    <div class="mb-3">
-                      <label class="form-label" for="validationCustom01"
-                        >Name Of Game:</label
-                      >
+                  v-if="showEditForm"
+                  class="was-validated"
+                  novalidate
+                  enctype="multipart/form-data"
+                  @submit.prevent="saveEditedGame"
+                >
+                  <div class="row g-3">
+                    <div class="col-md-6">
+                      <label class="form-label" for="nameOfGame">Name Of Game:</label>
                       <input
                         class="form-control"
-                        id="validationCustom01"
+                        id="nameOfGame"
+                        v-model="editingGame.nameGame"
                         type="text"
-                        v-model="nameGameForEdit"
                         required
                       />
-                      <!-- Sử dụng v-model để kết nối với nameGame -->
                       <div class="invalid-feedback">
-                        Please provide a Name of Game
+                        Please provide a Name of Game.
                       </div>
                       <div class="valid-feedback">Looks good!</div>
                     </div>
-                    <div class="mb-3">
-                      <label class="form-label" for="validationCustom05"
-                        >Image:</label
-                      >
+                    <div class="col-md-4">
+                      <label class="form-label" for="gameImage">Image:</label>
                       <input
                         class="form-control"
-                        id="validationCustom05"
+                        id="gameImage"
                         type="file"
-                        required
-                        @change="onFileChangeForEdit"
+                        @change="handleImageChange"
                       />
-                      <div class="invalid-feedback">
+                      <div class="invalid-feedback" v-if="!editingGame.imageName">
                         Please provide an Image.
                       </div>
-                      <div class="valid-feedback">Looks good!</div>
+                      <div class="valid-feedback" v-else>Looks good!</div>
                     </div>
-                    <div class="mb-3">
+                    <div class="col-md-2">
+                      <label class="form-label" for="previewImage">Preview Image:</label>
                       <img
-                        v-if="imageGameForEdit"
-                        :src="imageGameForEdit"
-                        alt="Game Image"
-                        class="img-100 rounded-circle"
+                        id="previewImage"
+                        class="img-fluid"
+                        :src="editingGame.imageName"
+                        alt="Preview"
                       />
                     </div>
-
-                    <button class="btn btn-primary">Save Changes</button>
-                  </form>
+                  </div>
+                  <div class="row g-3">
+                    <div class="col-md-4">
+                      <label class="form-label" for="levelIds">Level:</label>
+                      <select
+                        class="form-select"
+                        multiple
+                        aria-label="multiple select example"
+                        v-model="editingGame.levels"
+                        required
+                      >
+                        <option v-for="level in levelList" :key="level.id" :value="level.id">
+                          {{ level.name }}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback" v-if="editingGame.levels.length === 0">
+                        Please provide at least one Level.
+                      </div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="roleIds">Perfect Role:</label>
+                      <select
+                        class="form-select"
+                        multiple
+                        aria-label="multiple select example"
+                        v-model="editingGame.roles"
+                        required
+                      >
+                        <option v-for="role in allRoles" :key="role.id" :value="role.id">
+                          {{ role.name }}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback" v-if="editingGame.roles.length === 0">
+                        Please provide at least one Perfect Role.
+                      </div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-4">
+                      <label class="form-label" for="genderIds">Gender:</label>
+                      <select
+                        class="form-select"
+                        multiple
+                        aria-label="multiple select example"
+                        v-model="editingGame.genders"
+                        required
+                      >
+                        <option v-for="gender in allGenders" :key="gender.id" :value="gender.id">
+                          {{ gender.name }}
+                        </option>
+                      </select>
+                      <div class="invalid-feedback" v-if="editingGame.genders.length === 0">
+                        Please provide at least one Gender.
+                      </div>
+                      <div class="valid-feedback">Looks good!</div>
+                    </div>
+                    <div class="col-md-2">
+                      <button class="btn btn-primary" type="submit">Save</button>
+                    </div>
+                  </div>
+                </form>
+                
                 </div>
               </div>
             </div>
           </div>
 
-          <div class="card">
-            <div class="card-header pb-0 card-no-border">
-              <h3>List Game</h3>
-            </div>
-
-            <div class="card-body">
+          <div class="col-sm-12">
+            <div class="card" style="background-image: url(assets/gif/bg1.gif)">
+              <div class="card-header">
+                <h3>List Game</h3>
+              </div>
               <div class="table-responsive">
-                <table class="display" id="basic-1">
+                <table class="table table-dashed">
                   <thead>
-                    <tr>
-                      <th>ID</th>
-                      <th>Name</th>
-                      <th>Image</th>
-
-                      <th>Level</th>
-                      <th>Perfect Role</th>
-                      <th>Gender</th>
-                      <th>Action</th>
+                    <tr class="border-bottom-primary">
+                      <th scope="col" align="center">Id</th>
+                      <th scope="col" align="center">Name</th>
+                      <th scope="col" align="center">Image</th>
+                      <th scope="col-2" align="center">Level</th>
+                      <th scope="col" align="center">Perfect Role</th>
+                      <th scope="col" align="center">Gender</th>
+                      <th scope="col"></th>
                     </tr>
                   </thead>
+
                   <tbody>
-                    <tr v-for="game in gamelist" :key="game.id">
-                      <td data-label="ID" class="stats-item">
+                    <tr
+                      class="border-bottom-secondary"
+                      v-for="game in gamelist"
+                      :key="game.id"
+                    >
+                      <th scope="row">
                         {{ game.id }}
-                      </td>
-                      <td data-label="Game Name" class="stats-item">
+                      </th>
+                      <td>
                         {{ game.nameGame }}
                       </td>
-                      <td data-label="Image" class="stats-item">
+                      <td>
                         <img
                           class="img-100 rounded-circle"
                           :src="game.imageName"
                           :alt="game.nameGame"
                           @click="showImage(game.nameGame, game.imageName)"
+                          width="100%"
                         />
                       </td>
-                      <td data-label="levelIds" class="stats-item">
+                      <td>
                         <ul v-if="game.levels.length > 0">
                           <li
                             v-for="(level, index) in game.levels"
@@ -151,9 +213,8 @@
                         >
                       </td>
 
-                      <td data-label="roleIds" class="stats-item">
+                      <td>
                         <ul v-if="game.roles.length > 0">
-
                           <li
                             v-for="(role, index) in game.roles"
                             :key="role.id"
@@ -175,9 +236,8 @@
                         >
                       </td>
 
-                      <td data-label="genderIds" class="stats-item">
+                      <td>
                         <ul v-if="game.genders.length > 0">
-
                           <li
                             v-for="(gender, index) in game.genders"
                             :key="gender.id"
@@ -202,12 +262,11 @@
                       <td>
                         <a @click="startEditingGame(game.id)">
                           <!-- Sử dụng sự kiện @click -->
-                          <i class="icon-pencil-alt"></i>Edit
+                          <i class="icon-pencil-alt"></i>
                         </a>
-                      </td>
-                      <td>
+
                         <a @click="deleteGame(game.id)">
-                          <i class="icon-trash"></i>Delete
+                          <i class="icon-trash"></i>
                         </a>
                       </td>
                     </tr>
@@ -225,78 +284,94 @@
 <script>
 import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
+import ForGameService from "@/service/ForGameService";
 
 export default {
   name: "gameCollector",
   data() {
     return {
+      showEditForm: false,
+
+
       showAllLevel: false,
       showAllRole: false,
       showAllGender: false, // Theo dõi xem có hiển thị tất cả giá trị hay không
       initialItemsToShow: 3, // Số lượng giá trị hiển thị ban đầu
 
+      //editing
+      editingGame: {
+        nameGame: '',
+        imageName: '',
+        levels: [],
+        roles: [],
+        genders: [],
+      },
+
+     levelList: [],
+      allRoles: [],
+      allGenders: [],
       gamelist: [],
-      nameGame: "",
-      nameGameForEdit: "", // Thêm biến nameGameForEdit
-      selectedFileForEdit: null,
-      editGameId: null,
-      imageGameForEdit: "", // Thêm biến imageGameForEdit
+     
     };
   },
   methods: {
-    onFileChangeForEdit(event) {
-      this.selectedFileForEdit = event.target.files[0];
-    },
-    startEditingGame(id) {
-      this.editGameId = id;
-      // Đọc thông tin game từ danh sách và gán cho các field của form chỉnh sửa (nameGame và imageGame)
-      const selectedGame = this.gamelist.find((game) => game.id === id);
-      if (selectedGame) {
-        this.nameGameForEdit = selectedGame.nameGame;
-        this.imageGameForEdit = selectedGame.imageName; // Gán giá trị imageGameForEdit
+// timf trò chơi 
+  async startEditingGame(gameId) {
+    // Tìm trò chơi dựa trên gameId và gán cho editingGame
+    this.editingGame = await this.gamelist.find(game => game.id === gameId);
+  },
+  async saveEditedGame() {
+      // Validate form fields
+      if (
+        !this.editingGame.nameGame ||
+        !this.editingGame.imageName ||
+        this.editingGame.levels.length === 0 ||
+        this.editingGame.roles.length === 0 ||
+        this.editingGame.genders.length === 0
+      ) {
+        // Handle validation errors
+        Swal.fire({
+          icon: "error",
+          title: "Validation Error",
+          text: "Please fill in all required fields.",
+        });
+        return;
       }
-    },
 
-    async editGame() {
+      // Call the editGame method to update the game
       try {
-        // Đảm bảo rằng đã chọn game cần chỉnh sửa
-        if (this.editGameId) {
-          const response = await GameService.editGame(
-            this.editGameId,
-            this.selectedFileForEdit,
-            this.nameGameForEdit
-          );
+        const response = await GameService.editGame(
+          this.editingGame.id,
+          this.editingGame.nameGame,
+          this.editingGame.imageName,
+          this.editingGame.levels,
+          this.editingGame.roles,
+          this.editingGame.genders
+        );
 
-          if (response.status === 200) {
-            await this.getAllGames();
-            this.nameGameForEdit = "";
-            this.selectedFileForEdit = null;
-            this.editGameId = null; // Đặt lại giá trị ID game cần chỉnh sửa
-            Swal.fire({
-              position: "top-end",
-              icon: "success",
-              title: "Edit Success!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          } else {
-            Swal.fire({
-              position: "top-end",
-              icon: "error",
-              title: "Edit Error!",
-              showConfirmButton: false,
-              timer: 1500,
-            });
-          }
-        } else {
-          Swal.fire("Error", "Please select a game to edit.", "error");
+        if (response.id) {
+          // Handle successful update
+          this.editingGame = null;
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Game updated successfully!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.showEditForm = false; // Hide the edit form after successful update
         }
       } catch (error) {
-        Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
+        // Handle update errors
+        console.error("Error updating game:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Update Error",
+          text: "An error occurred while updating the game.",
+        });
       }
     },
 
-    
     async deleteGame(id) {
       try {
         // Gọi method deleteGame từ GameService
@@ -330,11 +405,39 @@ export default {
       } catch (error) {
         console.error("Lỗi khi lấy danh sách trò chơi: ", error);
       }
+    },  
+    // get all
+      async getAllLevels() {
+      try {
+        const response = await ForGameService.getAllLevelGames();
+        this.levelList = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Error fetching levels:", error);
+      }
+    },
+    async getAllRoles() {
+      try {
+        const response = await ForGameService.getAllRoleGames();
+        this.allRoles = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    },
+    async getAllGenders() {
+      try {
+        const response = await ForGameService.getAllGenderGames();
+        this.allGenders = response.data.sort((a, b) => b.id - a.id);
+
+      } catch (error) {
+        console.error("Error fetching genders:", error);
+      }
     },
   },
   async created() {
     await this.getAllGames();
+    await this.getAllLevels();
+    await this.getAllRoles();
+    await this.getAllGenders();
   },
-  
 };
 </script>

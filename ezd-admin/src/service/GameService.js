@@ -63,21 +63,48 @@ class GameService {
       
 
     async editGame(id, nameGame, imageName, levelIds, roleIds, genderIds) {
-        const formData = new FormData();
-        formData.append('nameGame', nameGame);
-        formData.append('imageName', imageName);
-        formData.append('levelIds', levelIds);
-        formData.append('roleIds', roleIds);
-        formData.append('genderIds', genderIds);
-
-        try {
-            const response = await axiosInstance.put(`${GAME_API_BASE_URL}edit/${id}`, formData);
-            return response.data;
-        } catch (error) {
-            console.error('Error editing game:', error);
-            throw error;
-        }
+      // Thực hiện kiểm tra cơ bản cho các thông tin cần thiết (tùy theo logic của ứng dụng)
+      if (!nameGame) {
+        throw new Error('Name of the game is required.');
+      }
+    
+      if (levelIds.length === 0 || roleIds.length === 0 || genderIds.length === 0) {
+        throw new Error('At least one level, role, and gender is required.');
+      }
+    
+      // Tạo một đối tượng FormData
+      const formData = new FormData();
+      formData.append('nameGame', nameGame);
+      formData.append('imageName', imageName);
+    
+      for (const levelId of levelIds) {
+        formData.append('levelIds', levelId);
+      }
+    
+      for (const roleId of roleIds) {
+        formData.append('roleIds', roleId);
+      }
+    
+      for (const genderId of genderIds) {
+        formData.append('genderIds', genderId);
+      }
+    
+      try {
+        // Sử dụng axios để gửi yêu cầu PUT
+        const response = await axios.put(`${GAME_API_BASE_URL}edit/${id}`, formData, {
+          headers: {
+            'Content-Type': 'multipart/form-data',
+          },
+        });
+    
+        return response.data;
+      } catch (error) {
+        console.error('Error editing the game:', error);
+        throw error;
+      }
     }
+    
+    
 
 
 
