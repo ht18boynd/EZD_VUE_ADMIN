@@ -22,6 +22,7 @@
             </ol>
           </div>
         </div>
+        
       </div>
     </div>
     <!-- Container-fluid starts-->
@@ -30,68 +31,18 @@
         <!-- Zero Configuration  Starts-->
         <div class="col-sm-12">
           <div class="row">
-            <div class="col-sm-6">
-              <div class="card">
-                <div class="card-header">
-                  <h5>Create</h5>
-                </div>
-                <div class="card-body">
-                  <form
-                    class="was-validated"
-                    novalidate
-                    @submit.prevent="createNewGame"
-                    enctype="multipart/form-data"
-                  >
-                    <div class="mb-3">
-                      <label class="form-label" for="nameOfGame"
-                        >Name Of Game:</label
-                      >
-                      <input
-                        class="form-control"
-                        id="nameOfGame"
-                        type="text"
-                        v-model="nameGame"
-                        required
-                      />
-                      <div class="invalid-feedback">
-                        Please provide a Name of Game.
-                      </div>
-                      <div class="valid-feedback">Looks good!</div>
-                    </div>
-                    <div class="mb-3">
-                      <label class="form-label" for="gameImage">Image:</label>
-                      <input
-                        class="form-control"
-                        id="gameImage"
-                        type="file"
-                        @change="onFileChangeForCreate"
-                        required
-                      />
-                      <div class="invalid-feedback">
-                        Please provide an Image.
-                      </div>
-                      <div class="valid-feedback">Looks good!</div>
-                    </div>
-                    <div class="col-md-2">
-                      <button
-                        class="btn btn-primary"
-                        type="submit"
-                        :disabled="!isFormValid"
-                      >
-                        Create
-                      </button>
-                    </div>
-                  </form>
-                </div>
-              </div>
-            </div>
+           
             <div class="col-sm-6">
               <div class="card">
                 <div class="card-header">
                   <h5>Edit Game</h5>
                 </div>
                 <div class="card-body">
-                  <form class="was-validated" novalidate  @submit.prevent="editGame">
+                  <form
+                    class="was-validated"
+                    novalidate
+                    @submit.prevent="editGame"
+                  >
                     <div class="mb-3">
                       <label class="form-label" for="validationCustom01"
                         >Name Of Game:</label
@@ -134,9 +85,7 @@
                       />
                     </div>
 
-                    <button class="btn btn-primary">
-                      Save Changes
-                    </button>
+                    <button class="btn btn-primary">Save Changes</button>
                   </form>
                 </div>
               </div>
@@ -156,17 +105,11 @@
                       <th>ID</th>
                       <th>Name</th>
                       <th>Image</th>
+
+                      <th>Level</th>
+                      <th>Perfect Role</th>
+                      <th>Gender</th>
                       <th>Action</th>
-                      <th>
-                        <div>
-                          <button
-                            type="button"
-                            class="btn btn-pill btn-primary btn-air-primary active"
-                          >
-                            Delete Selected
-                          </button>
-                        </div>
-                      </th>
                     </tr>
                   </thead>
                   <tbody>
@@ -184,6 +127,76 @@
                           :alt="game.nameGame"
                           @click="showImage(game.nameGame, game.imageName)"
                         />
+                      </td>
+                      <td data-label="levelIds" class="stats-item">
+                        <ul v-if="game.levels.length > 0">
+                          <li
+                            v-for="(level, index) in game.levels"
+                            :key="level.id"
+                          >
+                            <span
+                              v-if="showAllLevel || index < initialItemsToShow"
+                              >{{ level.name }}</span
+                            >
+                          </li>
+                        </ul>
+                        <span v-else>null</span>
+                        <a
+                          v-if="
+                            !showAllLevel &&
+                            game.levels.length > initialItemsToShow
+                          "
+                          @click="showAllLevel = true"
+                          >...</a
+                        >
+                      </td>
+
+                      <td data-label="roleIds" class="stats-item">
+                        <ul v-if="game.roles.length > 0">
+
+                          <li
+                            v-for="(role, index) in game.roles"
+                            :key="role.id"
+                          >
+                            <span
+                              v-if="showAllRole || index < initialItemsToShow"
+                              >{{ role.name }}</span
+                            >
+                          </li>
+                        </ul>
+                        <span v-else>null</span>
+                        <a
+                          v-if="
+                            !showAllRole &&
+                            game.roles.length > initialItemsToShow
+                          "
+                          @click="showAllRole = true"
+                          >...</a
+                        >
+                      </td>
+
+                      <td data-label="genderIds" class="stats-item">
+                        <ul v-if="game.genders.length > 0">
+
+                          <li
+                            v-for="(gender, index) in game.genders"
+                            :key="gender.id"
+                          >
+                            <span
+                              v-if="showAllGender || index < initialItemsToShow"
+                              >{{ gender.name }}</span
+                            >
+                          </li>
+                        </ul>
+                        <span v-else>null</span>
+                        <a
+                          v-if="
+                            !showAllGender &&
+                            game.genders.length > initialItemsToShow
+                          "
+                          @click="showAllGender = true"
+                          >...</a
+                        >
                       </td>
 
                       <td>
@@ -217,10 +230,13 @@ export default {
   name: "gameCollector",
   data() {
     return {
+      showAllLevel: false,
+      showAllRole: false,
+      showAllGender: false, // Theo dõi xem có hiển thị tất cả giá trị hay không
+      initialItemsToShow: 3, // Số lượng giá trị hiển thị ban đầu
+
       gamelist: [],
       nameGame: "",
-      selectedFileForCreate: null,
-
       nameGameForEdit: "", // Thêm biến nameGameForEdit
       selectedFileForEdit: null,
       editGameId: null,
@@ -232,7 +248,6 @@ export default {
       this.selectedFileForEdit = event.target.files[0];
     },
     startEditingGame(id) {
-
       this.editGameId = id;
       // Đọc thông tin game từ danh sách và gán cho các field của form chỉnh sửa (nameGame và imageGame)
       const selectedGame = this.gamelist.find((game) => game.id === id);
@@ -280,41 +295,8 @@ export default {
         Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
       }
     },
-    onFileChangeForCreate(event) {
-      this.selectedFileForCreate = event.target.files[0];
-    },
-    async createNewGame() {
-      try {
-        const response = await GameService.addNewGame(
-          this.selectedFileForCreate,
-          this.nameGame
-        );
 
-        if (response.status === 200) {
-          await this.getAllGames(); // Assuming you have an `getAllGames` method to refresh the game list
-          this.nameGame = "";
-          this.selectedFile = null;
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: "Create Success!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Create Error!",
-            showConfirmButton: false,
-            timer: 1500,
-          });
-        }
-      } catch (error) {
-        console.error("Lỗi khi thêm trò chơi: ", error);
-        Swal.fire("Xảy ra lỗi", "Vui lòng thử lại sau", "error");
-      }
-    },
+    
     async deleteGame(id) {
       try {
         // Gọi method deleteGame từ GameService
@@ -353,10 +335,6 @@ export default {
   async created() {
     await this.getAllGames();
   },
-  computed: {
-    isFormValid() {
-      return this.nameGame && this.selectedFileForCreate;
-    },
-  },
+  
 };
 </script>
