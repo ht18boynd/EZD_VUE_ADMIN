@@ -511,59 +511,171 @@
 
         <div class="container-fluid">
           <!-- Bảng hiển thị Roles -->
-          <div class="row mb-4" >
-            <div class="col-12" @click="toggleTable('roles')">
-              <h6 style="color: rgb(18, 143, 201); border-bottom: 2px solid rgb(18, 143, 201;">
-                Vị Trí
-                <img width="25" height="25" src="https://img.icons8.com/nolan/64/new-world.png" alt="new-world" />:
-              </h6>
-            </div>
-          
-              <div class="col-3" v-for="role in allRoles" :key="role.id" v-show="tables.roles" >
-                <div>
-                  {{ role.name }}
-                </div>
-                <a @click="deleteRole(role.id)">
-                  <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
-                </a>
+          <div class="row">
+            <div class="col-4">
+              <div class="col-12" @click="toggleTable('roles')">
+                <h6
+                  style="
+                    color: rgb(18, 143, 201);
+                    border-bottom: 2px solid rgb(18, 143, 201);
+                  "
+                >
+                  Vị Trí
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://img.icons8.com/nolan/64/new-world.png"
+                    alt="new-world"
+                  />:
+                </h6>
               </div>
-           
-           
-          </div>
-        
-          <!-- Bảng hiển thị Levels -->
-          <div class="row mb-4">
-            <div class="col-12" @click="toggleTable('levels')">
-              <h6 style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;">
-                Cấp Độ
-                <img width="25" height="25" src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png" alt="final-fantasy-xiv" />:
-              </h6>
+              <div class="col-12" v-show="tables.roles">
+                <div
+                  class="table-responsive"
+                  style="max-height: 300px; overflow-x: auto"
+                >
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width: 75%">Tên</th>
+                        <th style="width: 25%">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="role in allRoles" :key="role.id">
+                        <td>{{ role.name }}</td>
+                        <td>
+                          <a @click="deleteRole(role.id)">
+                            <img
+                              width="25"
+                              height="25"
+                              src="https://img.icons8.com/arcade/64/waste.png"
+                              alt="waste"
+                            />
+                          </a>
+                        </td>
+                        <!-- Repeat the above two columns to fill all 4 columns -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-            <div class="col-3" v-for="level in levelList" :key="level.id" v-show="tables.levels">
-              <div>{{ level.name }}</div>
-              <a @click="deleteLevel(level.id)">
-                <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
-              </a>
+
+            <!-- Bảng hiển thị Levels -->
+
+            <div class="col-4">
+              <div class="col-12" @click="toggleTable('levels')">
+                <h6
+                  style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;"
+                >
+                  Cấp Độ
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
+                    alt="final-fantasy-xiv"
+                  />:
+                </h6>
+              </div>
+              <div class="col-12"   v-show="tables.levels">
+                <div
+                  class="table-responsive"
+                  style="max-height: 300px; overflow-x: auto"
+                >
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width: 75%">Tên</th>
+                        <th style="width: 25%">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr
+                        v-for="level in levelList"
+                        :key="level.id"
+                      
+                      >
+                        <td>{{ level.name }}</td>
+                        <td>
+                          <a @click="deleteLevel(level.id)">
+                            <img
+                              width="25"
+                              height="25"
+                              src="https://img.icons8.com/arcade/64/waste.png"
+                              alt="waste"
+                            />
+                          </a>
+                        </td>
+                        <!-- Repeat the above two columns to fill all 4 columns -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+              </div>
             </div>
-          </div>
-        
-          <!-- Bảng hiển thị Genders -->
-          <div class="row mb-4">
+
+            <!-- Bảng hiển thị Genders -->
+          <div class="col-4">
             <div class="col-12" @click="toggleTable('genders')">
-              <h6 style="color: rgb(201, 18, 140); border-bottom: 2px solid rgb(201, 18, 140;">
+              <h6
+                style="
+                  color: rgb(201, 18, 140);
+                  border-bottom: 2px solid rgb(201, 18, 140);
+                "
+              >
                 Giới Tính
-                <img width="25" height="25" src="https://img.icons8.com/nolan/64/gender.png" alt="gender" />:
+                <img
+                  width="25"
+                  height="25"
+                  src="https://img.icons8.com/nolan/64/gender.png"
+                  alt="gender"
+                />:
               </h6>
             </div>
-            <div class="col-3" v-for="gender in allGenders" :key="gender.id" v-show="tables.genders">
-              <div>{{ gender.name }}</div>
-              <a @click="deleteGender(gender.id)">
-                <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
-              </a>
+            <div class="col-12"   v-show="tables.genders">
+              <div
+                class="table-responsive"
+                style="max-height: 300px; overflow-x: auto"
+              >
+                <table class="table table-bordered">
+                  <thead>
+                    <tr>
+                      <th style="width: 75%">Tên</th>
+                      <th style="width: 25%">Actions</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr
+                      v-for="gender in allGenders"
+                      :key="gender.id"
+                    
+                    >
+                      <td>{{ gender.name }}</td>
+                      <td>
+                        <a @click="deleteGender(gender.id)">
+                          <img
+                            width="25"
+                            height="25"
+                            src="https://img.icons8.com/arcade/64/waste.png"
+                            alt="waste"
+                          />
+                        </a>
+                      </td>
+                      <!-- Repeat the above two columns to fill all 4 columns -->
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
             </div>
           </div>
-        </div>
+          </div>
+
         
+     
+
+          
+        </div>
       </div>
     </div>
     <!--end page wrapper -->
@@ -615,7 +727,6 @@ export default {
   },
   data() {
     return {
-
       tables: {
         roles: true,
         levels: true,
@@ -648,12 +759,11 @@ export default {
     };
   },
   methods: {
-
     toggleTable(table) {
       this.tables[table] = !this.tables[table];
     },
     // Your deleteRole, deleteLevel, and deleteGender methods go here
-  
+
     // for Gender
     async getAllGenders() {
       try {
