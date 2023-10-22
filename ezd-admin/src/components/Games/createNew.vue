@@ -398,7 +398,9 @@
                   >
                     <div class="row g-3">
                       <div class="col-md-12">
-                        <label class="form-label" for="nameOfGame">Tên Vị Trí   :</label>
+                        <label class="form-label" for="nameOfGame"
+                          >Tên Vị Trí :</label
+                        >
                         <input
                           class="form-control"
                           id="nameOfGame"
@@ -463,7 +465,9 @@
                   >
                     <div class="row g-3">
                       <div class="col-md-12">
-                        <label class="form-label" for="nameOfGame">Tên Giới Tính:</label>
+                        <label class="form-label" for="nameOfGame"
+                          >Tên Giới Tính:</label
+                        >
                         <input
                           class="form-control"
                           id="nameOfGame"
@@ -472,25 +476,25 @@
                           required
                         />
                         <div class="invalid-feedback">
-                            Vui Lòng Nhập Tên
-                            <svg
-                              xmlns="http://www.w3.org/2000/svg"
-                              width="24"
-                              height="24"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              stroke-width="2"
-                              stroke-linecap="round"
-                              stroke-linejoin="round"
-                              class="feather feather-github me-2 icon-inline"
-                            >
-                              <path
-                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                              ></path>
-                            </svg>
-                          </div>
-                          <div class="valid-feedback">Looks good!</div>
+                          Vui Lòng Nhập Tên
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-github me-2 icon-inline"
+                          >
+                            <path
+                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
                       </div>
                       <div class="col-md-12">
                         <button class="btn btn-primary" type="submit">
@@ -504,6 +508,62 @@
             </div>
           </div>
         </div>
+
+        <div class="container-fluid">
+          <!-- Bảng hiển thị Roles -->
+          <div class="row mb-4" >
+            <div class="col-12" @click="toggleTable('roles')">
+              <h6 style="color: rgb(18, 143, 201); border-bottom: 2px solid rgb(18, 143, 201;">
+                Vị Trí
+                <img width="25" height="25" src="https://img.icons8.com/nolan/64/new-world.png" alt="new-world" />:
+              </h6>
+            </div>
+          
+              <div class="col-3" v-for="role in allRoles" :key="role.id" v-show="tables.roles" >
+                <div>
+                  {{ role.name }}
+                </div>
+                <a @click="deleteRole(role.id)">
+                  <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
+                </a>
+              </div>
+           
+           
+          </div>
+        
+          <!-- Bảng hiển thị Levels -->
+          <div class="row mb-4">
+            <div class="col-12" @click="toggleTable('levels')">
+              <h6 style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;">
+                Cấp Độ
+                <img width="25" height="25" src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png" alt="final-fantasy-xiv" />:
+              </h6>
+            </div>
+            <div class="col-3" v-for="level in levelList" :key="level.id" v-show="tables.levels">
+              <div>{{ level.name }}</div>
+              <a @click="deleteLevel(level.id)">
+                <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
+              </a>
+            </div>
+          </div>
+        
+          <!-- Bảng hiển thị Genders -->
+          <div class="row mb-4">
+            <div class="col-12" @click="toggleTable('genders')">
+              <h6 style="color: rgb(201, 18, 140); border-bottom: 2px solid rgb(201, 18, 140;">
+                Giới Tính
+                <img width="25" height="25" src="https://img.icons8.com/nolan/64/gender.png" alt="gender" />:
+              </h6>
+            </div>
+            <div class="col-3" v-for="gender in allGenders" :key="gender.id" v-show="tables.genders">
+              <div>{{ gender.name }}</div>
+              <a @click="deleteGender(gender.id)">
+                <img width="25" height="25" src="https://img.icons8.com/arcade/64/waste.png" alt="waste" />
+              </a>
+            </div>
+          </div>
+        </div>
+        
       </div>
     </div>
     <!--end page wrapper -->
@@ -555,6 +615,13 @@ export default {
   },
   data() {
     return {
+
+      tables: {
+        roles: true,
+        levels: true,
+        genders: true,
+      },
+
       //set giá trị cho trường create là rỗng
       nameOfGame: "",
       nameLevel: "",
@@ -581,6 +648,12 @@ export default {
     };
   },
   methods: {
+
+    toggleTable(table) {
+      this.tables[table] = !this.tables[table];
+    },
+    // Your deleteRole, deleteLevel, and deleteGender methods go here
+  
     // for Gender
     async getAllGenders() {
       try {
@@ -594,7 +667,7 @@ export default {
       if (!this.nameGender.trim()) {
         // Kiểm tra xem trường "Name" có giá trị không trống
         Swal.fire({
-            icon: "warning",
+          icon: "warning",
           text: "Tên Giới Tính Đã Bị Bỏ Trống",
         });
         return; // Không làm gì nếu trường "Name" trống
@@ -649,18 +722,15 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-        } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Xóa Lỗi! Giới Tính Đã Có Trong 1 Game .",
-            showConfirmButton: false,
-            timer: 1500,
-          });
         }
       } catch (error) {
-        console.error("Error deleting Level:", error);
-        // Xử lý lỗi nếu cần
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Xóa Lỗi! Giới Tính Đã Có Trong 1 Game .",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
 
@@ -734,18 +804,15 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-        } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Xóa Lỗi! Vị Trí Đã Có Trong 1 Game .",
-            showConfirmButton: false,
-            timer: 1500,
-          });
         }
       } catch (error) {
-        console.error("Error deleting Level:", error);
-        // Xử lý lỗi nếu cần
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Xóa Lỗi! Vị Trí Đã Có Trong 1 Game .",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     // for Level
@@ -821,18 +888,15 @@ export default {
             showConfirmButton: false,
             timer: 1500,
           });
-        } else {
-          Swal.fire({
-            position: "top-end",
-            icon: "error",
-            title: "Xóa Lỗi! Cấp Độ Đã Có Trong 1 Game .",
-            showConfirmButton: false,
-            timer: 1500,
-          });
         }
       } catch (error) {
-        console.error("Error deleting Level:", error);
-        // Xử lý lỗi nếu cần
+        Swal.fire({
+          position: "top-end",
+          icon: "error",
+          title: "Xóa Lỗi! Cấp Độ Đã Có Trong 1 Game .",
+          showConfirmButton: false,
+          timer: 1500,
+        });
       }
     },
     // click Image get File
@@ -849,68 +913,69 @@ export default {
       reader.readAsDataURL(this.gameImage);
     },
     async createNewGame() {
-  if (
-    !this.nameOfGame ||
-    !this.gameImage ||
-    this.selectedLevelIds.length === 0 ||
-    this.selectedRoleIds.length === 0 ||
-    this.selectedGenderIds.length === 0
-  ) {
-    Swal.fire({
-      icon: "warning",
-      title: "Cảnh Báo",
-      text: "Bạn Đã Để Trống Giá Trị Nào Đó",
-    });
-    return;
-  }
+      if (
+        !this.nameOfGame ||
+        !this.gameImage ||
+        this.selectedLevelIds.length === 0 ||
+        this.selectedRoleIds.length === 0 ||
+        this.selectedGenderIds.length === 0
+      ) {
+        Swal.fire({
+          icon: "warning",
+          title: "Cảnh Báo",
+          text: "Bạn Đã Để Trống Giá Trị Nào Đó",
+        });
+        return;
+      }
 
-  // Chuẩn hóa tên Game thành chữ thường để so sánh
-  const nameOfGameLowercase = this.nameOfGame.toLowerCase();
+      // Chuẩn hóa tên Game thành chữ thường để so sánh
+      const nameOfGameLowercase = this.nameOfGame.toLowerCase();
 
-  // Kiểm tra xem tên Game đã tồn tại trong danh sách hiện có
-  const isNameOfGameExist = this.gamelist.some(game => game.nameGame.toLowerCase() === nameOfGameLowercase);
+      // Kiểm tra xem tên Game đã tồn tại trong danh sách hiện có
+      const isNameOfGameExist = this.gamelist.some(
+        (game) => game.nameGame.toLowerCase() === nameOfGameLowercase
+      );
 
-  if (isNameOfGameExist) {
-    Swal.fire({
-      icon: "error",
-      text: "Tên Game Đã Tồn Tại !",
-    });
-    return; // Dừng quá trình tạo mới nếu tên đã tồn tại
-  }
+      if (isNameOfGameExist) {
+        Swal.fire({
+          icon: "error",
+          text: "Tên Game Đã Tồn Tại !",
+        });
+        return; // Dừng quá trình tạo mới nếu tên đã tồn tại
+      }
 
-  try {
-    const response = await GameService.createNewGame(
-      this.nameOfGame,
-      this.gameImage,
-      this.selectedLevelIds,
-      this.selectedRoleIds,
-      this.selectedGenderIds
-    );
-    if (response.id) {
-      this.nameOfGame = "";
-      this.gameImage = null;
-      this.selectedLevelIds = [];
-      this.selectedRoleIds = [];
-      this.selectedGenderIds = [];
-      this.getAllGames(); // Cập nhật danh sách game sau khi tạo mới
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Tạo Mới Thành Công!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  } catch (error) {
-    console.error("Error creating new game:", error);
-    Swal.fire({
-      icon: "error",
-      title: "Create Error",
-      text: "An error occurred while creating the game.",
-    });
-  }
-}
-,
+      try {
+        const response = await GameService.createNewGame(
+          this.nameOfGame,
+          this.gameImage,
+          this.selectedLevelIds,
+          this.selectedRoleIds,
+          this.selectedGenderIds
+        );
+        if (response.id) {
+          this.nameOfGame = "";
+          this.gameImage = "";
+          this.selectedLevelIds = [];
+          this.selectedRoleIds = [];
+          this.selectedGenderIds = [];
+          this.getAllGames(); // Cập nhật danh sách game sau khi tạo mới
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Tạo Mới Thành Công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } catch (error) {
+        console.error("Error creating new game:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Create Error",
+          text: "An error occurred while creating the game.",
+        });
+      }
+    },
     async getAllGames() {
       try {
         const response = await GameService.getAllGames();

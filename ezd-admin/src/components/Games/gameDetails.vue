@@ -74,78 +74,83 @@
                   </div>
                 </div>
 
-               <!-- Bảng hiển thị Roles -->
-<div>
-  <H6 style="color: rgb(18, 143, 201); border-bottom: 2px solid rgb(18, 143, 201;">
-    Vị Trí
-    <img
-      width="25"
-      height="25"
-      src="https://img.icons8.com/nolan/64/new-world.png"
-      alt="new-world"
-    />:
-  </H6>
-  <div class="d-flex flex-wrap">
-    <div
-      class="col-3"
-      v-for="role in game.roles"
-      :key="role.id"
-    >
-      {{ role.name }}
-    </div>
-  </div>
-</div>
+                <!-- Bảng hiển thị Roles -->
+                <div>
+                  <H6
+                    style="color: rgb(18, 143, 201); border-bottom: 2px solid rgb(18, 143, 201;"
+                  >
+                    Vị Trí
+                    <img
+                      width="25"
+                      height="25"
+                      src="https://img.icons8.com/nolan/64/new-world.png"
+                      alt="new-world"
+                    />:
+                  </H6>
+                  <div class="d-flex flex-wrap">
+                    <div
+                      class="col-3"
+                      v-for="role in game.roles"
+                      :key="role.id"
+                    >
+                      {{ role.name }}
+                    </div>
+                  </div>
+                </div>
 
-<!-- Bảng hiển thị Genders -->
-<div>
-  <H6 style="color: rgb(201, 18, 140); border-bottom: 2px solid rgb(201, 18, 140;">
-    Giới Tính
-    <img
-      width="25"
-      height="25"
-      src="https://img.icons8.com/nolan/64/gender.png"
-      alt="gender"
-    />:
-  </H6>
-  <div class="d-flex flex-wrap">
-    <div
-      class="col-3"
-      v-for="gender in game.genders"
-      :key="gender.id"
-    >
-      {{ gender.name }}
-    </div>
-  </div>
-</div>
+                <!-- Bảng hiển thị Genders -->
+                <div>
+                  <H6
+                    style="color: rgb(201, 18, 140); border-bottom: 2px solid rgb(201, 18, 140;"
+                  >
+                    Giới Tính
+                    <img
+                      width="25"
+                      height="25"
+                      src="https://img.icons8.com/nolan/64/gender.png"
+                      alt="gender"
+                    />:
+                  </H6>
+                  <div class="d-flex flex-wrap">
+                    <div
+                      class="col-3"
+                      v-for="gender in game.genders"
+                      :key="gender.id"
+                    >
+                      {{ gender.name }}
+                    </div>
+                  </div>
+                </div>
 
-<!-- Bảng hiển thị Levels -->
-<div>
-  <H6 style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;">
-    Cấp Độ
-    <img
-      width="25"
-      height="25"
-      src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
-      alt="final-fantasy-xiv"
-    />:
-  </H6>
-  <div class="d-flex flex-wrap">
-    <div
-      class="col-3"
-      v-for="level in game.levels"
-      :key="level.id"
-    >
-      {{ level.name }}
-    </div>
-  </div>
-</div>
-
+                <!-- Bảng hiển thị Levels -->
+                <div>
+                  <H6
+                    style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;"
+                  >
+                    Cấp Độ
+                    <img
+                      width="25"
+                      height="25"
+                      src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
+                      alt="final-fantasy-xiv"
+                    />:
+                  </H6>
+                  <div class="d-flex flex-wrap">
+                    <div
+                      class="col-3"
+                      v-for="level in game.levels"
+                      :key="level.id"
+                    >
+                      {{ level.name }}
+                    </div>
+                  </div>
+                </div>
 
                 <hr />
 
                 <div class="d-flex gap-3 mt-3">
                   <a href="#" class="btn btn-primary">Sửa Thông Tin</a>
-                  <a @click="deleteGame(game.id)"  class="btn btn-primary">
+                  <a @click="deleteGame(game.id)" class="btn btn-primary">
                     Xóa Game
                   </a>
                 </div>
@@ -310,39 +315,39 @@ export default {
   },
   methods: {
     async deleteGame(id) {
-  try {
-    const result = await Swal.fire({
-      title: 'Xác nhận xóa',
-      text: 'Bạn có chắc muốn xóa game này?',
-      icon: 'warning',
-      showCancelButton: true,
-      confirmButtonText: 'Xóa',
-      cancelButtonText: 'Hủy',
-    });
+      try {
+        const result = await Swal.fire({
+          title: "Xác nhận xóa",
+          text: "Bạn có chắc muốn xóa game này?",
+          icon: "warning",
+          showCancelButton: true,
+          confirmButtonText: "Xóa",
+          cancelButtonText: "Hủy",
+        });
 
-    if (result.isConfirmed) {
-      // Nếu người dùng xác nhận xóa
-      await GameService.deleteGame(id);
-      await Swal.fire({
-        icon: 'success',
-        title: 'Xóa thành công',
-        text: 'Game đã được xóa thành công!',
-      });
+        if (result.isConfirmed) {
+          // Nếu người dùng xác nhận xóa
+          await GameService.deleteGame(id);
+          await Swal.fire({
+            icon: "success",
+            title: "Xóa thành công",
+            text: "Game đã được xóa thành công!",
+          });
 
-      // Sau khi xóa thành công, chuyển về trang /game
-      this.$router.push('/game');
-    } else if (result.dismiss === Swal.DismissReason.cancel) {
-      // Nếu người dùng từ chối xóa
-      await Swal.fire({
-        icon: 'info',
-        title: 'Hủy thao tác',
-        text: 'Bạn đã hủy thao tác xóa game.',
-      });
-    }
-  } catch (error) {
-    console.error('Lỗi khi xóa game:', error);
-  }
-},
+          // Sau khi xóa thành công, chuyển về trang /game
+          this.$router.push("/game");
+        } else if (result.dismiss === Swal.DismissReason.cancel) {
+          // Nếu người dùng từ chối xóa
+          await Swal.fire({
+            icon: "info",
+            title: "Hủy thao tác",
+            text: "Bạn đã hủy thao tác xóa game.",
+          });
+        }
+      } catch (error) {
+        console.error("Lỗi khi xóa game:", error);
+      }
+    },
 
     async getGameDetails(id) {
       try {
