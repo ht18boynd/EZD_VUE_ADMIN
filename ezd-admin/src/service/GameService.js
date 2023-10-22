@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
         'Cache-Control': 'no-cache',
     },
 });
-const GAME_API_BASE_URL = 'http://localhost:8081/api/games/';
+const GAME_API_BASE_URL = 'http://localhost:8082/api/games/';
 
 
 
@@ -100,6 +100,16 @@ class GameService {
         return response.data;
       } catch (error) {
         console.error('Error editing the game:', error);
+        throw error;
+      }
+    }
+
+    async getGameById(id) {
+      try {
+        const response = await axiosInstance.get(`${GAME_API_BASE_URL}${id}`);
+        return response.data;
+      } catch (error) {
+        console.error('Error getting game by ID:', error);
         throw error;
       }
     }

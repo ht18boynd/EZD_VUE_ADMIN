@@ -315,11 +315,27 @@ export default {
     };
   },
   methods: {
+
+    async startEditingGame() {
+  try {
+    if (this.gamelist) {
+      // Đảm bảo rằng gamelist đã được tải
+      const game = this.gamelist.find((game) => game.id == this.id);
+      if (game) {
+        this.game = game;
+      } else {
+        console.error("Không tìm thấy trò chơi với ID: ", this.id);
+      }
+    } else {
+      console.error("Danh sách trò chơi không tồn tại.");
+    }
+  } catch (error) {
+    console.error("Lỗi khi lấy chi tiết trò chơi: ", error);
+  }
+},
+
 // timf trò chơi 
-  async startEditingGame(gameId) {
-    // Tìm trò chơi dựa trên gameId và gán cho editingGame
-    this.editingGame = await this.gamelist.find(game => game.id === gameId);
-  },
+ 
   async saveEditedGame() {
       // Validate form fields
       if (

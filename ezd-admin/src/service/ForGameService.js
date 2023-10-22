@@ -5,11 +5,11 @@ const axiosInstance = axios.create({
         'Cache-Control': 'no-cache',
     },
 });
-const LEVEL_GAME_API_BASE_URL = 'http://localhost:8081/api/levels/';
+const LEVEL_GAME_API_BASE_URL = 'http://localhost:8082/api/levels/';
 
-const GENDER_GAME_API_BASE_URL = 'http://localhost:8081/api/genders/';
+const GENDER_GAME_API_BASE_URL = 'http://localhost:8082/api/genders/';
 
-const ROLE_GAME_API_BASE_URL = 'http://localhost:8081/api/gameroles/';
+const ROLE_GAME_API_BASE_URL = 'http://localhost:8082/api/gameroles/';
 
 class ForGameService {
      // for Level of Game

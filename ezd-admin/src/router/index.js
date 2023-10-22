@@ -1,24 +1,36 @@
 import { createRouter, createWebHistory } from 'vue-router'
-
 import HomePage from '@/components/Home.vue'
-import GameIndex from '@/components/Games/Index.vue'
-import CreateGame from '@/components/Games/create.vue'
+import listGame from '@/components/Games/listGame.vue'
+import CreateGame from '@/components/Games/createNew.vue'
 import ContactPage from '@/components/Contact.vue'
+import GameDetails from '@/components/Games/gameDetails.vue'
+
+
 
 const routes = [
     {
         path: '/',
         component: HomePage
     },
+    
+
     {
         path: '/game',
-        component: GameIndex
+        component: listGame
     },
     {
-        path: '/createGame',
+        path: '/game/create',
         component: CreateGame
     },
-   
+    {
+        path: '/game/gameDetails/:id', // Định tuyến đến trang gameDetails với tham số ID
+        component: GameDetails,
+        name: "gameDetails",
+
+        props: true, // Cho phép truyền các tham số từ URL vào component
+
+    },
+
     {
         path: '/contact',
         component: ContactPage
