@@ -47,21 +47,17 @@
         </a>
         <ul>
           <li>
-            <a href="/game"
+            <a href="/admin/game"
               ><i class="bx bx-radio-circle"></i>Danh Sách</a
             >
           </li>
           
           <li>
-            <a href="/game/create"
+            <a href="/admin/game/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
           </li>
-          <li>
-            <a href="ecommerce-orders.html"
-              ><i class="bx bx-radio-circle"></i>Orders</a
-            >
-          </li>
+         
         </ul>
       </li>
       <li>

@@ -745,7 +745,7 @@ export default {
           });
 
           // Sau khi xóa thành công, chuyển về trang /game
-          this.$router.push("/game");
+          this.$router.push("/admin/game");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Nếu người dùng từ chối xóa
           await Swal.fire({
