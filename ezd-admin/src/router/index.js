@@ -4,6 +4,11 @@ import listGame from '@/components/Games/listGame.vue'
 import CreateGame from '@/components/Games/createNew.vue'
 import ContactPage from '@/components/Contact.vue'
 import GameDetails from '@/components/Games/gameDetails.vue'
+import LoginAdmin from '@/components/Authen/Login.vue'
+import ForgotPassword from '@/components/Authen/ForgotPassword.vue'
+// Banner
+import ListBanner from '@/components/Banner/Index.vue'
+import CreateBanner from '@/components/Banner/Create.vue'
 
 
 
@@ -12,27 +17,44 @@ const routes = [
         path: '/',
         component: HomePage
     },
+    {
+        path: '/login',
+        component: LoginAdmin
+    },
+    {
+        path: '/forgotpass',
+        component: ForgotPassword
+    },
     
 
     {
-        path: '/game',
+        path: '/admin/game',
         component: listGame
     },
     {
-        path: '/game/create',
+        path: '/admin/game/create',
         component: CreateGame
     },
     {
-        path: '/game/gameDetails/:id', // Định tuyến đến trang gameDetails với tham số ID
+        path: '/admin/game/gameDetails/:id', // Định tuyến đến trang gameDetails với tham số ID
         component: GameDetails,
         name: "gameDetails",
 
         props: true, // Cho phép truyền các tham số từ URL vào component
 
     },
+    {
+        path: '/admin/banner',
+        component: ListBanner
+    },
+    {
+        path: '/admin/banner/create',
+        component: CreateBanner
+    },
+
 
     {
-        path: '/contact',
+        path: '/admin/contact',
         component: ContactPage
     },
 ]

@@ -10,7 +10,7 @@
         />
       </div>
       <div>
-        <h4 class="logo-text">EZD Game</h4>
+        <a href="/"><h4 class="logo-text">EZD Game</h4></a>
       </div>
       <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
     </div>
@@ -47,20 +47,47 @@
         </a>
         <ul>
           <li>
-            <a href="/game"
+            <a href="/admin/game"
               ><i class="bx bx-radio-circle"></i>Danh Sách</a
             >
           </li>
           
           <li>
-            <a href="/game/create"
+            <a href="/admin/game/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
           </li>
+         
+        </ul>
+      </li>
+      <li>
+        <a class="has-arrow" href="javascript:;">
+          <div class="parent-icon"><i class="bx bx-menu"></i>
+          </div>
+          <div class="menu-title">Quản Lý Home Page</div>
+        </a>
+        <ul>
+          <li> <a href="javascript:;"><i class='bx bx-radio-circle'></i>Quản Lý Banner</a>
+            <ul>
+              <li> <a href="/admin/banner"><i class='bx bx-radio-circle'></i>Danh Sách Banner</a>
+
+              </li>
+              <li> <a  href="/admin/banner/create"><i class='bx bx-radio-circle'></i>Tạo Mới Banner</a>
+
+              </li>
+            </ul>
+          </li>
+
           <li>
-            <a href="ecommerce-orders.html"
-              ><i class="bx bx-radio-circle"></i>Orders</a
-            >
+            <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level One A</a>
+            <ul>
+              <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level Two</a>
+                <ul>
+                  <li> <a href="javascript:;"><i class='bx bx-radio-circle'></i>Level Three</a>
+                  </li>
+                </ul>
+              </li>
+            </ul>
           </li>
         </ul>
       </li>

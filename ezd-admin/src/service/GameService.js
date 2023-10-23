@@ -5,7 +5,7 @@ const axiosInstance = axios.create({
         'Cache-Control': 'no-cache',
     },
 });
-const GAME_API_BASE_URL = 'http://localhost:8082/api/games/';
+const GAME_API_BASE_URL = 'http://localhost:8081/api/games/';
 
 
 

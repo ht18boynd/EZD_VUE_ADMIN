@@ -17,7 +17,7 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-lg-3 col-xl-2">
-                    <a href="/game/create" class="btn btn-primary mb-3 mb-lg-0"
+                    <a href="/admin/game/create" class="btn btn-primary mb-3 mb-lg-0"
                       ><i class="bx bxs-plus-square"></i>Thêm Mới</a
                     >
                   </div>
@@ -37,12 +37,9 @@
                           ></span>
                         </div>
                       </div>
-                      
                     </form>
                     <div v-if="noGamesFound">
-                      Swal.fire({
-                        text: "Không Tìm Thấy"
-                      });
+                      Swal.fire({ text: "Không Tìm Thấy" });
                     </div>
                   </div>
                 </div>
@@ -78,13 +75,22 @@
                 <div
                   class="icon-badge position-relative me-lg-5"
                   v-if="game.id === maxId"
-                 
-                > <img width="50" height="50" src="https://img.icons8.com/bubbles/50/new.png" alt="new"/></div>
-                <div
-                  class="icon-badge position-relative me-lg-5"
-                  v-else
-                 
-                ><img width="40" height="40" src="https://img.icons8.com/office/40/filled-like--v1.png" alt="filled-like--v1"/></div>
+                >
+                  <img
+                    width="50"
+                    height="50"
+                    src="https://img.icons8.com/bubbles/50/new.png"
+                    alt="new"
+                  />
+                </div>
+                <div class="icon-badge position-relative me-lg-5" v-else>
+                  <img
+                    width="40"
+                    height="40"
+                    src="https://img.icons8.com/office/40/filled-like--v1.png"
+                    alt="filled-like--v1"
+                  />
+                </div>
 
                 <div class="card-body">
                   <h6 class="card-title cursor-pointer">{{ game.nameGame }}</h6>
@@ -92,7 +98,7 @@
                     <p class="mb-0 float-start"><strong>134</strong> Sales</p>
                   </div>
                   <router-link
-                    :to="'/game/gameDetails/' + game.id"
+                    :to="'/admin/game/gameDetails/' + game.id"
                     class="btn btn-primary"
                     >Chi Tiết</router-link
                   >
@@ -128,7 +134,6 @@
 </template>
 
 <script>
-
 import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
 import ForGameService from "@/service/ForGameService";
@@ -161,61 +166,107 @@ export default {
   methods: {
     // tìm kiếm
     searchGames() {
-  // Kiểm tra giá trị nhập vào
-  if (!this.searchTerm || this.searchTerm.trim() === "") {
-    this.gamelist = [...this.originalGamelist];
-    return;
-  }
+      // Kiểm tra giá trị nhập vào
+      if (!this.searchTerm || this.searchTerm.trim() === "") {
+        this.gamelist = [...this.originalGamelist];
+        return;
+      }
 
-  const searchTermLower = this.searchTerm.toLowerCase();
-  
-  // Tạo hàm tùy chỉnh để so sánh các trò chơi
-  const customSort = (a, b) => {
-    // So sánh theo tên Game
-    if (a.nameGame.toLowerCase().includes(searchTermLower) && !b.nameGame.toLowerCase().includes(searchTermLower)) {
-      return -1;
-    } else if (!a.nameGame.toLowerCase().includes(searchTermLower) && b.nameGame.toLowerCase().includes(searchTermLower)) {
-      return 1;
-    }
-    
-    // So sánh theo tên Level
-    if (a.levels.some((level) => level.name.toLowerCase().includes(searchTermLower)) && !b.levels.some((level) => level.name.toLowerCase().includes(searchTermLower))) {
-      return -1;
-    } else if (!a.levels.some((level) => level.name.toLowerCase().includes(searchTermLower)) && b.levels.some((level) => level.name.toLowerCase().includes(searchTermLower))) {
-      return 1;
-    }
+      const searchTermLower = this.searchTerm.toLowerCase();
 
-    // So sánh theo tên Vai Trò (Role)
-    if (a.roles.some((role) => role.name.toLowerCase().includes(searchTermLower)) && !b.roles.some((role) => role.name.toLowerCase().includes(searchTermLower))) {
-      return -1;
-    } else if (!a.roles.some((role) => role.name.toLowerCase().includes(searchTermLower)) && b.roles.some((role) => role.name.toLowerCase().includes(searchTermLower))) {
-      return 1;
-    }
+      // Tạo hàm tùy chỉnh để so sánh các trò chơi
+      const customSort = (a, b) => {
+        // So sánh theo tên Game
+        if (
+          a.nameGame.toLowerCase().includes(searchTermLower) &&
+          !b.nameGame.toLowerCase().includes(searchTermLower)
+        ) {
+          return -1;
+        } else if (
+          !a.nameGame.toLowerCase().includes(searchTermLower) &&
+          b.nameGame.toLowerCase().includes(searchTermLower)
+        ) {
+          return 1;
+        }
 
-    // Cuối cùng, so sánh theo tên Gender
-    if (a.genders.some((gender) => gender.name.toLowerCase().includes(searchTermLower)) && !b.genders.some((gender) => gender.name.toLowerCase().includes(searchTermLower))) {
-      return -1;
-    } else if (!a.genders.some((gender) => gender.name.toLowerCase().includes(searchTermLower)) && b.genders.some((gender) => gender.name.toLowerCase().includes(searchTermLower))) {
-      return 1;
-    }
+        // So sánh theo tên Level
+        if (
+          a.levels.some((level) =>
+            level.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          !b.levels.some((level) =>
+            level.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return -1;
+        } else if (
+          !a.levels.some((level) =>
+            level.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          b.levels.some((level) =>
+            level.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return 1;
+        }
 
-    // Không có sự khớp theo bất kỳ tiêu chí ưu tiên nào
-    return 0;
-  };
+        // So sánh theo tên Vai Trò (Role)
+        if (
+          a.roles.some((role) =>
+            role.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          !b.roles.some((role) =>
+            role.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return -1;
+        } else if (
+          !a.roles.some((role) =>
+            role.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          b.roles.some((role) =>
+            role.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return 1;
+        }
 
-  // Sắp xếp danh sách game bằng hàm tùy chỉnh
-  this.gamelist.sort(customSort);
+        // Cuối cùng, so sánh theo tên Gender
+        if (
+          a.genders.some((gender) =>
+            gender.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          !b.genders.some((gender) =>
+            gender.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return -1;
+        } else if (
+          !a.genders.some((gender) =>
+            gender.name.toLowerCase().includes(searchTermLower)
+          ) &&
+          b.genders.some((gender) =>
+            gender.name.toLowerCase().includes(searchTermLower)
+          )
+        ) {
+          return 1;
+        }
 
-  if (this.gamelist.length === 0) {
-    // Không có sự khớp, hiển thị thông báo
-    Swal.fire({
-      text: "Không Tìm Thấy",
-    });
-  }
-}
+        // Không có sự khớp theo bất kỳ tiêu chí ưu tiên nào
+        return 0;
+      };
 
+      // Sắp xếp danh sách game bằng hàm tùy chỉnh
+      this.gamelist.sort(customSort);
 
-,
+      if (this.gamelist.length === 0) {
+        // Không có sự khớp, hiển thị thông báo
+        Swal.fire({
+          text: "Không Tìm Thấy",
+        });
+      }
+    },
+
     // timf trò chơi
     async startEditingGame(gameId) {
       // Tìm trò chơi dựa trên gameId và gán cho editingGame
@@ -300,18 +351,17 @@ export default {
       });
     },
     async getAllGames() {
-  try {
-    const response = await GameService.getAllGames();
-    const data = response.data.sort((a, b) => b.id - a.id);
+      try {
+        const response = await GameService.getAllGames();
+        const data = response.data.sort((a, b) => b.id - a.id);
 
-    // Gán giá trị cho cả gamelist và originalGamelist
-    this.gamelist = data;
-    this.originalGamelist = data;
-
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách trò chơi: ", error);
-  }
-},
+        // Gán giá trị cho cả gamelist và originalGamelist
+        this.gamelist = data;
+        this.originalGamelist = data;
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách trò chơi: ", error);
+      }
+    },
 
     // get all
     async getAllLevels() {

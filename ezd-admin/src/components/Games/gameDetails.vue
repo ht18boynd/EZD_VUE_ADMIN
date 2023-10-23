@@ -149,7 +149,9 @@
                 <hr />
 
                 <div class="d-flex gap-3 mt-3">
-                  <a href="#" class="btn btn-primary">Sửa Thông Tin</a>
+                  <a @click="startEditingGame(game.id)" class="btn btn-primary"
+                    >Sửa Thông Tin</a
+                  >
                   <a @click="deleteGame(game.id)" class="btn btn-primary">
                     Xóa Game
                   </a>
@@ -159,7 +161,264 @@
           </div>
           <hr />
         </div>
+        <div class="card">
+          <div class="card-body p-4">
+            <div @click="showEditForm = !showEditForm">
+              <h6 class="card-title">
+                Sửa Chi Tiết Trò Chơi :
+                <img
+                  width="50"
+                  height="50"
+                  src="https://img.icons8.com/dusk/64/new-world.png"
+                  alt="new-world"
+                />
+              </h6>
+            </div>
+            <hr />
+            <div class="form-body mt-4" v-if="showEditForm">
+              <div class="row">
+                <form
+                  class="row g-3 needs-validation was-validated"
+                  novalidate
+                  enctype="multipart/form-data"
+                  @submit.prevent="saveEditedGame"
+                >
+                  <div class="col-lg-8">
+                    <div class="mb-3">
+                      <label for="bsValidation1" class="form-label"
+                        >Tên Trò Chơi</label
+                      >
+                      <input
+                        type="text"
+                        class="form-control"
+                        id="bsValidation1"
+                        placeholder="Vui Lòng Nhập Tên"
+                        v-model="editingGame.nameGame"
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">
+                        Vui Lòng Nhập Tên
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-github me-2 icon-inline"
+                        >
+                          <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="bsValidation2" class="form-label"
+                        >Ảnh Trò Chơi</label
+                      >
+                      <input
+                        type="file"
+                        class="form-control"
+                        id="bsValidation2"
+                        placeholder="Ảnh Trò Chơi"
+                        @change="handleImageChange"
+                        required
+                      />
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">
+                        Vui Lòng Chọn File
+                        <svg
+                          xmlns="http://www.w3.org/2000/svg"
+                          width="24"
+                          height="24"
+                          viewBox="0 0 24 24"
+                          fill="none"
+                          stroke="currentColor"
+                          stroke-width="2"
+                          stroke-linecap="round"
+                          stroke-linejoin="round"
+                          class="feather feather-github me-2 icon-inline"
+                        >
+                          <path
+                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                          ></path>
+                        </svg>
+                      </div>
+                    </div>
+                    <div class="mb-3">
+                      <label for="bsValidation2" class="form-label"
+                        >Ảnh Xem Trước</label
+                      >
 
+                      <img
+                        id="previewImage"
+                        class="img-fluid"
+                        v-if="imagePreviewUrl"
+                        :src="imagePreviewUrl"
+                        alt="Preview"
+                      />
+                      <img
+                        id="previewImage"
+                        class="img-fluid"
+                        v-else
+                        :src="game.imageName"
+                        alt="Preview"
+                      />
+                    </div>
+                  </div>
+
+                  <div class="col-lg-4">
+                    <div class="row g-3">
+                      <div class="col-12">
+                        <label for="bsValidation10" class="form-label"
+                          >Cấp Độ</label
+                        >
+                        <select
+                          id="bsValidation10"
+                          class="form-select"
+                          required
+                          multiple
+                          v-model="editingGame.levels"
+                        >
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="level in levelList"
+                            :key="level.id"
+                            :value="level.id"
+                          >
+                            {{ level.name }}
+                          </option>
+                        </select>
+                        <div class="valid-feedback">
+                          Looks good! Chọn Nhiều Bằng Ctrl +
+                        </div>
+                        <div class="invalid-feedback">
+                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-github me-2 icon-inline"
+                          >
+                            <path
+                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <label for="bsValidation11" class="form-label"
+                          >Vị Trí</label
+                        >
+                        <select
+                          id="bsValidation11"
+                          class="form-select"
+                          required
+                          multiple
+                          v-model="editingGame.roles"
+                        >
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="role in allRoles"
+                            :key="role.id"
+                            :value="role.id"
+                          >
+                            {{ role.name }}
+                          </option>
+                        </select>
+                        <div class="valid-feedback">
+                          Looks good! Chọn Nhiều Bằng Ctrl +
+                        </div>
+                        <div class="invalid-feedback">
+                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-github me-2 icon-inline"
+                          >
+                            <path
+                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+                      <div class="col-12">
+                        <label for="bsValidation12" class="form-label"
+                          >Giới Tính</label
+                        >
+                        <select
+                          id="bsValidation12"
+                          class="form-select"
+                          required
+                          multiple
+                          v-model="editingGame.genders"
+                        >
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="gender in allGenders"
+                            :key="gender.id"
+                            :value="gender.id"
+                          >
+                            {{ gender.name }}
+                          </option>
+                        </select>
+                        <div class="valid-feedback">
+                          Looks good! Chọn Nhiều Bằng Ctrl +
+                        </div>
+                        <div class="invalid-feedback">
+                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-github me-2 icon-inline"
+                          >
+                            <path
+                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path>
+                          </svg>
+                        </div>
+                      </div>
+
+                      <div class="col-12">
+                        <div class="d-grid">
+                          <button type="submit" class="btn btn-primary">
+                            Lưu
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!--end row-->
+            </div>
+          </div>
+        </div>
         <h6 class="text-uppercase mb-0">Các Sản Phẩm Liên Quan</h6>
         <hr />
         <div class="row row-cols-1 row-cols-lg-3">
@@ -288,6 +547,7 @@
   <!-- Các phần tử khác của trang gameDetails -->
 </template>
 <script>
+import ForGameService from "@/service/ForGameService";
 import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
 
@@ -306,14 +566,164 @@ export default {
   },
   data() {
     return {
+      imagePreviewUrl: null, // Sử dụng để hiển thị hình ảnh được chọn
+
+      showEditForm: false,
       game: {}, // Để lưu trữ thông tin chi tiết của trò chơi
+      //editing
+      editingGame: {
+        nameGame: "",
+        imageName: "",
+        levels: [],
+        roles: [],
+        genders: [],
+      },
+
+      levelList: [],
+      allRoles: [],
+      allGenders: [],
+      gamelist: [],
     };
   },
-  created() {
-    // Gọi phương thức để lấy thông tin game dựa vào id
-    this.getGameDetails(this.id);
-  },
+
   methods: {
+    handleImageChange(event) {
+      this.editingGame.imageName = event.target.files[0];
+      // Tạo một đối tượng FileReader để đọc hình ảnh
+      let reader = new FileReader();
+
+      reader.onload = (e) => {
+        this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+      };
+
+      // Đọc hình ảnh được chọn
+      reader.readAsDataURL(this.editingGame.imageName);
+    },
+    async startEditingGame() {
+      try {
+        if (this.gamelist) {
+          this.showEditForm = !this.showEditForm;
+          // Đảm bảo rằng gamelist đã được tải
+          const game = this.gamelist.find((game) => game.id == this.id);
+          if (game) {
+            this.editingGame = game;
+          } else {
+            console.error("Không tìm thấy trò chơi với ID: ", this.id);
+          }
+        } else {
+          console.error("Danh sách trò chơi không tồn tại.");
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy chi tiết trò chơi: ", error);
+      }
+    },
+
+    // timf trò chơi
+
+    async saveEditedGame() {
+      // Validate form fields
+      if (
+        !this.editingGame.nameGame ||
+        !this.editingGame.imageName ||
+        this.editingGame.levels.length === 0 ||
+        this.editingGame.roles.length === 0 ||
+        this.editingGame.genders.length === 0
+      ) {
+        // Handle validation errors
+        Swal.fire({
+          icon: "warning",
+       
+          text: "Bạn Đã Để Trống Giá Trị Nào Đó",
+        });
+        return;
+      }
+
+      // Check if the new name is already in use by other games (excluding the current game)
+      const isNameOfGameExist = this.gamelist.some(
+        (game) =>
+          game.id !== this.editingGame.id && // Exclude the current game from the check
+          game.nameGame.toLowerCase() ===
+            this.editingGame.nameGame.toLowerCase()
+      );
+
+      if (isNameOfGameExist) {
+        // Handle the error when a different game is using the new name
+        Swal.fire({
+          icon: "error",
+          title: "Duplicate Name",
+          text: "1 Trò Chơi Đã Sử Dụng Tên Này Rồi !",
+        });
+        return;
+      }
+
+      // Call the editGame method to update the game
+      try {
+        const response = await GameService.editGame(
+          this.editingGame.id,
+          this.editingGame.nameGame,
+          this.editingGame.imageName,
+          this.editingGame.levels,
+          this.editingGame.roles,
+          this.editingGame.genders
+        );
+
+        if (response.id) {
+          // Handle successful update
+          this.editingGame = null;
+          this.getGameDetails(this.id);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Cập Nhập Thành Công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+          this.showEditForm = false; // Hide the edit form after successful update
+        }
+      } catch (error) {
+        // Handle update errors
+        console.error("Error updating game:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Sửa Lỗi",
+          text: "Có Lỗi Khi Sửa Trò Chơi.",
+        });
+      }
+    },
+
+    async getAllGames() {
+      try {
+        const response = await GameService.getAllGames();
+        this.gamelist = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách trò chơi: ", error);
+      }
+    },
+    // get all
+    async getAllLevels() {
+      try {
+        const response = await ForGameService.getAllLevelGames();
+        this.levelList = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Error fetching levels:", error);
+      }
+    },
+    async getAllRoles() {
+      try {
+        const response = await ForGameService.getAllRoleGames();
+        this.allRoles = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Error fetching roles:", error);
+      }
+    },
+    async getAllGenders() {
+      try {
+        const response = await ForGameService.getAllGenderGames();
+        this.allGenders = response.data.sort((a, b) => b.id - a.id);
+      } catch (error) {
+        console.error("Error fetching genders:", error);
+      }
+    },
     async deleteGame(id) {
       try {
         const result = await Swal.fire({
@@ -335,7 +745,7 @@ export default {
           });
 
           // Sau khi xóa thành công, chuyển về trang /game
-          this.$router.push("/game");
+          this.$router.push("/admin/game");
         } else if (result.dismiss === Swal.DismissReason.cancel) {
           // Nếu người dùng từ chối xóa
           await Swal.fire({
@@ -358,6 +768,14 @@ export default {
         console.error("Lỗi khi lấy chi tiết trò chơi: ", error);
       }
     },
+  },
+  async created() {
+    // Gọi phương thức để lấy thông tin game dựa vào id
+    this.getGameDetails(this.id);
+    await this.getAllGames();
+    await this.getAllLevels();
+    await this.getAllRoles();
+    await this.getAllGenders();
   },
 };
 </script>
