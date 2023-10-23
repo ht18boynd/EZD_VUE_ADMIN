@@ -6,6 +6,9 @@ import ContactPage from '@/components/Contact.vue'
 import GameDetails from '@/components/Games/gameDetails.vue'
 import LoginAdmin from '@/components/Authen/Login.vue'
 import ForgotPassword from '@/components/Authen/ForgotPassword.vue'
+// Banner
+import ListBanner from '@/components/Banner/Index.vue'
+import CreateBanner from '@/components/Banner/Create.vue'
 
 
 
@@ -40,6 +43,15 @@ const routes = [
         props: true, // Cho phép truyền các tham số từ URL vào component
 
     },
+    {
+        path: '/admin/banner',
+        component: ListBanner
+    },
+    {
+        path: '/admin/banner/create',
+        component: CreateBanner
+    },
+
 
     {
         path: '/admin/contact',
