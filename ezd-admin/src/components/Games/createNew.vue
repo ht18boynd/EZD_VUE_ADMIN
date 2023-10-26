@@ -451,7 +451,7 @@
                   @click="showCreateGenderForm = !showCreateGenderForm"
                 >
                 <h6 style="color: rgb(9, 172, 123)">
-                  Tạo Mới Cấp Độ :
+                  Tạo Mới Gender :
                   <img
                     width="30"
                     height="30"
