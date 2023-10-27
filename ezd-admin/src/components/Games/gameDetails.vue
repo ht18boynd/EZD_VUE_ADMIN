@@ -149,9 +149,6 @@
                 <hr />
 
                 <div class="d-flex gap-3 mt-3">
-                  <a @click="startEditingGame(game.id)" class="btn btn-primary"
-                    >Sửa Thông Tin</a
-                  >
                   <a @click="deleteGame(game.id)" class="btn btn-primary">
                     Xóa Game
                   </a>
@@ -163,7 +160,7 @@
         </div>
         <div class="card">
           <div class="card-body p-4">
-            <div @click="showEditForm = !showEditForm">
+            <div>
               <h6 class="card-title">
                 Sửa Chi Tiết Trò Chơi :
                 <img
@@ -175,350 +172,225 @@
               </h6>
             </div>
             <hr />
-            <div class="form-body mt-4" v-if="showEditForm">
+            <div class="form-body mt-4">
               <div class="row">
+                <!-- Form for editing the game name -->
+                <div class="col-sm-4">
+                  <form
+                    class="row g-3 needs-validation was-validated"
+                    novalidate
+                    enctype="multipart/form-data"
+                    @submit.prevent="updateGameName"
+                  >
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="nameGame" class="form-label"
+                          >Tên Trò Chơi</label
+                        >
+                        <input type="hidden" v-model="game.id" />
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="nameGame"
+                          v-model="editingGame.nameGame"
+                          required
+                        />
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                          Lưu
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+
+                <div class="col-sm-8">
+                  <form
+                    class="row g-3 needs-validation was-validated"
+                    novalidate
+                    enctype="multipart/form-data"
+                    @submit.prevent="updateGameImage"
+                  >
+                    <div class="col-lg-6">
+                      <div class="mb-3">
+                        <label for="image" class="form-label"
+                          >Ảnh Trò Chơi</label
+                        >
+                        <input type="hidden" v-model="game.id" />
+                        <input
+                          type="file"
+                          class="form-control"
+                          id="image"
+                          @change="handleImageChange"
+                          required
+                        />
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Vui Lòng Chọn File</div>
+                      </div>
+                    </div>
+                    <div class="col-lg-6">
+                      <div class="mb-3" v-if="!imagePreviewUrl">
+                        <label for="image" class="form-label"
+                          >Image Review</label
+                        >
+
+                        <img :src="game.imageName" style="width:200px;height:160px"/>
+                        
+                      </div>
+                      <div class="mb-3" v-if="imagePreviewUrl">
+                        <label for="image" class="form-label"
+                          >Image Review</label
+                        >
+
+                        <img :src="imagePreviewUrl" style="width:200px;height:160px"/>
+                        
+                        
+                      </div>
+                    </div>
+                    <div class="col-lg-2">
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                          Lưu
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
+                <!-- Form for editing the game image -->
+              
+               <div class="col-sm-4">
+                  <form
+                    class="row g-3 needs-validation was-validated"
+                    novalidate
+                    enctype="multipart/form-data"
+                    @submit.prevent="updateGameLevels"
+                  >
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="nameGame" class="form-label"
+                          > Danh Sách Cấp Độ Trò Chơi :</label
+                        >
+                        <input type="hidden" v-model="game.id" />
+                        <select
+                        id="bsValidation10"
+                        class="form-select"
+                        required
+                        multiple
+                        v-model="editingGame.levels"
+                      >
+                        <option disabled>Lựa Chọn Dưới Đây...</option>
+                        <option
+                          v-for="level in levelList"
+                          :key="level.id"
+                          :value="level.id"
+                        >
+                          {{ level.name }}
+                        </option>
+                      </select>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                          Lưu
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+               </div>
+
+               <div class="col-sm-4">
                 <form
                   class="row g-3 needs-validation was-validated"
                   novalidate
                   enctype="multipart/form-data"
-                  @submit.prevent="saveEditedGame"
+                  @submit.prevent="updateGameRoles"
                 >
-                  <div class="col-lg-8">
+                  <div class="col-lg-12">
                     <div class="mb-3">
-                      <label for="bsValidation1" class="form-label"
-                        >Tên Trò Chơi</label
-                      >
-                      <input
-                        type="text"
-                        class="form-control"
-                        id="bsValidation1"
-                        placeholder="Vui Lòng Nhập Tên"
-                        v-model="editingGame.nameGame"
+                      <label for="role" class="form-label">Chỉnh Sửa Roles Trò Chơi :</label>
+                      <input type="hidden" v-model="game.id" />
+                      <select
+                        id="bsValidationRoles"
+                        class="form-select"
                         required
-                      />
-                      <div class="valid-feedback">Looks good!</div>
-                      <div class="invalid-feedback">
-                        Vui Lòng Nhập Tên
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-github me-2 icon-inline"
-                        >
-                          <path
-                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="bsValidation2" class="form-label"
-                        >Ảnh Trò Chơi</label
+                        multiple
+                        v-model="editingGame.roles"
                       >
-                      <input
-                        type="file"
-                        class="form-control"
-                        id="bsValidation2"
-                        placeholder="Ảnh Trò Chơi"
-                        @change="handleImageChange"
-                        required
-                      />
-                      <div class="valid-feedback">Looks good!</div>
-                      <div class="invalid-feedback">
-                        Vui Lòng Chọn File
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          stroke-width="2"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          class="feather feather-github me-2 icon-inline"
+                        <option disabled>Lựa Chọn Dưới Đây...</option>
+                        <option
+                          v-for="role in roleList"
+                          :key="role.id"
+                          :value="role.id"
                         >
-                          <path
-                            d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                          ></path>
-                        </svg>
-                      </div>
-                    </div>
-                    <div class="mb-3">
-                      <label for="bsValidation2" class="form-label"
-                        >Ảnh Xem Trước</label
-                      >
-
-                      <img
-                        id="previewImage"
-                        class="img-fluid"
-                        v-if="imagePreviewUrl"
-                        :src="imagePreviewUrl"
-                        alt="Preview"
-                      />
-                      <img
-                        id="previewImage"
-                        class="img-fluid"
-                        v-else
-                        :src="game.imageName"
-                        alt="Preview"
-                      />
+                          {{ role.name }}
+                        </option>
+                      </select>
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
                     </div>
                   </div>
-
                   <div class="col-lg-4">
-                    <div class="row g-3">
-                      <div class="col-12">
-                        <label for="bsValidation10" class="form-label"
-                          >Cấp Độ</label
-                        >
-                        <select
-                          id="bsValidation10"
-                          class="form-select"
-                          required
-                          multiple
-                          v-model="editingGame.levels"
-                        >
-                          <option disabled>Lựa Chọn Dưới Đây...</option>
-                          <option
-                            v-for="level in levelList"
-                            :key="level.id"
-                            :value="level.id"
-                          >
-                            {{ level.name }}
-                          </option>
-                        </select>
-                        <div class="valid-feedback">
-                          Looks good! Chọn Nhiều Bằng Ctrl +
-                        </div>
-                        <div class="invalid-feedback">
-                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-github me-2 icon-inline"
-                          >
-                            <path
-                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                            ></path>
-                          </svg>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <label for="bsValidation11" class="form-label"
-                          >Vị Trí</label
-                        >
-                        <select
-                          id="bsValidation11"
-                          class="form-select"
-                          required
-                          multiple
-                          v-model="editingGame.roles"
-                        >
-                          <option disabled>Lựa Chọn Dưới Đây...</option>
-                          <option
-                            v-for="role in allRoles"
-                            :key="role.id"
-                            :value="role.id"
-                          >
-                            {{ role.name }}
-                          </option>
-                        </select>
-                        <div class="valid-feedback">
-                          Looks good! Chọn Nhiều Bằng Ctrl +
-                        </div>
-                        <div class="invalid-feedback">
-                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-github me-2 icon-inline"
-                          >
-                            <path
-                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                            ></path>
-                          </svg>
-                        </div>
-                      </div>
-                      <div class="col-12">
-                        <label for="bsValidation12" class="form-label"
-                          >Giới Tính</label
-                        >
-                        <select
-                          id="bsValidation12"
-                          class="form-select"
-                          required
-                          multiple
-                          v-model="editingGame.genders"
-                        >
-                          <option disabled>Lựa Chọn Dưới Đây...</option>
-                          <option
-                            v-for="gender in allGenders"
-                            :key="gender.id"
-                            :value="gender.id"
-                          >
-                            {{ gender.name }}
-                          </option>
-                        </select>
-                        <div class="valid-feedback">
-                          Looks good! Chọn Nhiều Bằng Ctrl +
-                        </div>
-                        <div class="invalid-feedback">
-                          Vui Lòng Chọn Ít Nhất 1 Giá Trị
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="24"
-                            height="24"
-                            viewBox="0 0 24 24"
-                            fill="none"
-                            stroke="currentColor"
-                            stroke-width="2"
-                            stroke-linecap="round"
-                            stroke-linejoin="round"
-                            class="feather feather-github me-2 icon-inline"
-                          >
-                            <path
-                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
-                            ></path>
-                          </svg>
-                        </div>
-                      </div>
-
-                      <div class="col-12">
-                        <div class="d-grid">
-                          <button type="submit" class="btn btn-primary">
-                            Lưu
-                          </button>
-                        </div>
-                      </div>
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">
+                        Lưu
+                      </button>
                     </div>
                   </div>
                 </form>
               </div>
+              <div class="col-sm-4">
+                <form
+                  class="row g-3 needs-validation was-validated"
+                  novalidate
+                  enctype="multipart/form-data"
+                  @submit.prevent="updateGameGenders"
+                >
+                  <div class="col-lg-12">
+                    <div class="mb-3">
+                      <label for="gender" class="form-label">Chỉnh Sửa Genders Trò Chơi :</label>
+                      <input type="hidden" v-model="game.id" />
+                      <select
+                        id="bsValidationGenders"
+                        class="form-select"
+                        required
+                        multiple
+                        v-model="editingGame.genders"
+                      >
+                        <option disabled>Lựa Chọn Dưới Đây...</option>
+                        <option
+                          v-for="gender in genderList"
+                          :key="gender.id"
+                          :value="gender.id"
+                        >
+                          {{ gender.name }}
+                        </option>
+                      </select>
+                      <div class="valid-feedback">Looks good!</div>
+                      <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
+                    </div>
+                  </div>
+                  <div class="col-lg-4">
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">
+                        Lưu
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              
+              
+
+              </div>
               <!--end row-->
-            </div>
-          </div>
-        </div>
-        <h6 class="text-uppercase mb-0">Các Sản Phẩm Liên Quan</h6>
-        <hr />
-        <div class="row row-cols-1 row-cols-lg-3">
-          <div class="col">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img
-                    src="assets/images/products/16.png"
-                    class="img-fluid"
-                    alt="..."
-                  />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h6 class="card-title">Light Grey Headphone</h6>
-                    <div class="cursor-pointer my-2">
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-secondary"></i>
-                    </div>
-                    <div class="clearfix">
-                      <p class="mb-0 float-start fw-bold">
-                        <span
-                          class="me-2 text-decoration-line-through text-secondary"
-                          >$240</span
-                        ><span>$199</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img
-                    src="assets/images/products/17.png"
-                    class="img-fluid"
-                    alt="..."
-                  />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h6 class="card-title">Black Cover iPhone 8</h6>
-                    <div class="cursor-pointer my-2">
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                    </div>
-                    <div class="clearfix">
-                      <p class="mb-0 float-start fw-bold">
-                        <span
-                          class="me-2 text-decoration-line-through text-secondary"
-                          >$179</span
-                        ><span>$110</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="col">
-            <div class="card">
-              <div class="row g-0">
-                <div class="col-md-4">
-                  <img
-                    src="assets/images/products/19.png"
-                    class="img-fluid"
-                    alt="..."
-                  />
-                </div>
-                <div class="col-md-8">
-                  <div class="card-body">
-                    <h6 class="card-title">Men Hand Watch</h6>
-                    <div class="cursor-pointer my-2">
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-warning"></i>
-                      <i class="bx bxs-star text-secondary"></i>
-                      <i class="bx bxs-star text-secondary"></i>
-                    </div>
-                    <div class="clearfix">
-                      <p class="mb-0 float-start fw-bold">
-                        <span
-                          class="me-2 text-decoration-line-through text-secondary"
-                          >$150</span
-                        ><span>$120</span>
-                      </p>
-                    </div>
-                  </div>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -568,126 +440,174 @@ export default {
     return {
       imagePreviewUrl: null, // Sử dụng để hiển thị hình ảnh được chọn
 
+      selectedLevels: [],
       showEditForm: false,
       game: {}, // Để lưu trữ thông tin chi tiết của trò chơi
       //editing
-      editingGame: {
-        nameGame: "",
-        imageName: "",
-        levels: [],
-        roles: [],
-        genders: [],
-      },
-
+      editingGame: {},
+      roleList: [], // Make sure you initialize this with your data
       levelList: [],
-      allRoles: [],
-      allGenders: [],
+      genderList: [],
       gamelist: [],
     };
   },
 
   methods: {
-    handleImageChange(event) {
-      this.editingGame.imageName = event.target.files[0];
-      // Tạo một đối tượng FileReader để đọc hình ảnh
-      let reader = new FileReader();
 
-      reader.onload = (e) => {
-        this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
-      };
+    async updateGameGenders() {
+  try {
+    const response = await GameService.updateGameGenders(this.game.id, this.editingGame.genders);
+    
+    if (response.id) {
+      // Cập nhật trò chơi 
+      this.getGameDetails(this.id);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập nhật Genders thành công!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  } catch (error) {
+    console.error('Error updating Game Genders:', error);
+  }
+},
 
-      // Đọc hình ảnh được chọn
-      reader.readAsDataURL(this.editingGame.imageName);
-    },
-    async startEditingGame() {
-      try {
-        if (this.gamelist) {
-          this.showEditForm = !this.showEditForm;
-          // Đảm bảo rằng gamelist đã được tải
-          const game = this.gamelist.find((game) => game.id == this.id);
-          if (game) {
-            this.editingGame = game;
-          } else {
-            console.error("Không tìm thấy trò chơi với ID: ", this.id);
-          }
-        } else {
-          console.error("Danh sách trò chơi không tồn tại.");
-        }
-      } catch (error) {
-        console.error("Lỗi khi lấy chi tiết trò chơi: ", error);
-      }
-    },
+    async updateGameRoles() {
+  try {
+    // Lấy giá trị đã chọn từ editingGame.roles và chuyển thành một mảng các IDs
 
-    // timf trò chơi
+    const response = await GameService.updateGameRoles(this.game.id, this.editingGame.roles);
+    
+    if (response.id) {
+      // Cập nhật trò chơi 
+      this.getGameDetails(this.id);
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Cập nhật Roles thành công!",
+        showConfirmButton: false,
+        timer: 1500,
+      });
+    }
+  } catch (error) {
+    console.error('Error updating Game Roles:', error);
+  }
+},
 
-    async saveEditedGame() {
-      // Validate form fields
-      if (
-        !this.editingGame.nameGame ||
-        !this.editingGame.imageName ||
-        this.editingGame.levels.length === 0 ||
-        this.editingGame.roles.length === 0 ||
-        this.editingGame.genders.length === 0
-      ) {
-        // Handle validation errors
-        Swal.fire({
-          icon: "warning",
-       
-          text: "Bạn Đã Để Trống Giá Trị Nào Đó",
-        });
-        return;
-      }
-
-      // Check if the new name is already in use by other games (excluding the current game)
-      const isNameOfGameExist = this.gamelist.some(
-        (game) =>
-          game.id !== this.editingGame.id && // Exclude the current game from the check
-          game.nameGame.toLowerCase() ===
-            this.editingGame.nameGame.toLowerCase()
-      );
-
-      if (isNameOfGameExist) {
-        // Handle the error when a different game is using the new name
-        Swal.fire({
-          icon: "error",
-          title: "Duplicate Name",
-          text: "1 Trò Chơi Đã Sử Dụng Tên Này Rồi !",
-        });
-        return;
-      }
-
-      // Call the editGame method to update the game
-      try {
-        const response = await GameService.editGame(
-          this.editingGame.id,
-          this.editingGame.nameGame,
-          this.editingGame.imageName,
-          this.editingGame.levels,
-          this.editingGame.roles,
-          this.editingGame.genders
-        );
-
-        if (response.id) {
-          // Handle successful update
-          this.editingGame = null;
+    async updateGameLevels() {
+    try {
+      const response = await GameService.updateGameLevels(this.game.id, this.editingGame.levels);
+      // Xử lý kết quả từ API nếu cần
+      if (response.id) {
+          // Cập nhật trò chơi 
           this.getGameDetails(this.id);
           Swal.fire({
             position: "top-end",
             icon: "success",
-            title: "Cập Nhập Thành Công!",
+            title: "Cập nhật Cấp Độ Thành Công!",
             showConfirmButton: false,
             timer: 1500,
           });
-          this.showEditForm = false; // Hide the edit form after successful update
         }
-      } catch (error) {
-        // Handle update errors
-        console.error("Error updating game:", error);
+    } catch (error) {
+      console.error('Error updating Game Levels:', error);
+     
+    }
+  },
+    handleImageChange(event) {
+      if (event.target.files.length > 0) {
+        this.imagePreviewUrl = null; // Đặt lại imagePreviewUrl
+        this.editedImage = event.target.files[0]; // Lưu ảnh chỉnh sửa vào biến
+
+        // Tạo một đối tượng FileReader để xem trước hình ảnh
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+        };
+        reader.readAsDataURL(this.editedImage); // Đọc hình ảnh và gọi hàm onload
+      }
+    },
+    async updateGameImage() {
+      if (!this.editedImage) {
         Swal.fire({
-          icon: "error",
-          title: "Sửa Lỗi",
-          text: "Có Lỗi Khi Sửa Trò Chơi.",
+          icon: "warning",
+          text: "Vui lòng chọn ảnh trò chơi",
         });
+        return;
+      }
+
+      try {
+        const response = await GameService.updateGameImage(
+          this.game.id,
+          this.editedImage
+        );
+
+        if (response.id) {
+          this.editedImage = null;
+          this.imagePreviewUrl = null;
+          // Cập nhật trò chơi sau khi cập nhật ảnh (nếu cần)
+          this.getGameDetails(this.id);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Cập nhật ảnh thành công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        // Xử lý phản hồi từ máy chủ (nếu cần)
+      } catch (error) {
+        console.error("Error updating game image:", error);
+      }
+    },
+
+    async updateGameName() {
+      try {
+        if (!this.editingGame.nameGame) {
+          Swal.fire({
+            icon: "warning",
+            text: "Vui lòng điền tên trò chơi",
+          });
+          return;
+        }
+
+        // Check if the new name is already in use by other games (excluding the current game)
+        const isNameOfGameExist = this.gamelist.some(
+          (game) =>
+            game.id !== this.editingGame.id && // Exclude the current game from the check
+            game.nameGame.toLowerCase() ===
+              this.editingGame.nameGame.toLowerCase()
+        );
+
+        if (isNameOfGameExist) {
+          // Handle the error when a different game is using the new name
+          Swal.fire({
+            icon: "error",
+            title: "Trùng tên",
+            text: "Tên này đã được sử dụng bởi trò chơi khác!",
+          });
+          return;
+        }
+        const response = await GameService.updateGameName(
+          this.game.id,
+          this.editingGame.nameGame
+        );
+        if (response.id) {
+          this.editingGame.nameGame = null;
+          this.getGameDetails(this.id);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Cập nhật thành công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        // Xử lý phản hồi từ máy chủ (nếu cần)
+      } catch (error) {
+        console.error("Error updating game name:", error);
       }
     },
 
@@ -711,7 +631,7 @@ export default {
     async getAllRoles() {
       try {
         const response = await ForGameService.getAllRoleGames();
-        this.allRoles = response.data.sort((a, b) => b.id - a.id);
+        this.roleList = response.data.sort((a, b) => b.id - a.id);
       } catch (error) {
         console.error("Error fetching roles:", error);
       }
@@ -719,7 +639,7 @@ export default {
     async getAllGenders() {
       try {
         const response = await ForGameService.getAllGenderGames();
-        this.allGenders = response.data.sort((a, b) => b.id - a.id);
+        this.genderList = response.data.sort((a, b) => b.id - a.id);
       } catch (error) {
         console.error("Error fetching genders:", error);
       }
