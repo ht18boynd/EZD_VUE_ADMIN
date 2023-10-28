@@ -9,6 +9,9 @@ import ForgotPassword from '@/components/Authen/ForgotPassword.vue'
 // Banner
 import ListBanner from '@/components/Banner/Index.vue'
 import CreateBanner from '@/components/Banner/Create.vue'
+//
+import ListBlog from '@/components/Blog/listBlog.vue'
+import CreateBlog from '@/components/Blog/createBlog.vue'
 
 
 
@@ -45,11 +48,23 @@ const routes = [
     },
     {
         path: '/admin/banner',
+        name:"listbanner",
         component: ListBanner
     },
     {
         path: '/admin/banner/create',
-        component: CreateBanner
+        component: CreateBanner,
+        name:"createbanner",
+    },
+    {
+        path: '/admin/blog',
+        name:"listblog",
+        component: ListBlog
+    },
+    {
+        path: '/admin/blog/create',
+        name:"createblog",
+        component: CreateBlog
     },
 
 

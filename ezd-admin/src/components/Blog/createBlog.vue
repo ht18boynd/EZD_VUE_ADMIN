@@ -1,0 +1,170 @@
+<template>
+  <div class="wrapper">
+    <!--sidebar wrapper -->
+    <slibarWrapper></slibarWrapper>
+    <!--end sidebar wrapper -->
+    <!--start header -->
+    <startHeaderVue></startHeaderVue>
+    <div class="page-wrapper">
+      <div class="page-content">
+        <!--end header -->
+        <div class="card">
+          <div class="card-body">
+            <h5 class="card-title">Add New Blog</h5>
+            <hr />
+            <div class="form-body">
+              <div class="row">
+                <form @submit.prevent="addBlog" enctype="multipart/form-data">
+                  <div class="col-12">
+                    <div class="border border-3 p-4 rounded">
+                      <div class="mb-3">
+                        <label for="inputName" class="form-label">Name</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputName"
+                          v-model="newBlog.name"
+                          required
+                          placeholder="Enter Name"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputTitle" class="form-label">Title</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          id="inputTitle"
+                          required
+                          v-model="newBlog.title"
+                          placeholder="Enter Title"
+                        />
+                      </div>
+                      <div class="mb-3">
+                        <label for="inputContent" class="form-label"
+                          >Content</label
+                        >
+                        <textarea
+                          class="form-control"
+                          id="inputContent"
+                          v-model="newBlog.content"
+                          required
+                          rows="3"
+                        ></textarea>
+                      </div>
+                      <div class="mb-3">
+                        <label for="image-uploadify" class="form-label"
+                          >Image</label
+                        >
+                        <input
+                          id="image-uploadify"
+                          type="file"
+                          accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf"
+                          multiple
+                          @change="onImageChange"
+                          required
+                        />
+                      </div>
+                      <button
+                        type="submit"
+                        class="btn btn-primary px-5 radius-30"
+                      >
+                        Submit
+                      </button>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <!--end row-->
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!--start page wrapper  . Dữ liệu chính-->
+    <!--start page wrapper -->
+    <div class="page-wrapper">
+      <div class="page-content"></div>
+    </div>
+  </div>
+
+  <searchModal></searchModal>
+  <!-- end search modal -->
+  <!--start switcher-->
+  <switcher></switcher>
+</template>
+
+<script>
+import switcher from "@/pages/switcher.vue";
+import searchModal from "@/pages/searchModal.vue";
+import Swal from "sweetalert2";
+import slibarWrapper from "@/pages/sidebarWrapper.vue";
+import BlogService from "@/service/BlogService.js";
+import startHeaderVue from "@/pages/startHeader.vue";
+export default {
+  name: "createBlog",
+  data() {
+    return {
+      newBlog: {
+        name: "",
+        content: "",
+        title: "",
+        image: null,
+      },
+      blogList: [],
+    };
+  },
+  components: {
+    switcher,
+    searchModal,
+    slibarWrapper,
+    startHeaderVue,
+  },
+  methods: {
+    
+    onImageChange(event) {
+      this.newBlog.image = event.target.files[0];
+    },
+    async addBlog() {
+      try {
+        const response = await BlogService.createNewBlog(
+          this.newBlog.name,
+          this.newBlog.title,
+          this.newBlog.content,
+          
+          this.newBlog.image
+        );
+
+        console.log(response);
+        if (response.id) {
+          this.$router.push("/admin/blog");
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: " Thành Công !",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+        // Xử lý kết quả hoặc điều hướng đến trang danh sách sản phẩm Banner sau khi thêm thành công
+      } catch (error) {
+        console.error("Lỗi khi thêm Banner mới: ", error);
+      }
+    },
+    async getAllBlogs() {
+      try {
+        const response = await BlogService.getAllBlogs();
+        const data = response.data;
+        //const data = response.data.sort((a, b) => b.id - a.id);
+        // Gán giá trị cho cả bannerList và originalBannerList
+        this.blogList = data;
+        // this.originalBannerList = data;
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách banner: ", error);
+      }
+    },
+    async created() {
+      await this.getAllBlogs();
+    },
+  },
+};
+</script>

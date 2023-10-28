@@ -307,7 +307,6 @@
         </div>
         <div class="container-fluid">
           <div class="row">
-           
             <!-- Create new Role-->
             <div class="col-sm-4">
               <div class="card">
@@ -374,8 +373,8 @@
                 </div>
               </div>
             </div>
-             <!-- Create new Level-->
-             <div class="col-sm-4">
+            <!-- Create new Level-->
+            <div class="col-sm-4">
               <div class="card">
                 <div
                   class="card-header"
@@ -579,7 +578,7 @@
                   />:
                 </h6>
               </div>
-              <div class="col-12"   v-show="tables.levels">
+              <div class="col-12" v-show="tables.levels">
                 <div
                   class="table-responsive"
                   style="max-height: 300px; overflow-x: auto"
@@ -592,12 +591,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="level in levelList"
-                        
-                        :key="level.id"
-                      
-                      >
+                      <tr v-for="level in levelList" :key="level.id">
                         <td>{{ level.name }}</td>
                         <td>
                           <a @click="deleteLevel(level.id)">
@@ -618,65 +612,56 @@
             </div>
 
             <!-- Bảng hiển thị Genders -->
-          <div class="col-4">
-            <div class="col-12" @click="toggleTable('genders')">
-              <h6
-                style="
-                  color: rgb(201, 18, 140);
-                  border-bottom: 2px solid rgb(201, 18, 140);
-                "
-              >
-                Giới Tính
-                <img
-                  width="25"
-                  height="25"
-                  src="https://img.icons8.com/nolan/64/gender.png"
-                  alt="gender"
-                />:
-              </h6>
-            </div>
-            <div class="col-12"   v-show="tables.genders">
-              <div
-                class="table-responsive"
-                style="max-height: 300px; overflow-x: auto"
-              >
-                <table class="table table-bordered">
-                  <thead>
-                    <tr>
-                      <th style="width: 75%">Tên</th>
-                      <th style="width: 25%">Actions</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr
-                      v-for="gender in allGenders"
-                      :key="gender.id"
-                    
-                    >
-                      <td>{{ gender.name }}</td>
-                      <td>
-                        <a @click="deleteGender(gender.id)">
-                          <img
-                            width="25"
-                            height="25"
-                            src="https://img.icons8.com/arcade/64/waste.png"
-                            alt="waste"
-                          />
-                        </a>
-                      </td>
-                      <!-- Repeat the above two columns to fill all 4 columns -->
-                    </tr>
-                  </tbody>
-                </table>
+            <div class="col-4">
+              <div class="col-12" @click="toggleTable('genders')">
+                <h6
+                  style="
+                    color: rgb(201, 18, 140);
+                    border-bottom: 2px solid rgb(201, 18, 140);
+                  "
+                >
+                  Giới Tính
+                  <img
+                    width="25"
+                    height="25"
+                    src="https://img.icons8.com/nolan/64/gender.png"
+                    alt="gender"
+                  />:
+                </h6>
+              </div>
+              <div class="col-12" v-show="tables.genders">
+                <div
+                  class="table-responsive"
+                  style="max-height: 300px; overflow-x: auto"
+                >
+                  <table class="table table-bordered">
+                    <thead>
+                      <tr>
+                        <th style="width: 75%">Tên</th>
+                        <th style="width: 25%">Actions</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="gender in allGenders" :key="gender.id">
+                        <td>{{ gender.name }}</td>
+                        <td>
+                          <a @click="deleteGender(gender.id)">
+                            <img
+                              width="25"
+                              height="25"
+                              src="https://img.icons8.com/arcade/64/waste.png"
+                              alt="waste"
+                            />
+                          </a>
+                        </td>
+                        <!-- Repeat the above two columns to fill all 4 columns -->
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
               </div>
             </div>
           </div>
-          </div>
-
-        
-     
-
-          
         </div>
       </div>
     </div>

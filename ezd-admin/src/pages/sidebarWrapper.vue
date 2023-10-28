@@ -67,7 +67,7 @@
           <div class="menu-title">Quản Lý Home Page</div>
         </a>
         <ul>
-          <li> <a href="javascript:;"><i class='bx bx-radio-circle'></i>Quản Lý Banner</a>
+          <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Quản Lý Banner</a>
             <ul>
               <li> <a href="/admin/banner"><i class='bx bx-radio-circle'></i>Danh Sách Banner</a>
 
@@ -79,13 +79,13 @@
           </li>
 
           <li>
-            <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level One A</a>
+            <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Blog</a>
             <ul>
-              <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Level Two</a>
-                <ul>
-                  <li> <a href="javascript:;"><i class='bx bx-radio-circle'></i>Level Three</a>
-                  </li>
-                </ul>
+              <li> <a  href="/admin/blog"><i class='bx bx-radio-circle'></i>List Blog</a>
+               </li>
+                  <li> <a href="/admin/blog/create"><i class='bx bx-radio-circle'></i>Create Blog</a>
+                  
+                
               </li>
             </ul>
           </li>
