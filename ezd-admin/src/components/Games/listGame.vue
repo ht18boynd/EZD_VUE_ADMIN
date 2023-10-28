@@ -46,6 +46,7 @@
               </div>
             </div>
           </div>
+         
         </div>
         <div class="row">
           <div class="col-12">
@@ -65,7 +66,7 @@
           >
             <div class="col" v-for="game in gamelist" :key="game.id">
               <div class="card">
-                <img
+                <img style="width:auto"
                   class="card-img-top"
                   :src="game.imageName"
                   :alt="game.nameGame"
