@@ -92,8 +92,9 @@ export default {
         const data = response.data;
         //const data = response.data.sort((a, b) => b.id - a.id);
         // Gán giá trị cho cả bannerList và originalBannerList
-        this.bannerList = data;
-        // this.originalBannerList = data;
+       
+        this.bannerList = data.filter(banner => banner.status === 'ACTIVE');
+
       } catch (error) {
         console.error("Lỗi khi lấy danh sách banner: ", error);
       }
