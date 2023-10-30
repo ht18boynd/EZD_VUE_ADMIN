@@ -60,6 +60,7 @@
          
         </ul>
       </li>
+
       <li>
         <a class="has-arrow" href="javascript:;">
           <div class="parent-icon"><i class="bx bx-menu"></i>
@@ -77,7 +78,6 @@
               </li>
             </ul>
           </li>
-
           <li>
             <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Blog</a>
             <ul>
@@ -91,6 +91,52 @@
           </li>
         </ul>
       </li>
+
+      <!--Manager Rank Start-->
+        <li>
+        <a href="javascript:;" class="has-arrow">
+          <div class="parent-icon"><i class="lni lni-cup"></i></div>
+          <div class="menu-title text-primary">Quản Lý Rank</div>
+        </a>
+        <ul>
+          <li>
+            <a href="/admin/rank"
+              ><i class="bx bx-radio-circle"></i>Danh Sách</a
+            >
+          </li>
+          
+          <li>
+            <a href="/admin/rank/create"
+              ><i class="bx bx-radio-circle"></i>Tạo Mới</a
+            >
+          </li>
+         
+        </ul>
+      </li>
+      <!--Manager Rank End-->
+      <!--Manager Item Start-->
+        <li>
+        <a href="javascript:;" class="has-arrow">
+          <div class="parent-icon"><i class="bx bx-cart"></i></div>
+          <div class="menu-title">Quản Lý Item</div>
+        </a>
+        <ul>
+          <li>
+            <a href="/admin/item"
+              ><i class="bx bx-radio-circle"></i>Danh Sách</a
+            >
+          </li>
+          
+          <li>
+            <a href="/admin/item/create"
+              ><i class="bx bx-radio-circle"></i>Tạo Mới</a
+            >
+          </li>
+         
+        </ul>
+      </li>
+      <!--Manager Item End-->
+
       <li>
         <a href="widgets.html">
           <div class="parent-icon"><i class="bx bx-cookie"></i></div>

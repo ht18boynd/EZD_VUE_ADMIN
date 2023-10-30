@@ -35,6 +35,7 @@ class GameService {
       throw new Error('At least one level, role, and gender is required.');
     }
 
+
     const formData = new FormData();
     formData.append('nameGame', nameGame);
     formData.append('imageName', imageName);
@@ -174,6 +175,7 @@ class GameService {
     }
   }
   
+
 
 
 }
