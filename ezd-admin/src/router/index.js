@@ -9,8 +9,12 @@ import ForgotPassword from '@/components/Authen/ForgotPassword.vue'
 // Banner
 import ListBanner from '@/components/Banner/Index.vue'
 import CreateBanner from '@/components/Banner/Create.vue'
-
-
+//Rank
+import CreateRank from '@/components/Rank/rankCreate.vue'
+import ListRank from '@/components/Rank/listRank.vue'
+//Item
+import createItem from '@/components/Item/createItem.vue'
+import listItem from '@/components/Item/listItem.vue'
 
 const routes = [
     {
@@ -47,12 +51,31 @@ const routes = [
         path: '/admin/banner',
         component: ListBanner
     },
+    
     {
         path: '/admin/banner/create',
         component: CreateBanner
     },
-
-
+    //Rank-Start
+    {
+        path:'/admin/rank',
+        component:ListRank
+    },
+    {
+        path: '/admin/rank/create',
+        component: CreateRank
+    },
+    //Rank-End
+    //Item-Start
+     {
+        path:'/admin/item',
+        component:createItem
+    },
+    {
+        path:'/admin/item/create',
+        component: listItem
+    },
+    //Item-End
     {
         path: '/admin/contact',
         component: ContactPage
