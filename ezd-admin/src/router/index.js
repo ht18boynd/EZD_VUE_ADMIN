@@ -18,59 +18,70 @@ import CreateBlog from '@/components/Blog/createBlog.vue'
 const routes = [
     {
         path: '/',
-        component: HomePage
+        component: HomePage,
+        meta: { requiresAuth: true }
     },
     {
         path: '/login',
-        component: LoginAdmin
+        component: LoginAdmin,
+        meta: { requiresAuth: true }
     },
     {
         path: '/forgotpass',
-        component: ForgotPassword
+        component: ForgotPassword,
+        meta: { requiresAuth: true }
     },
-    
+
 
     {
         path: '/admin/game',
-        component: listGame
+        component: listGame,
+        meta: { requiresAuth: true }
     },
     {
         path: '/admin/game/create',
-        component: CreateGame
+        component: CreateGame,
+        meta: { requiresAuth: true }
     },
     {
         path: '/admin/game/gameDetails/:id', // Định tuyến đến trang gameDetails với tham số ID
         component: GameDetails,
         name: "gameDetails",
+        meta: { requiresAuth: true },
 
         props: true, // Cho phép truyền các tham số từ URL vào component
 
     },
     {
         path: '/admin/banner',
-        name:"listbanner",
-        component: ListBanner
+        name: "listbanner",
+        component: ListBanner,
+        meta: { requiresAuth: true }
     },
     {
         path: '/admin/banner/create',
         component: CreateBanner,
-        name:"createbanner",
+        name: "createbanner",
+        meta: { requiresAuth: true }
     },
     {
         path: '/admin/blog',
-        name:"listblog",
-        component: ListBlog
+        name: "listblog",
+        component: ListBlog,
+        meta: { requiresAuth: true }
     },
     {
         path: '/admin/blog/create',
-        name:"createblog",
-        component: CreateBlog
+        name: "createblog",
+        component: CreateBlog,
+        meta: { requiresAuth: true }
     },
 
 
     {
         path: '/admin/contact',
-        component: ContactPage
+        component: ContactPage,
+        meta: { requiresAuth: true }
     },
 ]
 
@@ -78,5 +89,26 @@ const router = createRouter({
     history: createWebHistory(),
     routes: routes
 })
+
+router.beforeEach((to, from, next) => {
+    // Kiểm tra nếu route yêu cầu đăng nhập và không có token, chuyển hướng đến trang đăng nhập
+    if (to.matched.some(record => record.meta.requiresAuth)) {
+      const token = localStorage.getItem('token');
+      if (!token) {
+        if (to.path !== '/login') { // Ngăn chuyển hướng lại /login nếu đã ở đó
+          next('/login');
+        } else {
+          next(); // Nếu đang ở /login, cho phép điều hướng
+        }
+      } else {
+        // Nếu có token, cho phép điều hướng
+        next();
+      }
+    } else {
+      // Trang không yêu cầu đăng nhập, cho phép điều hướng
+      next();
+    }
+  });
+  
 
 export default router
