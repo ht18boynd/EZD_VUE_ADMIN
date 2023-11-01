@@ -1,23 +1,23 @@
 <template>
-   <!--sidebar wrapper -->
-   <div class="sidebar-wrapper" data-simplebar="true">
+  <!--sidebar wrapper -->
+  <div class="sidebar-wrapper" data-simplebar="true">
     <div class="sidebar-header">
       <div>
         <img
-        :src= " BASE_URL + 'assets/images/logo-icon.png' "
+          :src="BASE_URL + 'assets/images/logo-icon.png'"
           class="logo-icon"
           alt="logo icon"
         />
       </div>
       <div>
-        <a href="/"><h4 class="logo-text">EZD Game</h4></a>
+        <router-link to="/"><h4 class="logo-text">EZD Game</h4></router-link>
       </div>
       <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
     </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
       <li>
-        <a href="javascript:;" class="has-arrow">
+        <a href="#" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
           <div class="menu-title">Dashboard</div>
         </a>
@@ -37,9 +37,9 @@
           </li>
         </ul>
       </li>
- 
+
       <li class="menu-label">ADMIN MANAGEMENT</li>
-    
+
       <li>
         <a href="javascript:;" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
@@ -47,45 +47,57 @@
         </a>
         <ul>
           <li>
-            <a href="/admin/game"
-              ><i class="bx bx-radio-circle"></i>Danh Sách</a
+            <router-link to="/admin/game"
+              ><i class="bx bx-radio-circle"></i>Danh Sách</router-link
             >
           </li>
-          
+
           <li>
-            <a href="/admin/game/create"
-              ><i class="bx bx-radio-circle"></i>Tạo Mới</a
+            <router-link to="/admin/game/create"
+              ><i class="bx bx-radio-circle"></i>Tạo Mới</router-link
             >
           </li>
-         
         </ul>
       </li>
 
       <li>
         <a class="has-arrow" href="javascript:;">
-          <div class="parent-icon"><i class="bx bx-menu"></i>
-          </div>
+          <div class="parent-icon"><i class="bx bx-menu"></i></div>
           <div class="menu-title">Quản Lý Home Page</div>
         </a>
         <ul>
-          <li> <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Quản Lý Banner</a>
+          <li>
+            <a class="has-arrow" href="javascript:;"
+              ><i class="bx bx-radio-circle"></i>Quản Lý Banner</a
+            >
             <ul>
-              <li> <a href="/admin/banner"><i class='bx bx-radio-circle'></i>Danh Sách Banner</a>
-
+              <li>
+                <router-link to="/admin/banner"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách
+                  Banner</router-link
+                >
               </li>
-              <li> <a  href="/admin/banner/create"><i class='bx bx-radio-circle'></i>Tạo Mới Banner</a>
-
+              <li>
+                <router-link to="/admin/banner/create"
+                  ><i class="bx bx-radio-circle"></i>Tạo Mới Banner</router-link
+                >
               </li>
             </ul>
           </li>
           <li>
-            <a class="has-arrow" href="javascript:;"><i class='bx bx-radio-circle'></i>Blog</a>
+            <a class="has-arrow" href="javascript:;"
+              ><i class="bx bx-radio-circle"></i>Blog</a
+            >
             <ul>
-              <li> <a  href="/admin/blog"><i class='bx bx-radio-circle'></i>List Blog</a>
-               </li>
-                  <li> <a href="/admin/blog/create"><i class='bx bx-radio-circle'></i>Create Blog</a>
-                  
-                
+              <li>
+                <router-link to="/admin/blog"
+                  ><i class="bx bx-radio-circle"></i>List Blog</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/admin/blog/create"
+                  ><i class="bx bx-radio-circle"></i>Create Blog</router-link
+                >
               </li>
             </ul>
           </li>
@@ -143,9 +155,6 @@
           <div class="menu-title">Widgets</div>
         </a>
       </li>
-      
-     
-     
     </ul>
     <!--end navigation-->
   </div>
@@ -154,15 +163,13 @@
 
 <script>
 export default {
-name:'slibarWrapper',
-data(){
-  return {
-       BASE_URL: process.env.BASE_URL,
-  }
-}
-}
+  name: "slibarWrapper",
+  data() {
+    return {
+      BASE_URL: process.env.BASE_URL,
+    };
+  },
+};
 </script>
 
-<style>
-
-</style>
+<style></style>
