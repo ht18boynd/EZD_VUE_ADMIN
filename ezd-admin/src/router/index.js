@@ -1,4 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
+
 import HomePage from '@/components/Home.vue'
 import listGame from '@/components/Games/listGame.vue'
 import CreateGame from '@/components/Games/createNew.vue'
@@ -12,6 +13,7 @@ import CreateBanner from '@/components/Banner/Create.vue'
 //
 import ListBlog from '@/components/Blog/listBlog.vue'
 import CreateBlog from '@/components/Blog/createBlog.vue'
+import testAdmin from '@/components/test.vue'
 
 
 
@@ -21,6 +23,11 @@ const routes = [
         component: HomePage,
         meta: { requiresAuth: true }
     },
+    {
+      path: '/test',
+      component: testAdmin,
+      
+  },
     {
         path: '/login',
         component: LoginAdmin,
