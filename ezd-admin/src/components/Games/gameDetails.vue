@@ -174,6 +174,7 @@
             <hr />
             <div class="form-body mt-4">
               <div class="row">
+                <div class="container">
                 <!-- Form for editing the game name -->
                 <div class="col-sm-4">
                   <form
@@ -239,17 +240,20 @@
                           >Image Review</label
                         >
 
-                        <img :src="game.imageName" style="width:200px;height:160px"/>
-                        
+                        <img
+                          :src="game.imageName"
+                          style="width: 200px; height: 160px"
+                        />
                       </div>
                       <div class="mb-3" v-if="imagePreviewUrl">
                         <label for="image" class="form-label"
                           >Image Review</label
                         >
 
-                        <img :src="imagePreviewUrl" style="width:200px;height:160px"/>
-                        
-                        
+                        <img
+                          :src="imagePreviewUrl"
+                          style="width: 200px; height: 160px"
+                        />
                       </div>
                     </div>
                     <div class="col-lg-2">
@@ -262,8 +266,11 @@
                   </form>
                 </div>
                 <!-- Form for editing the game image -->
-              
-               <div class="col-sm-4">
+              </div>
+                <hr />
+              </div>
+              <div class="row">
+                <div class="col-sm-4">
                   <form
                     class="row g-3 needs-validation was-validated"
                     novalidate
@@ -272,28 +279,29 @@
                   >
                     <div class="col-lg-12">
                       <div class="mb-3">
-                        <label for="nameGame" class="form-label"
-                          > Danh Sách Cấp Độ Trò Chơi :</label
+                        <label for="nameGame" class="form-label">
+                          Danh Sách Cấp Độ Trò Chơi :</label
                         >
                         <input type="hidden" v-model="game.id" />
                         <select
-                        id="bsValidation10"
-                        class="form-select"
-                        required
-                        multiple
-                        v-model="editingGame.levels"
-                      >
-                        <option disabled>Lựa Chọn Dưới Đây...</option>
-                        <option
-                          v-for="level in levelList"
-                          :key="level.id"
-                          :value="level.id"
+                          id="bsValidation10"
+                          class="form-select"
+                          style="height: 250px"
+                          required
+                          multiple
+                          v-model="editingGame.levels"
                         >
-                          {{ level.name }}
-                        </option>
-                      </select>
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="level in levelList"
+                            :key="level.id"
+                            :value="level.id"
+                          >
+                            {{ level.name }}
+                          </option>
+                        </select>
                         <div class="valid-feedback">Looks good!</div>
-                        <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
+                        <div class="invalid-feedback">Vui Lòng Chọn</div>
                       </div>
                     </div>
                     <div class="col-lg-4">
@@ -304,91 +312,94 @@
                       </div>
                     </div>
                   </form>
-               </div>
+                </div>
 
-               <div class="col-sm-4">
-                <form
-                  class="row g-3 needs-validation was-validated"
-                  novalidate
-                  enctype="multipart/form-data"
-                  @submit.prevent="updateGameRoles"
-                >
-                  <div class="col-lg-12">
-                    <div class="mb-3">
-                      <label for="role" class="form-label">Chỉnh Sửa Roles Trò Chơi :</label>
-                      <input type="hidden" v-model="game.id" />
-                      <select
-                        id="bsValidationRoles"
-                        class="form-select"
-                        required
-                        multiple
-                        v-model="editingGame.roles"
-                      >
-                        <option disabled>Lựa Chọn Dưới Đây...</option>
-                        <option
-                          v-for="role in roleList"
-                          :key="role.id"
-                          :value="role.id"
+                <div class="col-sm-4">
+                  <form
+                    class="row g-3 needs-validation was-validated"
+                    novalidate
+                    enctype="multipart/form-data"
+                    @submit.prevent="updateGameRoles"
+                  >
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="role" class="form-label"
+                          >Chỉnh Sửa Roles Trò Chơi :</label
                         >
-                          {{ role.name }}
-                        </option>
-                      </select>
-                      <div class="valid-feedback">Looks good!</div>
-                      <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
-                    </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="d-grid">
-                      <button type="submit" class="btn btn-primary">
-                        Lưu
-                      </button>
-                    </div>
-                  </div>
-                </form>
-              </div>
-              <div class="col-sm-4">
-                <form
-                  class="row g-3 needs-validation was-validated"
-                  novalidate
-                  enctype="multipart/form-data"
-                  @submit.prevent="updateGameGenders"
-                >
-                  <div class="col-lg-12">
-                    <div class="mb-3">
-                      <label for="gender" class="form-label">Chỉnh Sửa Genders Trò Chơi :</label>
-                      <input type="hidden" v-model="game.id" />
-                      <select
-                        id="bsValidationGenders"
-                        class="form-select"
-                        required
-                        multiple
-                        v-model="editingGame.genders"
-                      >
-                        <option disabled>Lựa Chọn Dưới Đây...</option>
-                        <option
-                          v-for="gender in genderList"
-                          :key="gender.id"
-                          :value="gender.id"
+                        <input type="hidden" v-model="game.id" />
+                        <select
+                          id="bsValidationRoles"
+                          class="form-select"
+                          required
+                          multiple
+                          style="height: 250px"
+                          v-model="editingGame.roles"
                         >
-                          {{ gender.name }}
-                        </option>
-                      </select>
-                      <div class="valid-feedback">Looks good!</div>
-                      <div class="invalid-feedback">Vui Lòng Nhập Tên</div>
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="role in roleList"
+                            :key="role.id"
+                            :value="role.id"
+                          >
+                            {{ role.name }}
+                          </option>
+                        </select>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Vui Lòng Chọn</div>
+                      </div>
                     </div>
-                  </div>
-                  <div class="col-lg-4">
-                    <div class="d-grid">
-                      <button type="submit" class="btn btn-primary">
-                        Lưu
-                      </button>
+                    <div class="col-lg-4">
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                          Lưu
+                        </button>
+                      </div>
                     </div>
-                  </div>
-                </form>
-              </div>
-              
-              
-
+                  </form>
+                </div>
+                <div class="col-sm-4">
+                  <form
+                    class="row g-3 needs-validation was-validated"
+                    novalidate
+                    enctype="multipart/form-data"
+                    @submit.prevent="updateGameGenders"
+                  >
+                    <div class="col-lg-12">
+                      <div class="mb-3">
+                        <label for="gender" class="form-label"
+                          >Chỉnh Sửa Genders Trò Chơi :</label
+                        >
+                        <input type="hidden" v-model="game.id" />
+                        <select
+                          id="bsValidationGenders"
+                          class="form-select"
+                          required
+                          multiple
+                          style="height: 250px"
+                          v-model="editingGame.genders"
+                        >
+                          <option disabled>Lựa Chọn Dưới Đây...</option>
+                          <option
+                            v-for="gender in genderList"
+                            :key="gender.id"
+                            :value="gender.id"
+                          >
+                            {{ gender.name }}
+                          </option>
+                        </select>
+                        <div class="valid-feedback">Looks good!</div>
+                        <div class="invalid-feedback">Vui Lòng Chọn</div>
+                      </div>
+                    </div>
+                    <div class="col-lg-4">
+                      <div class="d-grid">
+                        <button type="submit" class="btn btn-primary">
+                          Lưu
+                        </button>
+                      </div>
+                    </div>
+                  </form>
+                </div>
               </div>
               <!--end row-->
             </div>
@@ -453,55 +464,63 @@ export default {
   },
 
   methods: {
-
     async updateGameGenders() {
-  try {
-    const response = await GameService.updateGameGenders(this.game.id, this.editingGame.genders);
-    
-    if (response.id) {
-      // Cập nhật trò chơi 
-      this.getGameDetails(this.id);
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Cập nhật Genders thành công!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  } catch (error) {
-    console.error('Error updating Game Genders:', error);
-  }
-},
+      try {
+        const response = await GameService.updateGameGenders(
+          this.game.id,
+          this.editingGame.genders
+        );
+
+        if (response.id) {
+          // Cập nhật trò chơi
+          this.getGameDetails(this.id);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Cập nhật Genders thành công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } catch (error) {
+        console.error("Error updating Game Genders:", error);
+      }
+    },
 
     async updateGameRoles() {
-  try {
-    // Lấy giá trị đã chọn từ editingGame.roles và chuyển thành một mảng các IDs
+      try {
+        // Lấy giá trị đã chọn từ editingGame.roles và chuyển thành một mảng các IDs
 
-    const response = await GameService.updateGameRoles(this.game.id, this.editingGame.roles);
-    
-    if (response.id) {
-      // Cập nhật trò chơi 
-      this.getGameDetails(this.id);
-      Swal.fire({
-        position: "top-end",
-        icon: "success",
-        title: "Cập nhật Roles thành công!",
-        showConfirmButton: false,
-        timer: 1500,
-      });
-    }
-  } catch (error) {
-    console.error('Error updating Game Roles:', error);
-  }
-},
+        const response = await GameService.updateGameRoles(
+          this.game.id,
+          this.editingGame.roles
+        );
+
+        if (response.id) {
+          // Cập nhật trò chơi
+          this.getGameDetails(this.id);
+          Swal.fire({
+            position: "top-end",
+            icon: "success",
+            title: "Cập nhật Roles thành công!",
+            showConfirmButton: false,
+            timer: 1500,
+          });
+        }
+      } catch (error) {
+        console.error("Error updating Game Roles:", error);
+      }
+    },
 
     async updateGameLevels() {
-    try {
-      const response = await GameService.updateGameLevels(this.game.id, this.editingGame.levels);
-      // Xử lý kết quả từ API nếu cần
-      if (response.id) {
-          // Cập nhật trò chơi 
+      try {
+        const response = await GameService.updateGameLevels(
+          this.game.id,
+          this.editingGame.levels
+        );
+        // Xử lý kết quả từ API nếu cần
+        if (response.id) {
+          // Cập nhật trò chơi
           this.getGameDetails(this.id);
           Swal.fire({
             position: "top-end",
@@ -511,11 +530,10 @@ export default {
             timer: 1500,
           });
         }
-    } catch (error) {
-      console.error('Error updating Game Levels:', error);
-     
-    }
-  },
+      } catch (error) {
+        console.error("Error updating Game Levels:", error);
+      }
+    },
     handleImageChange(event) {
       if (event.target.files.length > 0) {
         this.imagePreviewUrl = null; // Đặt lại imagePreviewUrl

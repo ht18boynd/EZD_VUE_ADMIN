@@ -391,14 +391,8 @@ export default {
     },
   },
   async created() {
-    this.getAllGames()
-      .then((response) => {
-        this.gamelist = response.data;
-        this.originalGamelist = response.data;
-      })
-      .catch((error) => {
-        console.error("Lỗi khi lấy danh sách trò chơi: ", error);
-      });
+    await this.getAllGames();
+ 
     await this.getAllLevels();
     await this.getAllRoles();
     await this.getAllGenders();
