@@ -109,12 +109,14 @@
         </ul>
       </li>
 
+
       <li class="parent">
         <a class="has-arrow" href="#">
           <div class="parent-icon">
             <i class="bx bx-bell" style="color: red"></i>
           </div>
           <div class="menu-title">Quản Lý Đơn</div>
+
         </a>
         <ul class="child">
           <li class="parent">
@@ -140,10 +142,12 @@
               </li>
             </ul>
           </li>
+
           <li class="parent">
             <a class="has-arrow" href="#"
               ><i class="fadeIn animated bx bx-message-square-add"> </i
               ><span>Đăng Ký Sản Phẩm</span></a
+
             >
             <ul class="child">
               <li>
@@ -165,12 +169,14 @@
           </li>
         </ul>
       </li>
+
       <li class="parent">
         <a class="has-arrow" href="#">
           <div class="parent-icon">
             <i class="bx bx-shopping-bag" style="color: red"></i>
           </div>
           <div class="menu-title">Quản Lý Giao Dịch</div>
+
         </a>
         <ul class="child">
           <li class="parent">

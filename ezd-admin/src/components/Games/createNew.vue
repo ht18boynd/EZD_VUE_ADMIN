@@ -1010,7 +1010,7 @@ export default {
       this.gameImage = event.target.files[0];
       // Tạo một đối tượng FileReader để đọc hình ảnh
       let reader = new FileReader();
-
+      
       reader.onload = (e) => {
         this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
       };

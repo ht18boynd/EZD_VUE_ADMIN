@@ -1,3 +1,4 @@
+
 import { createRouter, createWebHistory } from 'vue-router';
 
 import HomePage from '@/components/Home.vue';
@@ -36,6 +37,7 @@ const routes = [
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });
+
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
