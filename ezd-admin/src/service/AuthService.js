@@ -11,7 +11,7 @@ const axiosInstance = axios.create({
 
 const AuthService = {
 
- async login(credentials) {
+  async login(credentials) {
     const LOGIN_API_URL = `${baseURL}/auth/signinAdmin`; // Địa chỉ đăng nhập
     return await axiosInstance.post(LOGIN_API_URL, credentials).then((response) => {
       const token = response.data.token;
@@ -26,6 +26,17 @@ const AuthService = {
       return response.data;
     });
   },
+
+  async getAllUser(role) {
+    try {
+      const GET_ALL_USERS = `${baseURL}/auth/?role=${role}`;
+      return await axiosInstance.get(GET_ALL_USERS).then((response) => {
+        return response.data;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  }
 };
 
 export default AuthService;

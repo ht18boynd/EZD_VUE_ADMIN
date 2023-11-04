@@ -30,13 +30,13 @@
             >
             <ul class="child">
               <li>
-                <a href="#" nowrap
+                <a href="/admin/user/listUser" nowrap
                   ><i class="bx bx-radio-circle"></i
                   ><i class="lni lni-indent-increase"></i>Danh Sách User</a
                 >
               </li>
               <li>
-                <a href="#" nowrap
+                <a href="/admin/user/listStaf" nowrap
                   ><i class="bx bx-radio-circle"></i
                   ><i class="lni lni-indent-increase"></i>Danh Sách Cộng Tác
                   Viên</a
@@ -147,17 +147,17 @@
             >
             <ul class="child">
               <li>
-                <a href="/admin/banner"
+                <a href="#"
                   ><i class="bx bx-radio-circle"></i>Danh Sách Đơn</a
                 >
               </li>
               <li>
-                <a href="/admin/banner/create"
+                <a href="#"
                   ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối</a
                 >
               </li>
               <li>
-                <a href="/admin/banner/create"
+                <a href="#"
                   ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận</a
                 >
               </li>

@@ -25,6 +25,90 @@
           </div>
         </div>
         <!--end breadcrumb-->
+        <h6 class="mb-0 text-uppercase">Danh Sách Đơn Ngày Hôm Nay</h6>
+        <hr>
+        <div class="card">
+          <div class="card-body">
+            <div class="table-responsive table-container">
+              <table
+                id="example"
+                class="table table-striped table-bordered"
+                style="width: 100%"
+              >
+                <thead>
+                  <tr>
+                    <th>ID</th>
+                    <th>User</th>
+                    <th>Amount</th>
+                    <th>Transaction Time</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="item in itemsPerPageToday" :key="item.id">
+
+                    <td>{{ item.id }}</td>
+                    <td>{{ item.user_transaction.name }}</td>
+                    <td>
+                      {{
+                        item.amount.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      }}
+                    </td>
+                    <td>{{ item.transactionTime }}</td>
+
+                    <td>
+                      <button
+                        @click="showConfirmation(item.id)"
+                        class="btn btn-outline-success px-5"
+                      >
+                        {{ item.status }}
+                        <img class="image-right" :src="BASE_URL + 'assets/gif/200w.webp'" >
+                      </button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+        <div class="pagination-container">
+          <vue-awesome-paginate :total-items="100" v-model="currentPageNew">
+      
+            <template #prev-button>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+                Prev
+              </span>
+            </template>
+      
+            <template #next-button>
+              <span>
+                Next
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+              </span>
+            </template>
+          </vue-awesome-paginate>
+        </div>
+        <hr>
         <h6 class="mb-0 text-uppercase">Danh Sách Tất Cả Đơn</h6>
         <hr />
         <div class="card">
@@ -64,6 +148,7 @@
                         class="btn btn-outline-success px-5"
                       >
                         {{ item.status }}
+                        <img class="image-right" :src="BASE_URL + 'assets/gif/200w.webp'" >
                       </button>
                     </td>
                   </tr>
@@ -72,44 +157,49 @@
             </div>
           </div>
         </div>
+
+        <div class="pagination-container">
+          <vue-awesome-paginate :total-items="100" v-model="currentPage">
+      
+            <template #prev-button>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+                Prev
+              </span>
+            </template>
+      
+            <template #next-button>
+              <span>
+                Next
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+              </span>
+            </template>
+          </vue-awesome-paginate>
+        </div>
+        <hr>
+
+      
         
       </div>
     </div>
   </div>
-  <div class="pagination-container">
-    <vue-awesome-paginate :total-items="100" v-model="currentPage">
-
-      <template #prev-button>
-        <span>
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="black"
-            width="8"
-            height="8"
-            viewBox="0 0 24 24"
-          >
-            <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
-          </svg>
-          Prev
-        </span>
-      </template>
-
-      <template #next-button>
-        <span>
-          Next
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            fill="black"
-            width="8"
-            height="8"
-            viewBox="0 0 24 24"
-          >
-            <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
-          </svg>
-        </span>
-      </template>
-    </vue-awesome-paginate>
-  </div>
+ 
   <searchModal></searchModal>
   <!-- end search modal -->
   <!--start switcher-->
@@ -132,13 +222,16 @@ export default {
   data() {
     return {
       PENDINGlist: [],
-    
+      BASE_URL: process.env.BASE_URL,
     };
   },
   setup() {
     const currentPage = ref(1);
+    const currentPageNew= ref(1);
     return {
       currentPage,
+      currentPageNew
+
     };
   },
   components: {
@@ -223,7 +316,27 @@ export default {
 
     // Use Array.slice() to get a subset of data
     return this.PENDINGlist.slice(startIndex, endIndex);
-  }}
+  },
+  pendingTransactionsToday() {
+    const today = new Date(); // Get the current date
+    return this.PENDINGlist.filter((item) => {
+      const transactionDate = new Date(item.transactionTime);
+      return (
+        item.status === 'PENDING' &&
+        today.toDateString() === transactionDate.toDateString()
+      );
+    });
+  },
+  itemsPerPageToday() {
+    const itemsPerPage = 10; // Number of items to display per page
+    const startIndex = (this.currentPageNew - 1) * itemsPerPage;
+    const endIndex = startIndex + itemsPerPage;
+
+    // Use Array.slice() to get a subset of data
+    return this.pendingTransactionsToday.slice(startIndex, endIndex);
+  }
+},
+  
   
 };
 </script>
@@ -271,7 +384,12 @@ export default {
   background-color: #dedede;
 }
 .table-container {
-  max-height: 600px; /* Adjust the height as needed */
-  overflow-y: auto; /* Add vertical scroll when the table overflows */
+  max-height: 700px ; /* Adjust the height as needed */
+}
+.image-right {
+  float: right; /* Sử dụng float để đặt hình ảnh bên phải của button */
+  margin-left: 10px; /* Để tạo khoảng cách giữa nút và hình ảnh */
+  width: 30px;
+  height: 30px;
 }
 </style>

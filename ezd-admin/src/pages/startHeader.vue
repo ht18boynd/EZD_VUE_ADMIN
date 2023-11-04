@@ -1,6 +1,6 @@
 <template>
-   <!--start header -->
-   <header>
+  <!--start header -->
+  <header>
     <div class="topbar d-flex align-items-center">
       <nav class="navbar navbar-expand gap-3">
         <div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
@@ -38,8 +38,9 @@
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
                 href="avascript:;"
                 data-bs-toggle="dropdown"
-                ><img 
-                :src="BASE_URL + 'assets/images/county/02.png'"    width="22"
+                ><img
+                  :src="BASE_URL + 'assets/images/county/02.png'"
+                  width="22"
                 />
               </a>
               <ul class="dropdown-menu dropdown-menu-end">
@@ -48,7 +49,7 @@
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
                     ><img
-                    :src="BASE_URL + 'assets/images/county/01.png'"
+                      :src="BASE_URL + 'assets/images/county/01.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">English</span></a
@@ -59,7 +60,7 @@
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
                     ><img
-                    :src="BASE_URL + 'assets/images/county/02.png'"
+                      :src="BASE_URL + 'assets/images/county/02.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Catalan</span></a
@@ -69,7 +70,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/03.png'" 
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/03.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">French</span></a
@@ -79,7 +81,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/04.png'"
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/04.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Belize</span></a
@@ -89,7 +92,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/05.png'" 
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/05.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Colombia</span></a
@@ -99,7 +103,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/06.png'" 
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/06.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Spanish</span></a
@@ -109,7 +114,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/07.png'" 
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/07.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Georgian</span></a
@@ -119,7 +125,8 @@
                   <a
                     class="dropdown-item d-flex align-items-center py-2"
                     href="javascript:;"
-                    ><img :src="BASE_URL + 'assets/images/county/08.png'" 
+                    ><img
+                      :src="BASE_URL + 'assets/images/county/08.png'"
                       width="20"
                       alt=""
                     /><span class="ms-2">Hindi</span></a
@@ -150,7 +157,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/slack.png'" 
+                              :src="BASE_URL + 'assets/images/app/slack.png'"
                               width="30"
                               alt=""
                             />
@@ -166,7 +173,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/behance.png'" 
+                              :src="BASE_URL + 'assets/images/app/behance.png'"
                               width="30"
                               alt=""
                             />
@@ -182,7 +189,9 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/google-drive.png'" 
+                              :src="
+                                BASE_URL + 'assets/images/app/google-drive.png'
+                              "
                               width="30"
                               alt=""
                             />
@@ -198,7 +207,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/outlook.png'" 
+                              :src="BASE_URL + 'assets/images/app/outlook.png'"
                               width="30"
                               alt=""
                             />
@@ -214,7 +223,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/github.png'" 
+                              :src="BASE_URL + 'assets/images/app/github.png'"
                               width="30"
                               alt=""
                             />
@@ -230,7 +239,10 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/stack-overflow.png'" 
+                              :src="
+                                BASE_URL +
+                                'assets/images/app/stack-overflow.png'
+                              "
                               width="30"
                               alt=""
                             />
@@ -246,7 +258,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/figma.png'" 
+                              :src="BASE_URL + 'assets/images/app/figma.png'"
                               width="30"
                               alt=""
                             />
@@ -262,7 +274,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/twitter.png'" 
+                              :src="BASE_URL + 'assets/images/app/twitter.png'"
                               width="30"
                               alt=""
                             />
@@ -278,7 +290,10 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/google-calendar.png'" 
+                              :src="
+                                BASE_URL +
+                                'assets/images/app/google-calendar.png'
+                              "
                               width="30"
                               alt=""
                             />
@@ -294,7 +309,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/spotify.png'" 
+                              :src="BASE_URL + 'assets/images/app/spotify.png'"
                               width="30"
                               alt=""
                             />
@@ -310,7 +325,9 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/google-photos.png'" 
+                              :src="
+                                BASE_URL + 'assets/images/app/google-photos.png'
+                              "
                               width="30"
                               alt=""
                             />
@@ -326,7 +343,9 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/pinterest.png'" 
+                              :src="
+                                BASE_URL + 'assets/images/app/pinterest.png'
+                              "
                               width="30"
                               alt=""
                             />
@@ -342,7 +361,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/linkedin.png'" 
+                              :src="BASE_URL + 'assets/images/app/linkedin.png'"
                               width="30"
                               alt=""
                             />
@@ -358,7 +377,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/dribble.png'" 
+                              :src="BASE_URL + 'assets/images/app/dribble.png'"
                               width="30"
                               alt=""
                             />
@@ -374,7 +393,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/youtube.png'" 
+                              :src="BASE_URL + 'assets/images/app/youtube.png'"
                               width="30"
                               alt=""
                             />
@@ -390,7 +409,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/google.png'" 
+                              :src="BASE_URL + 'assets/images/app/google.png'"
                               width="30"
                               alt=""
                             />
@@ -406,7 +425,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/envato.png'" 
+                              :src="BASE_URL + 'assets/images/app/envato.png'"
                               width="30"
                               alt=""
                             />
@@ -422,7 +441,7 @@
                         <div class="app-box text-center">
                           <div class="app-icon">
                             <img
-                              :src="BASE_URL + 'assets/images/app/safari.png'" 
+                              :src="BASE_URL + 'assets/images/app/safari.png'"
                               width="30"
                               alt=""
                             />
@@ -459,7 +478,7 @@
                     <div class="d-flex align-items-center">
                       <div class="user-online">
                         <img
-                          :src="BASE_URL + 'assets/images/avatars/avatar-1.png'" 
+                          :src="BASE_URL + 'assets/images/avatars/avatar-1.png'"
                           class="msg-avatar"
                           alt="user avatar"
                         />
@@ -490,7 +509,7 @@
                     <div class="d-flex align-items-center">
                       <div class="user-online">
                         <img
-                          :src="BASE_URL + 'assets/images/avatars/avatar-2.png'" 
+                          :src="BASE_URL + 'assets/images/avatars/avatar-2.png'"
                           class="msg-avatar"
                           alt="user avatar"
                         />
@@ -500,9 +519,7 @@
                           Althea Cabardo
                           <span class="msg-time float-end">14 sec ago</span>
                         </h6>
-                        <p class="msg-info">
-                          Many desktop publishing packages
-                        </p>
+                        <p class="msg-info">Many desktop publishing packages</p>
                       </div>
                     </div>
                   </a>
@@ -510,7 +527,7 @@
                     <div class="d-flex align-items-center">
                       <div class="notify bg-light-success text-success">
                         <img
-                          :src="BASE_URL + 'assets/images/app/outlook.png'" 
+                          :src="BASE_URL + 'assets/images/app/outlook.png'"
                           width="25"
                           alt="user avatar"
                         />
@@ -541,7 +558,7 @@
                     <div class="d-flex align-items-center">
                       <div class="user-online">
                         <img
-                          :src="BASE_URL + 'assets/images/avatars/avatar-4.png'" 
+                          :src="BASE_URL + 'assets/images/avatars/avatar-4.png'"
                           class="msg-avatar"
                           alt="user avatar"
                         />
@@ -575,7 +592,7 @@
                     <div class="d-flex align-items-center">
                       <div class="notify bg-light-primary">
                         <img
-                          :src="BASE_URL + 'assets/images/app/github.png'" 
+                          :src="BASE_URL + 'assets/images/app/github.png'"
                           width="25"
                           alt="user avatar"
                         />
@@ -586,9 +603,7 @@
                             >1 day ago</span
                           >
                         </h6>
-                        <p class="msg-info">
-                          24 new authors joined last week
-                        </p>
+                        <p class="msg-info">24 new authors joined last week</p>
                       </div>
                     </div>
                   </a>
@@ -596,7 +611,7 @@
                     <div class="d-flex align-items-center">
                       <div class="user-online">
                         <img
-                          :src="BASE_URL + 'assets/images/avatars/avatar-8.png'" 
+                          :src="BASE_URL + 'assets/images/avatars/avatar-8.png'"
                           class="msg-avatar"
                           alt="user avatar"
                         />
@@ -606,9 +621,7 @@
                           Peter Costanzo
                           <span class="msg-time float-end">6 hrs ago</span>
                         </h6>
-                        <p class="msg-info">
-                          It was popularised in the 1960s
-                        </p>
+                        <p class="msg-info">It was popularised in the 1960s</p>
                       </div>
                     </div>
                   </a>
@@ -646,7 +659,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/11.png'" 
+                            :src="BASE_URL + 'assets/images/products/11.png'"
                             class=""
                             alt="product image"
                           />
@@ -671,7 +684,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/02.png'" 
+                            :src="BASE_URL + 'assets/images/products/02.png'"
                             class=""
                             alt="product image"
                           />
@@ -696,7 +709,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/03.png'" 
+                            :src="BASE_URL + 'assets/images/products/03.png'"
                             class=""
                             alt="product image"
                           />
@@ -721,7 +734,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/04.png'" 
+                            :src="BASE_URL + 'assets/images/products/04.png'"
                             class=""
                             alt="product image"
                           />
@@ -746,7 +759,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/05.png'" 
+                            :src="BASE_URL + 'assets/images/products/05.png'"
                             class=""
                             alt="product image"
                           />
@@ -771,7 +784,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/06.png'" 
+                            :src="BASE_URL + 'assets/images/products/06.png'"
                             class=""
                             alt="product image"
                           />
@@ -796,7 +809,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/07.png'" 
+                            :src="BASE_URL + 'assets/images/products/07.png'"
                             class=""
                             alt="product image"
                           />
@@ -821,7 +834,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/08.png'" 
+                            :src="BASE_URL + 'assets/images/products/08.png'"
                             class=""
                             alt="product image"
                           />
@@ -846,7 +859,7 @@
                       <div class="position-relative">
                         <div class="cart-product rounded-circle bg-light">
                           <img
-                            :src="BASE_URL + 'assets/images/products/09.png'" 
+                            :src="BASE_URL + 'assets/images/products/09.png'"
                             class=""
                             alt="product image"
                           />
@@ -891,7 +904,7 @@
             aria-expanded="false"
           >
             <img
-              :src="BASE_URL + 'assets/images/avatars/avatar-2.png'" 
+              :src="BASE_URL + 'assets/images/avatars/avatar-2.png'"
               class="user-img"
               alt="user avatar"
             />
@@ -919,8 +932,7 @@
               <a
                 class="dropdown-item d-flex align-items-center"
                 href="javascript:;"
-                ><i class="bx bx-home-circle fs-5"></i
-                ><span>Dashboard</span></a
+                ><i class="bx bx-home-circle fs-5"></i><span>Dashboard</span></a
               >
             </li>
             <li>
@@ -942,11 +954,12 @@
               <div class="dropdown-divider mb-0"></div>
             </li>
             <li>
-              <a
+              <router-link to="/login" @click="Logout"
                 class="dropdown-item d-flex align-items-center"
                 href="javascript:;"
-                ><i class="bx bx-log-out-circle"></i><span>Logout</span></a
-              >
+                ><i class="bx bx-log-out-circle"></i><span>Logout</span>
+              </router-link>
+
             </li>
           </ul>
         </div>
@@ -957,16 +970,34 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+
 export default {
 name:'startHeader',
 data(){
   return {
        BASE_URL: process.env.BASE_URL,
   }
+},methods:{
+  Logout() {
+      // Thực hiện đăng xuất bằng cách đặt lại giá trị của authInfo thành null
+      localStorage.removeItem("token");
+
+      // Điều hướng người dùng đến trang đăng nhập sau khi đăng xuất
+      this.$router.push("/login");
+
+      // Hiển thị thông báo đăng xuất thành công bằng SweetAlert2 hoặc bất kỳ cách nào bạn mong muốn
+      Swal.fire({
+        position: "top-end",
+        icon: "success",
+        title: "Logged out successfully!",
+        showConfirmButton: false,
+        timer: 2000,
+      });
+    },
 }
+
 }
 </script>
 
-<style>
 
-</style>

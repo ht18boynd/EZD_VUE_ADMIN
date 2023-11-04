@@ -149,7 +149,7 @@ export default {
     async login(event) {
       try {
         event.preventDefault();
-
+        console.log(this.userData.email + this.userData.password);
         const response = await AuthService.login(this.userData);
         const token = response.data.token;
       
@@ -167,7 +167,7 @@ export default {
         console.log(authInfoResponse);
         console.log("authen globle ID: " + authInfo.value.id);
         console.log("authen globle Name: " + authInfo.value.name);
-        this.$router.push("/");
+        window.location.href = "/";
         Swal.fire("Login Success!", "You clicked the button!", "success");
       } catch {
         console.log("Error");

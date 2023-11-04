@@ -14,7 +14,8 @@ import testAdmin from '@/components/test.vue';
 import PendingList from "@/components/Transaction/pendingList.vue";
 import SuccessList from "@/components/Transaction/successList.vue";
 import FailedList from "@/components/Transaction/failedList.vue";
-
+import ListUser from "@/components/User/listUser.vue";
+import ListStaf from "@/components/User/listStaf.vue";
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -30,6 +31,8 @@ const routes = [
   { path: '/admin/transaction', component: PendingList, meta: { requiresAuth: true } },
   { path: '/admin/transaction/success', component: SuccessList, meta: { requiresAuth: true } },
   { path: '/admin/transaction/failed', component: FailedList, meta: { requiresAuth: true } },
+  { path: '/admin/user/listUser', component: ListUser, meta: { requiresAuth: true } },
+  { path: '/admin/user/listStaf', component: ListStaf, meta: { requiresAuth: true } },
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });
