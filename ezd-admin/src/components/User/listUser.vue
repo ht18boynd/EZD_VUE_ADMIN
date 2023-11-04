@@ -54,7 +54,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in UserList" :key="item.id">
+                  <tr v-for="item in displayedUsers" :key="item.id">
                     <td>{{ item.avatar }}</td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
@@ -122,7 +122,7 @@
 </template>
 
 <script>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Chart from "chart.js/auto";
 import AuthService from "@/service/AuthService";
 import searchModal from "@/pages/searchModal.vue";
@@ -130,10 +130,9 @@ import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 import switcher from "@/pages/switcher.vue";
 
-
 export default {
   name: "listTransaction",
-  components:{
+  components: {
     switcher,
     searchModal,
     slibarWrapper,
@@ -143,6 +142,10 @@ export default {
   setup() {
     const currentPage = ref(1);
     const UserList = ref([]);
+    const itemsPerPage = 10; // Số lượng mục hiển thị trên mỗi trang
+    const totalItems = ref(0);
+    const isDataLoaded = ref(false); // Flag để kiểm tra xem dữ liệu đã được tải xong
+
     const userCountByMonth = ref(new Array(12).fill(0));
 
     const getAllUsers = async () => {
@@ -150,6 +153,10 @@ export default {
         const role = "USER";
         const response = await AuthService.getAllUser(role);
         UserList.value = response;
+        totalItems.value = UserList.value.length;
+        isDataLoaded.value = true; // Đánh dấu rằng dữ liệu đã được tải xong
+        // Sắp xếp dữ liệu theo id giảm dần
+        UserList.value.sort((a, b) => b.id - a.id);
 
         // Count the number of users for each month
         UserList.value.forEach((user) => {
@@ -188,7 +195,7 @@ export default {
             {
               label: "User Creation by Month",
               data: data,
-              fill: 'start',
+              fill: "start",
               borderColor: "rgb(201, 41, 230)",
             },
           ],
@@ -215,12 +222,20 @@ export default {
     onMounted(() => {
       getAllUsers();
     });
-
+    const displayedUsers = ref([]);
+    watch([currentPage, isDataLoaded], () => {
+      if (isDataLoaded.value) {
+        const startIndex = (currentPage.value - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        displayedUsers.value = UserList.value.slice(startIndex, endIndex);
+      }
+    });
     return {
       currentPage,
       UserList,
+      displayedUsers,
+      totalItems,
     };
   },
-
 };
 </script>

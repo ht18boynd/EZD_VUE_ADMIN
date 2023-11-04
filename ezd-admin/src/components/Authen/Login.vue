@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapper">
+  <div>
     <div class="section-authentication-cover">
       <div class="">
         <div class="row g-0">
@@ -34,7 +34,11 @@
                     <p class="mb-0">Please log in to your account</p>
                   </div>
                   <div class="form-body">
-                    <form class="row g-3" @submit="login">
+                    <form
+                      class="row g-3 was-validated"
+                      @submit="login"
+                      novalidate
+                    >
                       <div class="col-12">
                         <label for="inputEmailAddress" class="form-label"
                           >Email</label
@@ -45,8 +49,30 @@
                           id="inputEmailAddress"
                           placeholder="Please Input Email"
                           v-model="userData.email"
+                          required
                         />
+                        <div class="invalid-feedback">
+                          Không Được Để Trống
+                          <svg
+                            xmlns="http://www.w3.org/2000/svg"
+                            width="24"
+                            height="24"
+                            viewBox="0 0 24 24"
+                            fill="none"
+                            stroke="currentColor"
+                            stroke-width="2"
+                            stroke-linecap="round"
+                            stroke-linejoin="round"
+                            class="feather feather-github me-2 icon-inline"
+                          >
+                            <path
+                              d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                            ></path>
+                          </svg>
+                        </div>
+                        <div class="valid-feedback">Looks good!</div>
                       </div>
+
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label"
                           >Password</label
@@ -54,32 +80,41 @@
                         <div class="input-group" id="show_hide_password">
                           <input
                             type="password"
-                            class="form-control border-end-0"
+                            class="form-control"
                             id="inputChoosePassword"
                             v-model="userData.password"
                             placeholder="Enter Password"
+                            required
                           />
                           <a
                             href="javascript:;"
                             class="input-group-text bg-transparent"
                             ><i class="bx bx-hide"></i
                           ></a>
+                          <div class="invalid-feedback">
+                            Không Được Để Trống
+                            <svg
+                              xmlns="http://www.w3.org/2000/svg"
+                              width="24"
+                              height="24"
+                              viewBox="0 0 24 24"
+                              fill="none"
+                              stroke="currentColor"
+                              stroke-width="2"
+                              stroke-linecap="round"
+                              stroke-linejoin="round"
+                              class="feather feather-github me-2 icon-inline"
+                            >
+                              <path
+                                d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"
+                              ></path>
+                            </svg>
+                          </div>
+                          <div class="valid-feedback">Looks good!</div>
                         </div>
+                        
                       </div>
-                      <div class="col-md-6">
-                        <div class="form-check form-switch">
-                          <input
-                            class="form-check-input"
-                            type="checkbox"
-                            id="flexSwitchCheckChecked"
-                          />
-                          <label
-                            class="form-check-label"
-                            for="flexSwitchCheckChecked"
-                            >Remember Me</label
-                          >
-                        </div>
-                      </div>
+
                       <div class="col-md-6 text-end">
                         <a href="/forgotpass">Forgot Password ?</a>
                       </div>
@@ -152,10 +187,10 @@ export default {
         console.log(this.userData.email + this.userData.password);
         const response = await AuthService.login(this.userData);
         const token = response.data.token;
-      
-      // Lưu JWT vào localStorage hoặc Vuex state
-      localStorage.setItem("token", token);
-      console.log(token);
+
+        // Lưu JWT vào localStorage hoặc Vuex state
+        localStorage.setItem("token", token);
+        console.log(token);
         const decoded = jwtDecode(token);
         console.log(decoded);
         // Gán giá trị sub vào biến user
@@ -167,8 +202,17 @@ export default {
         console.log(authInfoResponse);
         console.log("authen globle ID: " + authInfo.value.id);
         console.log("authen globle Name: " + authInfo.value.name);
-        window.location.href = "/";
-        Swal.fire("Login Success!", "You clicked the button!", "success");
+        // this.$router.push("/");
+        Swal.fire({
+          position: "top-end",
+          icon: "success",
+          title: "Log In successfully!",
+          showConfirmButton: false,
+          timer: 2000,
+        }).then(() => {
+          // Chuyển hướng sau khi người dùng xác nhận thông báo
+          window.location.href = "/";
+        });
       } catch {
         console.log("Error");
         Swal.fire("Login Fail!", "You clicked the button!", "error");
@@ -177,5 +221,3 @@ export default {
   },
 };
 </script>
-
-

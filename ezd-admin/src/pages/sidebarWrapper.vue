@@ -1,6 +1,6 @@
 <template>
   <!--sidebar wrapper -->
-  <div class="sidebar-wrapper" data-simplebar="true">
+  <div class="sidebar-wrapper" data-simplebar="true" style="background-color: #8aedb5;">
     <div class="sidebar-header" style="background-image: url(&quot;assets/gif/oke1.gif&quot;);
     background-size: cover;
     background-position: center center;
@@ -228,4 +228,37 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped> 
+
+  @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Odibee+Sans&display=swap');
+
+/* Chọn tất cả các phần tử "menu-title" */
+.menu-title {
+  color: #941616; /* Màu chữ */
+  font-family: 'Agbalumo', sans-serif; /* Font-family */
+  font-size: 16px; /* Cỡ chữ */
+  transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
+}
+
+/* Hiệu ứng màu khi di chuột qua */
+.menu-title:hover {
+  color: #941616;
+}
+.parent{
+  padding: 5px;
+}
+
+/* Chọn tất cả các phần tử "child" bên trong "li" */
+ul li .menu-title {
+  color: #941616; /* Màu chữ */
+  font-family: 'Agbalumo', sans-serif; /* Font-family */
+  font-size: 16px; /* Cỡ chữ */
+  transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
+}
+
+/* Hiệu ứng màu khi di chuột qua */
+ul li .menu-title:hover {
+  color: #941616;
+}
+
+</style>

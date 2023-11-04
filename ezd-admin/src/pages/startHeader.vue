@@ -1,6 +1,6 @@
 <template>
   <!--start header -->
-  <header>
+  <header style="background-color: #299cc2;">
     <div class="topbar d-flex align-items-center">
       <nav class="navbar navbar-expand gap-3">
         <div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
@@ -909,8 +909,7 @@
               alt="user avatar"
             />
             <div class="user-info">
-              <p class="user-name mb-0">Pauline Seitz</p>
-              <p class="designattion mb-0">Web Designer</p>
+              <p class="user-name mb-0">{{userInfor.name}}</p>
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
@@ -954,12 +953,13 @@
               <div class="dropdown-divider mb-0"></div>
             </li>
             <li>
-              <router-link to="/login" @click="Logout"
+              <router-link
+                to="/login"
+                @click="Logout"
                 class="dropdown-item d-flex align-items-center"
                 href="javascript:;"
                 ><i class="bx bx-log-out-circle"></i><span>Logout</span>
               </router-link>
-
             </li>
           </ul>
         </div>
@@ -971,15 +971,19 @@
 
 <script>
 import Swal from "sweetalert2";
+import AuthService from "@/service/AuthService";
+import { jwtDecode } from "jwt-decode";
 
 export default {
-name:'startHeader',
-data(){
-  return {
-       BASE_URL: process.env.BASE_URL,
-  }
-},methods:{
-  Logout() {
+  name: "startHeader",
+  data() {
+    return {
+      userInfor:[],
+      BASE_URL: process.env.BASE_URL,
+    };
+  },
+  methods: {
+    Logout() {
       // Thực hiện đăng xuất bằng cách đặt lại giá trị của authInfo thành null
       localStorage.removeItem("token");
 
@@ -995,9 +999,25 @@ data(){
         timer: 2000,
       });
     },
-}
+
+    async findByEmail(){
+
+const decoded = jwtDecode(localStorage.getItem("token"));
+const userGmail =decoded.sub;
+const response = await AuthService.findByEmail( userGmail);
+this.userInfor=response;
+console.log(this.userInfor);
 
 }
+  },
+ async created() {
+   
+    await this.findByEmail();
+
+  },
+
+ 
+
+
+};
 </script>
-
-

@@ -1,57 +1,39 @@
 <template>
   <div>
-    <canvas id="myChart"></canvas>
+    <h1>Thông tin người dùng</h1>
+ 
+    <!-- Các thông tin khác từ authInfo -->
   </div>
 </template>
 
 <script>
-import Chart from "chart.js/auto";
-
+import AuthService from "@/service/AuthService";
+import { jwtDecode } from "jwt-decode";
 export default {
-  name: "testAdmin",
-
-  mounted() {
-    const ctx = document.getElementById("myChart");
-    new Chart(ctx, {
-      type: "line",
-      data: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-        ],
-        datasets: [
-          {
-            label: "Looping tension",
-            data: [65, 59, 80, 81, 26, 55, 40],
-            fill: false,
-            borderColor: "rgb(75, 192, 192)",
-          },
-        ],
-      },
-      options: {
-        animations: {
-          tension: {
-            duration: 1000,
-            easing: "linear",
-            from: 1,
-            to: 0,
-            loop: true,
-          },
-        },
-        scales: {
-          y: {
-            // defining min and max so hiding the dataset does not change scale range
-            min: 0,
-            max: 100,
-          },
-        },
-      },
-    });
+  name: "UserProfile",
+  data() {
+    return {
+      userInfor:[],
+      BASE_URL: process.env.BASE_URL,
+    };
   },
+  methods: {
+    async findByEmail(){
+
+      const decoded = jwtDecode(localStorage.getItem("token"));
+      const userGmail =decoded.sub;
+     const response = await AuthService.findByEmail( userGmail);
+     this.userInfor=response;
+     console.log(this.userInfor);
+
+    }
+
+    
+  },
+  async created() {
+   
+   await this.findByEmail();
+
+ },
 };
 </script>
