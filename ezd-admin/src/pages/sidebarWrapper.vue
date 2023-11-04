@@ -1,102 +1,107 @@
 <template>
   <!--sidebar wrapper -->
-  <div class="sidebar-wrapper" data-simplebar="true">
-    <div class="sidebar-header">
-      <div>
-        <img
-          :src="BASE_URL + 'assets/images/logo-icon.png'"
-          class="logo-icon"
-          alt="logo icon"
-        />
-      </div>
-      <div>
-        <router-link to="/"><h4 class="logo-text">EZD Game</h4></router-link>
+  <div class="sidebar-wrapper" data-simplebar="true" style="background-color: #8aedb5;">
+    <div class="sidebar-header" style="background-image: url(&quot;assets/gif/oke1.gif&quot;);
+    background-size: cover;
+    background-position: center center;
+    background-repeat: no-repeat;">
+      <div >
+        <a href="/"
+          >
+          <h4>EZD</h4></a
+        >
       </div>
       <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
     </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-      <li>
-        <a href="#" class="has-arrow">
-          <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
-          <div class="menu-title">Dashboard</div>
+      <li class="parent">
+        <a class="has-arrow" href="#">
+          <div class="parent-icon">
+            <i class="fadeIn animated bx bx-line-chart-down"></i>
+          </div>
+          <div class="menu-title">Thống Kê</div>
         </a>
-        <ul>
-          <li>
-            <a href="index.html"><i class="bx bx-radio-circle"></i>Default</a>
-          </li>
-          <li>
-            <a href="index2.html"
-              ><i class="bx bx-radio-circle"></i>Alternate</a
+        <ul class="child">
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Thống
+              Kê User</a
             >
-          </li>
-          <li>
-            <a href="index3.html"
-              ><i class="bx bx-radio-circle"></i>Graphical</a
-            >
+            <ul class="child">
+              <li>
+                <a href="/admin/user/listUser" nowrap
+                  ><i class="bx bx-radio-circle"></i
+                  ><i class="lni lni-indent-increase"></i>Danh Sách User</a
+                >
+              </li>
+              <li>
+                <a href="/admin/user/listStaf" nowrap
+                  ><i class="bx bx-radio-circle"></i
+                  ><i class="lni lni-indent-increase"></i>Danh Sách Cộng Tác
+                  Viên</a
+                >
+              </li>
+            </ul>
           </li>
         </ul>
       </li>
-
-      <li class="menu-label">ADMIN MANAGEMENT</li>
-
-      <li>
-        <a href="javascript:;" class="has-arrow">
+      <li class="parent">
+        <a class="has-arrow" href="#">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
-          <div class="menu-title">Quản Lý Trò Chơi</div>
-        </a>
-        <ul>
-          <li>
-            <router-link to="/admin/game"
-              ><i class="bx bx-radio-circle"></i>Danh Sách</router-link
-            >
-          </li>
-
-          <li>
-            <router-link to="/admin/game/create"
-              ><i class="bx bx-radio-circle"></i>Tạo Mới</router-link
-            >
-          </li>
-        </ul>
-      </li>
-
-      <li>
-        <a class="has-arrow" href="javascript:;">
-          <div class="parent-icon"><i class="bx bx-menu"></i></div>
           <div class="menu-title">Quản Lý Home Page</div>
         </a>
-        <ul>
-          <li>
-            <a class="has-arrow" href="javascript:;"
-              ><i class="bx bx-radio-circle"></i>Quản Lý Banner</a
-            >
-            <ul>
+        <ul class="child">
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-chevron-right-circle"></i> Danh
+              Mục Game <span class="expand"></span
+            ></a>
+            <ul class="child">
               <li>
-                <router-link to="/admin/banner"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách
-                  Banner</router-link
+                <a href="/admin/game"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Game</a
                 >
               </li>
               <li>
-                <router-link to="/admin/banner/create"
-                  ><i class="bx bx-radio-circle"></i>Tạo Mới Banner</router-link
+                <a href="/admin/game/create"
+                  ><i class="bx bx-radio-circle"></i>Tạo Mới Game</a
                 >
               </li>
             </ul>
           </li>
-          <li>
-            <a class="has-arrow" href="javascript:;"
-              ><i class="bx bx-radio-circle"></i>Blog</a
-            >
-            <ul>
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Danh
+              Mục Banner <span class="expand"></span
+            ></a>
+            <ul class="child">
               <li>
-                <router-link to="/admin/blog"
-                  ><i class="bx bx-radio-circle"></i>List Blog</router-link
+                <a href="/admin/banner"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Banner</a
                 >
               </li>
               <li>
-                <router-link to="/admin/blog/create"
-                  ><i class="bx bx-radio-circle"></i>Create Blog</router-link
+                <a href="/admin/banner/create"
+                  ><i class="bx bx-radio-circle"></i>Tạo Mới Banner</a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Danh
+              Mục Blog <span class="expand"></span
+            ></a>
+            <ul class="child">
+              <li>
+                <a href="/admin/blog"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Blog</a
+                >
+              </li>
+              <li>
+                <a href="/admin/blog/create"
+                  ><i class="bx bx-radio-circle"></i>Tạo Mới Blog</a
                 >
               </li>
             </ul>
@@ -104,56 +109,113 @@
         </ul>
       </li>
 
-      <!--Manager Rank Start-->
-        <li>
-        <a href="javascript:;" class="has-arrow">
-          <div class="parent-icon"><i class="lni lni-cup"></i></div>
-          <div class="menu-title text-primary">Quản Lý Rank</div>
-        </a>
-        <ul>
-          <li>
-            <a href="/admin/rank"
-              ><i class="bx bx-radio-circle"></i>Danh Sách</a
-            >
-          </li>
-          
-          <li>
-            <a href="/admin/rank/create"
-              ><i class="bx bx-radio-circle"></i>Tạo Mới</a
-            >
-          </li>
-         
-        </ul>
-      </li>
-      <!--Manager Rank End-->
-      <!--Manager Item Start-->
-        <li>
-        <a href="javascript:;" class="has-arrow">
-          <div class="parent-icon"><i class="bx bx-cart"></i></div>
-          <div class="menu-title">Quản Lý Item</div>
-        </a>
-        <ul>
-          <li>
-            <a href="/admin/item"
-              ><i class="bx bx-radio-circle"></i>Danh Sách</a
-            >
-          </li>
-          
-          <li>
-            <a href="/admin/item/create"
-              ><i class="bx bx-radio-circle"></i>Tạo Mới</a
-            >
-          </li>
-         
-        </ul>
-      </li>
-      <!--Manager Item End-->
 
-      <li>
-        <a href="widgets.html">
-          <div class="parent-icon"><i class="bx bx-cookie"></i></div>
-          <div class="menu-title">Widgets</div>
+      <li class="parent">
+        <a class="has-arrow" href="#">
+          <div class="parent-icon">
+            <i class="bx bx-bell" style="color: red"></i>
+          </div>
+          <div class="menu-title">Quản Lý Đơn</div>
+
         </a>
+        <ul class="child">
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-message-square-add"> </i
+              ><span>Đăng Ký Cộng Tác</span></a
+            >
+            <ul class="child">
+              <li>
+                <a href="/admin/banner"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn</a
+                >
+              </li>
+              <li>
+                <a href="/admin/banner/create"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối</a
+                >
+              </li>
+              <li>
+                <a href="/admin/banner/create"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận</a
+                >
+              </li>
+            </ul>
+          </li>
+
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-message-square-add"> </i
+              ><span>Đăng Ký Sản Phẩm</span></a
+
+            >
+            <ul class="child">
+              <li>
+                <a href="#"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối</a
+                >
+              </li>
+              <li>
+                <a href="#"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </li>
+
+      <li class="parent">
+        <a class="has-arrow" href="#">
+          <div class="parent-icon">
+            <i class="bx bx-shopping-bag" style="color: red"></i>
+          </div>
+          <div class="menu-title">Quản Lý Giao Dịch</div>
+
+        </a>
+        <ul class="child">
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-message-square-add"> </i
+              ><span>Nạp Coin</span></a
+            >
+            <ul class="child">
+              <li>
+                <a href="/admin/transaction"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn Chờ</a
+                >
+              </li>
+              <li>
+                <a href="/admin/transaction/success"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận </a
+                >
+              </li>
+              <li>
+                <a href="/admin/transaction/failed"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối </a
+                >
+              </li>
+            </ul>
+          </li>
+          <li class="parent">
+            <a class="has-arrow" href="#"
+              ><i class="fadeIn animated bx bx-message-square-add"> </i
+              ><span>Lucky Spin</span></a
+            >
+            <ul class="child">
+              <li>
+                <a href="/admin/banner"
+                  ><i class="bx bx-radio-circle"></i>Danh Sách</a
+                >
+              </li>
+            </ul>
+          </li>
+        </ul>
       </li>
     </ul>
     <!--end navigation-->
@@ -172,4 +234,37 @@ export default {
 };
 </script>
 
-<style></style>
+<style scoped> 
+
+  @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Odibee+Sans&display=swap');
+
+/* Chọn tất cả các phần tử "menu-title" */
+.menu-title {
+  color: #941616; /* Màu chữ */
+  font-family: 'Agbalumo', sans-serif; /* Font-family */
+  font-size: 16px; /* Cỡ chữ */
+  transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
+}
+
+/* Hiệu ứng màu khi di chuột qua */
+.menu-title:hover {
+  color: #941616;
+}
+.parent{
+  padding: 5px;
+}
+
+/* Chọn tất cả các phần tử "child" bên trong "li" */
+ul li .menu-title {
+  color: #941616; /* Màu chữ */
+  font-family: 'Agbalumo', sans-serif; /* Font-family */
+  font-size: 16px; /* Cỡ chữ */
+  transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
+}
+
+/* Hiệu ứng màu khi di chuột qua */
+ul li .menu-title:hover {
+  color: #941616;
+}
+
+</style>
