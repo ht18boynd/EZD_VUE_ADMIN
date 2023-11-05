@@ -17,6 +17,7 @@ import SuccessList from "@/components/Transaction/successList.vue";
 import FailedList from "@/components/Transaction/failedList.vue";
 import ListUser from "@/components/User/listUser.vue";
 import ListStaf from "@/components/User/listStaf.vue";
+import ListLucky from "@/components/LuckySpin/listLucky.vue"
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -34,6 +35,8 @@ const routes = [
   { path: '/admin/transaction/failed', component: FailedList, meta: { requiresAuth: true } },
   { path: '/admin/user/listUser', component: ListUser, meta: { requiresAuth: true } },
   { path: '/admin/user/listStaf', component: ListStaf, meta: { requiresAuth: true } },
+  { path: '/admin/user/listLucky', component: ListLucky, meta: { requiresAuth: true } },
+
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });

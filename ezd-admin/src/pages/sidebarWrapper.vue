@@ -209,7 +209,7 @@
             >
             <ul class="child">
               <li>
-                <a href="/admin/banner"
+                <a href="/admin/user/listLucky"
                   ><i class="bx bx-radio-circle"></i>Danh Sách</a
                 >
               </li>
