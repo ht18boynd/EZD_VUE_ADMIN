@@ -1,6 +1,6 @@
 <template>
   <!--wrapper-->
-  <div class="wrapper">
+  <div>
     <!--sidebar wrapper -->
     <slibarWrapper></slibarWrapper>
     <!--end sidebar wrapper -->
@@ -857,7 +857,6 @@
 
 
   <!-- search modal -->
-  <searchModal></searchModal>
   <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
@@ -866,7 +865,6 @@
 
 <script>
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 
@@ -875,9 +873,20 @@ export default {
   name: "HomePage",
   components: {
     switcher,
-    searchModal,
+    
     slibarWrapper,
     startHeaderVue
   },
+  created(){
+    const token = localStorage.getItem('token');
+    console.log(token);
+  }
 };
 </script>
+<style scoped>
+.wrapper{
+  --tw-bg-opacity: 1;
+  background-color: rgb(var(--color-gray-900)/var(--tw-bg-opacity));
+}
+</style>
+

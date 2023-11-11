@@ -100,6 +100,7 @@
 <script>
 export default {
 name:'switcherPages'
+
 }
 </script>
 

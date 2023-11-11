@@ -26,29 +26,7 @@
               </ol>
             </nav>
           </div>
-          <div class="ms-auto">
-            <div class="btn-group">
-              <button type="button" class="btn btn-primary">Settings</button>
-              <button
-                type="button"
-                class="btn btn-primary split-bg-primary dropdown-toggle dropdown-toggle-split"
-                data-bs-toggle="dropdown"
-              >
-                <span class="visually-hidden">Toggle Dropdown</span>
-              </button>
-              <div
-                class="dropdown-menu dropdown-menu-right dropdown-menu-lg-end"
-              >
-                <a class="dropdown-item" href="javascript:;">Action</a>
-                <a class="dropdown-item" href="javascript:;">Another action</a>
-                <a class="dropdown-item" href="javascript:;"
-                  >Something else here</a
-                >
-                <div class="dropdown-divider"></div>
-                <a class="dropdown-item" href="javascript:;">Separated link</a>
-              </div>
-            </div>
-          </div>
+
         </div>
         <!--end breadcrumb-->
 
@@ -79,7 +57,7 @@
                   <div class="col-lg-8">
                     <div class="mb-3">
                       <label for="bsValidation1" class="form-label"
-                      ><strong>Tên Trò Chơi:</strong></label
+                        ><strong>Tên Trò Chơi:</strong></label
                       >
                       <input
                         type="text"
@@ -112,8 +90,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="bsValidation2" class="form-label"
-                      ><strong>Ảnh Trò Chơi:</strong></label
-                      
+                        ><strong>Ảnh Trò Chơi:</strong></label
                       >
                       <input
                         type="file"
@@ -146,7 +123,7 @@
                     </div>
                     <div class="mb-3">
                       <label for="bsValidation2" class="form-label"
-                      ><strong>Ảnh Xem Trước:</strong></label
+                        ><strong>Ảnh Xem Trước:</strong></label
                       >
 
                       <img
@@ -206,7 +183,7 @@
                       </div>
                       <div class="col-12">
                         <label for="bsValidation11" class="form-label"
-                        ><strong>Vị Trị:</strong></label
+                          ><strong>Vị Trị:</strong></label
                         >
                         <select
                           id="bsValidation11"
@@ -249,7 +226,7 @@
                       </div>
                       <div class="col-12">
                         <label for="bsValidation12" class="form-label"
-                        ><strong>Giới Tính:</strong></label
+                          ><strong>Giới Tính:</strong></label
                         >
                         <select
                           id="bsValidation12"
@@ -315,14 +292,15 @@
                   class="card-header"
                   @click="showCreateRoleForm = !showCreateRoleForm"
                 >
-                
-                    <h6 style="color: rgb(18, 143, 201)">Tạo Mới Vị Trí :  <img
+                  <h6 style="color: rgb(18, 143, 201)">
+                    Tạo Mới Vị Trí :
+                    <img
                       width="30"
                       height="30"
                       src="https://img.icons8.com/nolan/64/new-world.png"
                       alt="new-world"
-                  /></h6>
-                   
+                    />
+                  </h6>
                 </div>
                 <div class="card-body" v-if="showCreateRoleForm">
                   <form
@@ -334,7 +312,7 @@
                     <div class="row g-3">
                       <div class="col-md-12">
                         <label class="form-label" for="nameOfGame"
-                        ><strong>Tên Vị Trí:</strong></label
+                          ><strong>Tên Vị Trí:</strong></label
                         >
                         <input
                           class="form-control"
@@ -381,16 +359,15 @@
                   class="card-header"
                   @click="showCreateLevelForm = !showCreateLevelForm"
                 >
-                <h6 style="color: rgb(9, 172, 123)">
-                  Tạo Mới Cấp Độ :
-                  <img
-                    width="30"
-                    height="30"
-                    src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
-                    alt="final-fantasy-xiv"
-                  />
-                </h6>
-                
+                  <h6 style="color: rgb(9, 172, 123)">
+                    Tạo Mới Cấp Độ :
+                    <img
+                      width="30"
+                      height="30"
+                      src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
+                      alt="final-fantasy-xiv"
+                    />
+                  </h6>
                 </div>
                 <div class="card-body" v-if="showCreateLevelForm">
                   <form
@@ -401,7 +378,7 @@
                     <div class="row g-3">
                       <div class="col-md-12">
                         <label class="form-label" for="nameLevel"
-                        ><strong>Tên Cấp Độ:</strong></label
+                          ><strong>Tên Cấp Độ:</strong></label
                         >
                         <input
                           class="form-control"
@@ -449,16 +426,15 @@
                   class="card-header"
                   @click="showCreateGenderForm = !showCreateGenderForm"
                 >
-                <h6 style="color: rgb(9, 172, 123)">
-                  Tạo Mới Gender :
-                  <img
-                    width="30"
-                    height="30"
-                    src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
-                    alt="final-fantasy-xiv"
-                  />
-                </h6>
-                
+                  <h6 style="color: rgb(9, 172, 123)">
+                    Tạo Mới Gender :
+                    <img
+                      width="30"
+                      height="30"
+                      src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
+                      alt="final-fantasy-xiv"
+                    />
+                  </h6>
                 </div>
                 <div class="card-body" v-if="showCreateGenderForm">
                   <form
@@ -470,7 +446,7 @@
                     <div class="row g-3">
                       <div class="col-md-12">
                         <label class="form-label" for="nameOfGame"
-                        ><strong>Tên Giới Tính:</strong></label
+                          ><strong>Tên Giới Tính:</strong></label
                         >
                         <input
                           class="form-control"
@@ -514,31 +490,32 @@
         </div>
 
         <div class="container-fluid">
-         
           <div class="row">
-
-             <!-- Bảng hiển thị Roles -->
+            <!-- Bảng hiển thị Roles -->
 
             <div class="col-4">
               <div class="card">
-                <div  class="card-header" @click="toggleTable('roles')">
+                <div class="card-header" @click="toggleTable('roles')">
                   <h6
-                  style="
-                    color: rgb(18, 143, 201);
-                    border-bottom: 2px solid rgb(18, 143, 201);
-                  "
-                >
-                  Vị Trí
-                  <img
-                    width="25"
-                    height="25"
-                    src="https://img.icons8.com/nolan/64/new-world.png"
-                    alt="new-world"
-                  />:
-                </h6>
+                    style="
+                      color: rgb(18, 143, 201);
+                      border-bottom: 2px solid rgb(18, 143, 201);
+                    "
+                  >
+                    Vị Trí
+                    <img
+                      width="25"
+                      height="25"
+                      src="https://img.icons8.com/nolan/64/new-world.png"
+                      alt="new-world"
+                    />:
+                  </h6>
                 </div>
                 <div class="card-body" v-show="tables.roles">
-                  <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
+                  <div
+                    class="table-responsive"
+                    style="max-height: 400px; overflow-y: scroll"
+                  >
                     <table class="table table-bordered">
                       <thead class="table-danger">
                         <tr>
@@ -547,7 +524,10 @@
                         </tr>
                       </thead>
                       <tbody>
-                        <tr v-for="role in allRoles.slice(0, 10)" :key="role.id">
+                        <tr
+                          v-for="role in allRoles.slice(0, 10)"
+                          :key="role.id"
+                        >
                           <td>{{ role.name }}</td>
                           <td>
                             <a @click="deleteRole(role.id)">
@@ -564,15 +544,14 @@
                       </tbody>
                     </table>
                   </div>
-                  
                 </div>
               </div>
             </div>
 
             <!-- Bảng hiển thị Levels -->
-            <div class="col-4">
-
-              <div class="col-12" @click="toggleTable('levels')">
+            <div class="col-4">   
+              <div class="card">
+              <div class="card-header" @click="toggleTable('levels')">
                 <h6
                   style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;"
                 >
@@ -585,13 +564,13 @@
                   />:
                 </h6>
               </div>
-              <div class="col-12" v-show="tables.levels">
+              <div class="card-body" v-show="tables.levels">
                 <div
-                  class="table-responsive"
-                  style="max-height: 300px; overflow-x: auto"
-                >
-                  <table class="table table-bordered">
-                    <thead>
+                class="table-responsive"
+                style="max-height: 400px; overflow-y: scroll"
+              >
+                <table class="table table-bordered">
+                  <thead class="table-danger">
                       <tr>
                         <th style="width: 75%">Tên</th>
                         <th style="width: 25%">Actions</th>
@@ -614,105 +593,16 @@
                       </tr>
                     </tbody>
                   </table>
-
-              <div class="card">
-                <div class="card-header" @click="toggleTable('levels')">
-                  <h6 style="color: rgb(9, 172, 123); border-bottom: 2px solid rgb(9, 172, 123;">
-                    Cấp Độ
-                    <img
-                      width="25"
-                      height="25"
-                      src="https://img.icons8.com/nolan/64/final-fantasy-xiv.png"
-                      alt="final-fantasy-xiv"
-                    />:
-                  </h6>
-
                 </div>
-                <div class="card-body" v-show="tables.levels">
-                  <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
-                    <table class="table table-bordered">
-                      <thead class="table-warning">
-                        <tr>
-                          <th style="width: 75%">Tên</th>
-                          <th style="width: 25%">Actions</th>
-                        </tr>
-                      </thead>
-                      <tbody>
-                        <tr v-for="level in levelList" :key="level.id">
-                          <td>{{ level.name }}</td>
-                          <td>
-                            <a @click="deleteLevel(level.id)">
-                              <img
-                                width="25"
-                                height="25"
-                                src="https://img.icons8.com/arcade/64/waste.png"
-                                alt="waste"
-                              />
-                            </a>
-                          </td>
-                          <!-- Repeat the above two columns to fill all 4 columns -->
-                        </tr>
-                      </tbody>
-                    </table>
-                  </div>
-                </div>
-                
               </div>
             </div>
-            
-            <!-- Bảng hiển thị Genders -->
+              <!-- Bảng hiển thị Genders -->
+            </div>
+
+            <!--Bảng Hiển Thị Gender-->
             <div class="col-4">
 
-              <div class="col-12" @click="toggleTable('genders')">
-                <h6
-                  style="
-                    color: rgb(201, 18, 140);
-                    border-bottom: 2px solid rgb(201, 18, 140);
-                  "
-                >
-                  Giới Tính
-                  <img
-                    width="25"
-                    height="25"
-                    src="https://img.icons8.com/nolan/64/gender.png"
-                    alt="gender"
-                  />:
-                </h6>
-              </div>
-              <div class="col-12" v-show="tables.genders">
-                <div
-                  class="table-responsive"
-                  style="max-height: 300px; overflow-x: auto"
-                >
-                  <table class="table table-bordered">
-                    <thead>
-                      <tr>
-                        <th style="width: 75%">Tên</th>
-                        <th style="width: 25%">Actions</th>
-                      </tr>
-                    </thead>
-                    <tbody>
-                      <tr v-for="gender in allGenders" :key="gender.id">
-                        <td>{{ gender.name }}</td>
-                        <td>
-                          <a @click="deleteGender(gender.id)">
-                            <img
-                              width="25"
-                              height="25"
-                              src="https://img.icons8.com/arcade/64/waste.png"
-                              alt="waste"
-                            />
-                          </a>
-                        </td>
-                        <!-- Repeat the above two columns to fill all 4 columns -->
-                      </tr>
-                    </tbody>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-
+            
               <div class="card">
                 <div class="card-header" @click="toggleTable('genders')">
                   <h6 style="color: rgb(201, 18, 140); border-bottom: 2px solid rgb(201, 18, 140);">
@@ -728,7 +618,7 @@
                 <div class="card-body" v-show="tables.genders">
                   <div class="table-responsive" style="max-height: 400px; overflow-y: scroll;">
                     <table class="table table-bordered">
-                      <thead class="table-secondary">
+                      <thead class="table-danger">
                         <tr>
                           <th style="width: 75%">Tên</th>
                           <th style="width: 25%">Actions</th>
@@ -756,12 +646,9 @@
                 
               </div>
             </div>
-            </div>
         
-     
 
-          
-
+          </div>
         </div>
       </div>
     </div>
@@ -1101,7 +988,7 @@ export default {
       this.gameImage = event.target.files[0];
       // Tạo một đối tượng FileReader để đọc hình ảnh
       let reader = new FileReader();
-
+      
       reader.onload = (e) => {
         this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
       };
