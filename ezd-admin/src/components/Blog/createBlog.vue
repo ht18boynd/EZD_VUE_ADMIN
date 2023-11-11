@@ -24,9 +24,14 @@
                           class="form-control"
                           id="inputName"
                           v-model="newBlog.name"
-                          required
+                          
                           placeholder="Enter Name"
+                          @input="validatename"
+                          :class="{ 'is-invalid': errors.name }"
                         />
+                        <p v-if="errors.name" style="color: red">
+                          {{ errors.name }}
+                        </p>
                       </div>
                       <div class="mb-3">
                         <label for="inputTitle" class="form-label">Title</label>
@@ -34,10 +39,14 @@
                           type="text"
                           class="form-control"
                           id="inputTitle"
-                          required
                           v-model="newBlog.title"
                           placeholder="Enter Title"
+                          @input="validateTitle"
+                          :class="{ 'is-invalid': errors.title }"
                         />
+                        <p v-if="errors.title" style="color: red">
+                          {{ errors.title }}
+                        </p>
                       </div>
                       <div class="mb-3">
                         <label for="inputContent" class="form-label"
@@ -47,9 +56,14 @@
                           class="form-control"
                           id="inputContent"
                           v-model="newBlog.content"
-                          required
+                          
                           rows="3"
+                          @input="validatecontent"
+                          :class="{ 'is-invalid': errors.content }"
                         ></textarea>
+                        <p v-if="errors.content" style="color: red">
+                          {{ errors.content }}
+                        </p>
                       </div>
                       <div class="mb-3">
                         <label for="image-uploadify" class="form-label"
@@ -61,7 +75,7 @@
                           accept=".xlsx,.xls,image/*,.doc,audio/*,.docx,video/*,.ppt,.pptx,.txt,.pdf"
                           multiple
                           @change="onImageChange"
-                          required
+                         
                         />
                       </div>
                       <button
@@ -104,6 +118,12 @@ export default {
   name: "createBlog",
   data() {
     return {
+      errors: {
+        name: "",
+        content: "",
+        title: "",
+        image: "",
+      },
       newBlog: {
         name: "",
         content: "",
@@ -120,34 +140,50 @@ export default {
     startHeaderVue,
   },
   methods: {
-    
+    validatename() {
+      this.errors.name =
+        this.newBlog.name.trim() === "" ? "không được bỏ trống." : "";
+    },
+    validatecontent() {
+      this.errors.content =
+        this.newBlog.content.trim() === "" ? "không được bỏ trống." : "";
+    },
+    validateTitle() {
+      this.errors.title =
+        this.newBlog.title.trim() === "" ? "Không được bỏ trống." : "";
+    },
     onImageChange(event) {
       this.newBlog.image = event.target.files[0];
     },
     async addBlog() {
-      try {
-        const response = await BlogService.createNewBlog(
-          this.newBlog.name,
-          this.newBlog.title,
-          this.newBlog.content,
-          
-          this.newBlog.image
-        );
+      this.validatename();
+      this.validatecontent();
+      this.validateTitle();
+      if (!this.errors.name && !this.errors.title && !this.errors.content) {
+        try {
+          const response = await BlogService.createNewBlog(
+            this.newBlog.name,
+            this.newBlog.title,
+            this.newBlog.content,
 
-        console.log(response);
-        if (response.id) {
-          this.$router.push("/admin/blog");
-          Swal.fire({
-            position: "top-end",
-            icon: "success",
-            title: " Thành Công !",
-            showConfirmButton: false,
-            timer: 1500,
-          });
+            this.newBlog.image
+          );
+
+          console.log(response);
+          if (response.id) {
+            this.$router.push("/admin/blog");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: " Thành Công !",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          // Xử lý kết quả hoặc điều hướng đến trang danh sách sản phẩm Banner sau khi thêm thành công
+        } catch (error) {
+          console.error("Lỗi khi thêm Banner mới: ", error);
         }
-        // Xử lý kết quả hoặc điều hướng đến trang danh sách sản phẩm Banner sau khi thêm thành công
-      } catch (error) {
-        console.error("Lỗi khi thêm Banner mới: ", error);
       }
     },
     async getAllBlogs() {
