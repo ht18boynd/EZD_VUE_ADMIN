@@ -12,23 +12,29 @@
                 <div class="form-group">
                   <label for="name">Name</label>
                   <input
+                    @input="validatename"
                     v-model="newBanner.name"
                     type="text"
                     id="name"
                     class="form-control"
-                    required
+                    :class="{ 'is-invalid': errors.name }"
                   />
+                  <p v-if="errors.name" style="color: red">{{ errors.name }}</p>
                 </div>
 
                 <div class="form-group">
                   <label for="title">Title</label>
                   <input
                     v-model="newBanner.title"
+                    @input="validateTitle"
                     type="text"
                     id="title"
                     class="form-control"
-                    required
+                    :class="{ 'is-invalid': errors.title }"
                   />
+                  <p v-if="errors.title" style="color: red">
+                    {{ errors.title }}
+                  </p>
                 </div>
 
                 <div class="form-group">
@@ -38,8 +44,17 @@
                     id="image"
                     @change="onImageChange"
                     class="form-control"
-                    accept=".jpg, .png, image/jpeg, image/png"
-                    required
+                    :class="{ 'is-invalid': errors.image }"
+                  />
+                  <p v-if="errors.image" style="color: red">
+                    {{ errors.image }}
+                  </p>
+                </div>
+                <div class="form-group">
+                  <img
+                    :src="imagePreviewUrl"
+                    alt="Image Preview"
+                    style="width: 360px; height: 180px"
                   />
                 </div>
                 <div class="form-group">
@@ -86,7 +101,7 @@
                     @change="handleImageChange"
                     class="form-control"
                     accept=".jpg, .png, image/jpeg, image/png"
-                    required
+                    :src="editedBanner.image"
                   />
                 </div>
                 <div class="form-group">
@@ -207,15 +222,23 @@ export default {
   name: "createBanner",
   data() {
     return {
+      errors: {
+        name: "",
+        title: "",
+        image: "",
+      },
+      imagePreviewUrl: null,
+      submitted: false,
       newBanner: {
         name: "",
         title: "",
         image: null,
       },
+
       editedBanner: {
         name: "",
         title: "",
-        image: null,
+        image: "",
       },
       selectedStatus: "PENDING",
       isEditing: false,
@@ -231,6 +254,15 @@ export default {
     startHeaderVue,
   },
   methods: {
+    validatename() {
+      this.errors.name =
+        this.newBanner.name.trim() === "" ? "không được bỏ trống." : "";
+    },
+    validateTitle() {
+      this.errors.title =
+        this.newBanner.title.trim() === "" ? "Không được bỏ trống." : "";
+    },
+
     async showChangeStatusConfirmDialog(id, status) {
       const result = await Swal.fire({
         title: "Xác nhận thay đổi trạng thái",
@@ -273,17 +305,26 @@ export default {
       }
     },
     handleImageChange(event) {
-      this.editedBanner.image = event.target.files[0];
-      // Tạo một đối tượng FileReader để đọc hình ảnh
-      let reader = new FileReader();
+      const selectedImage = event.target.files[0]; // Lấy hình ảnh đầu tiên trong danh sách chọn
 
-      reader.onload = (e) => {
-        this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
-      };
+      if (selectedImage) {
+        // Nếu có hình ảnh được chọn, cập nhật trường "image" và imagePreviewUrl
+        this.editedBanner.image = selectedImage;
+        // this.editedBanner.image = URL.createObjectURL(selectedImage);
 
-      // Đọc hình ảnh được chọn
-      reader.readAsDataURL(this.editedBanner.image);
+        // Tạo một đối tượng FileReader để đọc hình ảnh
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+          this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+        };
+
+        // Đọc hình ảnh được chọn
+        reader.readAsDataURL(selectedImage);
+      }
+      // Nếu không có hình ảnh được chọn, không cần thực hiện cập nhật
     },
+
     async startEditingBanner(id) {
       try {
         if (this.bannerList) {
@@ -373,31 +414,56 @@ export default {
       }
     },
     async addBanner() {
-      try {
-        const response = await BannerService.createNewBanner(
-          this.newBanner.name,
-          this.newBanner.title,
-          this.newBanner.image
-        );
+      this.validatename();
+      this.validateTitle();
 
-        console.log(response);
-        if (response.id) {
-          this.$router.push("/admin/banner");
+      if (!this.errors.name && !this.errors.title) {
+        // Nếu không có lỗi, tiến hành xử lý submit form ở đây.
+        try {
+          const response = await BannerService.createNewBanner(
+            this.newBanner.name,
+            this.newBanner.title,
+            this.newBanner.image
+          );
+
+          console.log(response);
+          if (response.id) {
+            this.$router.push("/admin/banner");
+            Swal.fire({
+              position: "top-end",
+              icon: "success",
+              title: " Thành Công !",
+              showConfirmButton: false,
+              timer: 1500,
+            });
+          }
+          // Xử lý kết quả hoặc điều hướng đến trang danh sách sản phẩm Banner sau khi thêm thành công
+        } catch (error) {
           Swal.fire({
             position: "top-end",
-            icon: "success",
-            title: " Thành Công !",
+            icon: "error",
+            title: " đã có lỗi xảy ra vui lòng kiểm tra lại",
             showConfirmButton: false,
             timer: 1500,
           });
         }
-        // Xử lý kết quả hoặc điều hướng đến trang danh sách sản phẩm Banner sau khi thêm thành công
-      } catch (error) {
-        console.error("Lỗi khi thêm Banner mới: ", error);
       }
     },
     onImageChange(event) {
       this.newBanner.image = event.target.files[0];
+      if (this.newBanner.image) {
+        // Nếu có hình ảnh được chọn, cập nhật trường "image" và imagePreviewUrl
+
+        // Tạo một đối tượng FileReader để đọc hình ảnh
+        let reader = new FileReader();
+
+        reader.onload = (e) => {
+          this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+        };
+
+        // Đọc hình ảnh được chọn
+        reader.readAsDataURL(this.newBanner.image);
+      }
     },
     // Trong tệp .vue của trang hiện tại
 

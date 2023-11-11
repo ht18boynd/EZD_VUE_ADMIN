@@ -102,7 +102,9 @@
                       {{ item.title }}
                     </td>
                     <td>
-                      {{ item.content }}
+                    <p  @click="showContent(item.name, item.content)">bấm vào để xem chi tiết</p>
+                      
+                       
                     </td>
                     <td>
                       <img
@@ -267,6 +269,12 @@ export default {
       } catch (error) {
         console.error("Lỗi khi cập nhật banner: ", error);
       }
+    },
+    showContent(name, content) {
+      Swal.fire({
+        title: name,
+        html:content,
+      });
     },
     showImage(name, imageUrl) {
       Swal.fire({
