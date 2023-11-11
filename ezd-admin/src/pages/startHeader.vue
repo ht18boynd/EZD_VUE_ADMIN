@@ -1,6 +1,6 @@
 <template>
   <!--start header -->
-  <header style="background-color: #299cc2;">
+  <header >
     <div class="topbar d-flex align-items-center">
       <nav class="navbar navbar-expand gap-3">
         <div class="mobile-toggle-menu"><i class="bx bx-menu"></i></div>
@@ -961,6 +961,15 @@
                 ><i class="bx bx-log-out-circle"></i><span>Logout</span>
               </router-link>
             </li>
+            <li>
+              <router-link
+                to="/test"
+               
+                class="dropdown-item d-flex align-items-center"
+                href="javascript:;"
+                ><i class="bx bx-log-out-circle"></i><span>test</span>
+              </router-link>
+            </li>
           </ul>
         </div>
       </nav>
@@ -1015,9 +1024,5 @@ console.log(this.userInfor);
     await this.findByEmail();
 
   },
-
- 
-
-
 };
 </script>

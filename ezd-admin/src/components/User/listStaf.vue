@@ -20,10 +20,69 @@
             </nav>
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <div>
-              <canvas id="myChart"></canvas>
+        <div class="row">
+          <div class="col-12 col-lg-8">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="col">
+              <div class="card radius-4 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-white">Tổng Số Staff:</p>
+                      <h4 class="my-1 text-white">{{ totalUsers }}</h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-success ms-auto">
+                      <i class="bx bx-user-circle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card radius-10 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-dark">Tổng Staff On :</p>
+                      <h4 class="my-1 text-dark">{{ onlineUsers }}</h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-dark ms-auto">
+                      <i
+                        class="fadeIn animated bx bx-disc"
+                        style="color: green"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card radius-10 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-dark">Tổng User Off :</p>
+                      <h4 class="my-1 text-dark">
+                        {{ offlineUsers }}
+                      </h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-dark ms-auto">
+                      <i
+                        class="fadeIn animated bx bx-disc"
+                        style="color: red"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -70,7 +129,11 @@
                         })
                       }}
                     </td>
-                    <td>{{ item.status }}</td>
+                    <td
+                      class="badge bg-gradient-quepal text-white shadow-sm w-100"
+                    >
+                      {{ item.status }}
+                    </td>
                     <td>{{ item.role }}</td>
                     <td>{{ item.birthDay }}</td>
                     <td>{{ item.createdDate }}</td>
@@ -122,7 +185,7 @@
 </template>
 
 <script>
-import { ref, onMounted ,watch } from "vue";
+import { ref, onMounted, watch } from "vue";
 import Chart from "chart.js/auto";
 import AuthService from "@/service/AuthService";
 import searchModal from "@/pages/searchModal.vue";
@@ -130,10 +193,9 @@ import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 import switcher from "@/pages/switcher.vue";
 
-
 export default {
   name: "listStaff",
-  components:{
+  components: {
     switcher,
     searchModal,
     slibarWrapper,
@@ -141,6 +203,20 @@ export default {
   },
 
   setup() {
+    const totalUsers = ref(0);
+    const onlineUsers = ref(0);
+    const offlineUsers = ref(0);
+
+    // Function to calculate user stats
+    const calculateUserStats = () => {
+      totalUsers.value = UserList.value.length;
+      onlineUsers.value = UserList.value.filter(
+        (user) => user.status === "ON"
+      ).length;
+      offlineUsers.value = UserList.value.filter(
+        (user) => user.status === "OFF"
+      ).length;
+    };
     const currentPage = ref(1);
     const UserList = ref([]);
     const itemsPerPage = 10; // Số lượng mục hiển thị trên mỗi trang
@@ -150,14 +226,12 @@ export default {
     const userCountByMonth = ref(new Array(12).fill(0));
 
     const getAllUsers = async () => {
-    
       try {
         const role = "STAF";
         const response = await AuthService.getAllUser(role);
         UserList.value = response;
         totalItems.value = UserList.value.length;
         isDataLoaded.value = true; // Đánh dấu rằng dữ liệu đã được tải xong
-
 
         // Count the number of users for each month
         UserList.value.forEach((user) => {
@@ -196,7 +270,7 @@ export default {
             {
               label: "STAF Creation by Month",
               data: data,
-              fill: 'start',
+              fill: "start",
               borderColor: "rgb(232, 49, 101)",
             },
           ],
@@ -225,22 +299,25 @@ export default {
       displayedUsers;
     });
     const displayedUsers = ref([]);
-  watch([currentPage, isDataLoaded], () => {
-    if (isDataLoaded.value) {
-      const startIndex = (currentPage.value - 1) * itemsPerPage;
-      const endIndex = startIndex + itemsPerPage;
-      displayedUsers.value = UserList.value.slice(startIndex, endIndex);
-    }
-  });
-   // Đặt sự kiện lắng nghe cho currentPage
-   
+    watch([currentPage, isDataLoaded], () => {
+      if (isDataLoaded.value) {
+        const startIndex = (currentPage.value - 1) * itemsPerPage;
+        const endIndex = startIndex + itemsPerPage;
+        displayedUsers.value = UserList.value.slice(startIndex, endIndex);
+      }
+    });
+    // Đặt sự kiện lắng nghe cho currentPage
+    watch(UserList, calculateUserStats, { immediate: true });
+
     return {
+      totalUsers,
+      onlineUsers,
+      offlineUsers,
       currentPage,
       UserList,
       displayedUsers,
       totalItems,
     };
   },
-
 };
 </script>

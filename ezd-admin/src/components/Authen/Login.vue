@@ -127,32 +127,8 @@
                       </div>
                     </form>
                   </div>
-                  <div class="login-separater text-center mb-5">
-                    <span>OR SIGN IN WITH</span>
-                    <hr />
-                  </div>
-                  <div class="list-inline contacts-social text-center">
-                    <a
-                      href="javascript:;"
-                      class="list-inline-item bg-facebook text-white border-0 rounded-3"
-                      ><i class="bx bxl-facebook"></i
-                    ></a>
-                    <a
-                      href="javascript:;"
-                      class="list-inline-item bg-twitter text-white border-0 rounded-3"
-                      ><i class="bx bxl-twitter"></i
-                    ></a>
-                    <a
-                      href="javascript:;"
-                      class="list-inline-item bg-google text-white border-0 rounded-3"
-                      ><i class="bx bxl-google"></i
-                    ></a>
-                    <a
-                      href="javascript:;"
-                      class="list-inline-item bg-linkedin text-white border-0 rounded-3"
-                      ><i class="bx bxl-linkedin"></i
-                    ></a>
-                  </div>
+                  <hr>
+                 
                 </div>
               </div>
             </div>
@@ -166,10 +142,8 @@
 </template>
 
 <script>
-import { user, authInfo } from "@/store";
 import Swal from "sweetalert2";
 import AuthService from "@/service/AuthService";
-import { jwtDecode } from "jwt-decode";
 export default {
   name: "loginAdmin",
   data() {
@@ -191,18 +165,8 @@ export default {
         // Lưu JWT vào localStorage hoặc Vuex state
         localStorage.setItem("token", token);
         console.log(token);
-        const decoded = jwtDecode(token);
-        console.log(decoded);
-        // Gán giá trị sub vào biến user
-        user.value = decoded.sub;
-        console.log("globle :" + user.value);
-        // Fetch the complete Auth information
-        const authInfoResponse = await AuthService.findByEmail(user.value);
-        authInfo.value = authInfoResponse;
-        console.log(authInfoResponse);
-        console.log("authen globle ID: " + authInfo.value.id);
-        console.log("authen globle Name: " + authInfo.value.name);
-        // this.$router.push("/");
+       
+       
         Swal.fire({
           position: "top-end",
           icon: "success",

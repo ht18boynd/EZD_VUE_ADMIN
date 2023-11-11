@@ -17,8 +17,10 @@
               <div class="card-body">
                 <div class="row align-items-center">
                   <div class="col-lg-3 col-xl-2">
-                    <a href="/admin/game/create" class="btn btn-primary mb-3 mb-lg-0"
-                      ><i class="bx bxs-plus-square"></i>Thêm Mới</a
+                    <router-link
+                      to="/admin/game/create"
+                      class="btn btn-primary mb-3 mb-lg-0"
+                      ><i class="bx bxs-plus-square"></i>Thêm Mới</router-link
                     >
                   </div>
                   <div class="col-lg-9 col-xl-10">
@@ -46,7 +48,6 @@
               </div>
             </div>
           </div>
-         
         </div>
         <div class="row">
           <div class="col-12">
@@ -66,7 +67,8 @@
           >
             <div class="col" v-for="game in gamelist" :key="game.id">
               <div class="card">
-                <img style="width:auto"
+                <img
+                  style="width: auto"
                   class="card-img-top"
                   :src="game.imageName"
                   :alt="game.nameGame"
@@ -113,17 +115,6 @@
       </div>
     </div>
     <!--end page wrapper -->
-    <!--start overlay-->
-    <div class="overlay toggle-icon"></div>
-    <!--end overlay-->
-    <!--Start Back To Top Button-->
-    <a href="javaScript:;" class="back-to-top"
-      ><i class="bx bxs-up-arrow-alt"></i
-    ></a>
-    <!--End Back To Top Button-->
-    <footer class="page-footer">
-      <p class="mb-0">Copyright © 2022. All right reserved.</p>
-    </footer>
   </div>
   <!--end wrapper-->
   <!-- search modal -->
@@ -392,7 +383,7 @@ export default {
   },
   async created() {
     await this.getAllGames();
- 
+
     await this.getAllLevels();
     await this.getAllRoles();
     await this.getAllGenders();

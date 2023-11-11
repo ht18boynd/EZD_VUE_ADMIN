@@ -1,221 +1,207 @@
 <template>
-  <!--sidebar wrapper -->
-  <div class="sidebar-wrapper" data-simplebar="true" style="background-color: #8aedb5;">
-    <div class="sidebar-header" style="background-image: url(&quot;assets/gif/oke1.gif&quot;);
-    background-size: cover;
-    background-position: center center;
-    background-repeat: no-repeat;">
-      <div >
-        <a href="/"
-          >
-          <h4>EZD</h4></a
-        >
+  <div class="sidebar-wrapper" data-simplebar="true">
+    <div
+      class="sidebar-header"
+      style="
+        background-image: url('assets/gif/oke1.gif');
+        background-size: cover;
+        background-position: center center;
+        background-repeat: no-repeat;
+      "
+    >
+      <div>
+        <router-link to="/"> <h4>EZD</h4></router-link>
       </div>
       <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
     </div>
     <!--navigation-->
-    <ul class="metismenu" id="menu">
-      <li class="parent">
-        <a class="has-arrow" href="#">
-          <div class="parent-icon">
-            <i class="fadeIn animated bx bx-line-chart-down"></i>
-          </div>
-          <div class="menu-title">Thống Kê</div>
-        </a>
-        <ul class="child">
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Thống
-              Kê User</a
+    <ul class="metismenu" id="menu" >
+      <li>
+        <router-link to="/">
+          <div class="parent-icon"><i class="bx bx-line-chart"></i></div>
+          <div class="menu-title">Dashboard</div>
+        </router-link>
+      </li>
+      <li>
+        <a class="has-arrow"  @click="clicknguoidung =!clicknguoidung">
+          <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
+          <div class="menu-title">Quản Lý Người Dùng</div>
+        </a >
+        <ol v-if="clicknguoidung">
+          <li>
+            <a class="has-arrow" 
+              >Quản Lý User</a
             >
-            <ul class="child">
+            <ul>
               <li>
-                <a href="/admin/user/listUser" nowrap
-                  ><i class="bx bx-radio-circle"></i
-                  ><i class="lni lni-indent-increase"></i>Danh Sách User</a
-                >
-              </li>
-              <li>
-                <a href="/admin/user/listStaf" nowrap
-                  ><i class="bx bx-radio-circle"></i
-                  ><i class="lni lni-indent-increase"></i>Danh Sách Cộng Tác
-                  Viên</a
+                <router-link to="/admin/user/listUser"
+                  >Danh Sách User</router-link
                 >
               </li>
             </ul>
           </li>
-        </ul>
+          <li>
+            <a class="has-arrow" 
+              >Quản Lý Idol</a
+            >
+            <ul>
+              <li>
+                <router-link to="/admin/user/listStaf"
+                  >Danh Sách Idol</router-link
+                >
+              </li>
+            </ul>
+          </li>
+        </ol>
       </li>
-      <li class="parent">
-        <a class="has-arrow" href="#">
-          <div class="parent-icon"><i class="bx bx-cart"></i></div>
+
+      <li>
+        <a class="has-arrow"  @click="clickhomepage =!clickhomepage">
+          <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
           <div class="menu-title">Quản Lý Home Page</div>
         </a>
-        <ul class="child">
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-chevron-right-circle"></i> Danh
-              Mục Game <span class="expand"></span
-            ></a>
-            <ul class="child">
+        <ol v-if="clickhomepage">
+          <li>
+            <a class="has-arrow" 
+              >Danh Mục Game</a
+            >
+            <ul>
               <li>
-                <a href="/admin/game"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Game</a
+                <router-link to="/admin/game"
+                  >Danh Sách Game</router-link
                 >
               </li>
               <li>
-                <a href="/admin/game/create"
-                  ><i class="bx bx-radio-circle"></i>Tạo Mới Game</a
-                >
-              </li>
-            </ul>
-          </li>
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Danh
-              Mục Banner <span class="expand"></span
-            ></a>
-            <ul class="child">
-              <li>
-                <a href="/admin/banner"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Banner</a
-                >
-              </li>
-              <li>
-                <a href="/admin/banner/create"
-                  ><i class="bx bx-radio-circle"></i>Tạo Mới Banner</a
+                <router-link to="/admin/game/create"
+                  >Tạo Mới Game</router-link
                 >
               </li>
             </ul>
           </li>
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-chevron-right-circle"> </i>Danh
-              Mục Blog <span class="expand"></span
-            ></a>
-            <ul class="child">
+          <li>
+            <a class="has-arrow" 
+              >Danh Mục Banner</a
+            >
+            <ul>
               <li>
-                <a href="/admin/blog"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Blog</a
+                <router-link to="/admin/banner"
+                  >Danh Sách Banner</router-link
                 >
               </li>
               <li>
-                <a href="/admin/blog/create"
-                  ><i class="bx bx-radio-circle"></i>Tạo Mới Blog</a
+                <router-link to="/admin/banner/create"
+                  >Tạo Mới Banner</router-link
                 >
               </li>
             </ul>
           </li>
-        </ul>
+          <li>
+            <a class="has-arrow" 
+              >Danh Mục Blog</a
+            >
+            <ul>
+              <li>
+                <router-link to="/admin/blog"
+                  >Danh Sách Blog</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/admin/blog/create"
+                  >Tạo Mới Blog</router-link
+                >
+              </li>
+            </ul>
+          </li>
+        </ol>
       </li>
-
-
-      <li class="parent">
-        <a class="has-arrow" href="#">
+      <li>
+        
+        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" @click="clickDon=!clickDon">
           <div class="parent-icon">
-            <i class="bx bx-bell" style="color: red"></i>
-          </div>
-          <div class="menu-title">Quản Lý Đơn</div>
-
+            <span class="alert-count">10</span>
+            <i class="bx bx-bell" style="color:red"></i></div>
+          <div class="menu-title"> Quản Lý Đơn</div>
         </a>
-        <ul class="child">
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-message-square-add"> </i
-              ><span>Đăng Ký Cộng Tác</span></a
+        <ol v-if="clickDon">
+          <li>
+            <a class="has-arrow"  @click="DangKyIdol=!DangKyIdol"
+              >Đăng Ký Idol</a
             >
-            <ul class="child">
+            <ul v-if="DangKyIdol">
               <li>
-                <a href="/admin/banner"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn</a
+                <router-link to="/admin/become"
+                  >Danh Sách Chờ</router-link
                 >
               </li>
               <li>
-                <a href="/admin/banner/create"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối</a
+                <router-link to="/admin/become/success"
+                  >Danh Sách Chấp Nhận</router-link
                 >
               </li>
               <li>
-                <a href="/admin/banner/create"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận</a
+                <router-link to="/admin/become/failed"
+                  >Danh Sách Từ Chối</router-link
                 >
               </li>
             </ul>
           </li>
-
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-message-square-add"> </i
-              ><span>Đăng Ký Sản Phẩm</span></a
-
+          <li>
+            <a class="has-arrow"  @click="DangKySanPham=!DangKySanPham"
+              >Đăng Ký Sản Phẩm</a
             >
-            <ul class="child">
+            <ul v-if="DangKySanPham">
               <li>
-                <a href="#"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn</a
+                <router-link to="#"
+                  >Danh Sách Đơn Chờ</router-link
                 >
               </li>
               <li>
-                <a href="#"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối</a
+                <router-link to="#"
+                  >Danh Sách Từ Chối</router-link
                 >
               </li>
               <li>
-                <a href="#"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận</a
+                <router-link to="#"
+                  >Danh Sách Chấp Nhận</router-link
                 >
               </li>
             </ul>
           </li>
-        </ul>
-      </li>
-
-      <li class="parent">
-        <a class="has-arrow" href="#">
-          <div class="parent-icon">
-            <i class="bx bx-shopping-bag" style="color: red"></i>
-          </div>
-          <div class="menu-title">Quản Lý Giao Dịch</div>
-
-        </a>
-        <ul class="child">
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-message-square-add"> </i
-              ><span>Nạp Coin</span></a
+          <li>
+            <a class="has-arrow"  @click="DanhSachNap=!DanhSachNap"
+              >Danh Sách Nạp Coin</a
             >
-            <ul class="child">
+            <ul v-if="DanhSachNap">
               <li>
-                <a href="/admin/transaction"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Đơn Chờ</a
+                <router-link to="/admin/transaction"
+                  >Danh Sách Đơn Chờ</router-link
                 >
               </li>
               <li>
-                <a href="/admin/transaction/success"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Chấp Nhận </a
-                >
+                <router-link to="/admin/transaction/success"
+                  >Danh Sách Chấp Nhận
+                </router-link>
               </li>
               <li>
-                <a href="/admin/transaction/failed"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách Từ Chối </a
+                <router-link to="/admin/transaction/failed"
+                  >Danh Sách Từ Chối
+                </router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow" @click="DanhSachLucky=!DanhSachLucky"
+              >Danh Sách Lucky Spin</a
+            >
+            <ul v-if="DanhSachLucky">
+              <li>
+                <router-link to="/admin/user/listLucky"
+                  >Danh Sách</router-link
                 >
               </li>
             </ul>
           </li>
-          <li class="parent">
-            <a class="has-arrow" href="#"
-              ><i class="fadeIn animated bx bx-message-square-add"> </i
-              ><span>Lucky Spin</span></a
-            >
-            <ul class="child">
-              <li>
-                <a href="/admin/banner"
-                  ><i class="bx bx-radio-circle"></i>Danh Sách</a
-                >
-              </li>
-            </ul>
-          </li>
-        </ul>
+        </ol>
       </li>
     </ul>
     <!--end navigation-->
@@ -224,47 +210,35 @@
 </template>
 
 <script>
+import {userInfo} from "@/store"
+
 export default {
   name: "slibarWrapper",
   data() {
     return {
       BASE_URL: process.env.BASE_URL,
+      role: userInfo.value,
+      clicknguoidung:false,clickhomepage:false,clickDon:false,
+      DangKyIdol:false,DangKySanPham:false,DanhSachNap:false,DanhSachLucky:false
+      
     };
   },
 };
 </script>
 
-<style scoped> 
-
-  @import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Odibee+Sans&display=swap');
-
-/* Chọn tất cả các phần tử "menu-title" */
-.menu-title {
-  color: #941616; /* Màu chữ */
-  font-family: 'Agbalumo', sans-serif; /* Font-family */
+<style scoped>
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@1,900&display=swap"); /* Chọn tất cả các phần tử "menu-title" */
+li .menu-title {
+  font-family: "Times New Roman Bold";
+  font-weight: 500;
   font-size: 16px; /* Cỡ chữ */
   transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
-}
+  color: rgb(251, 146, 60);
 
-/* Hiệu ứng màu khi di chuột qua */
-.menu-title:hover {
-  color: #941616;
 }
-.parent{
-  padding: 5px;
+ul li a {
+  font-family: "Times New Roman Bold";
+  font-size: 14px;
+  color: rgb(74, 201, 169);
 }
-
-/* Chọn tất cả các phần tử "child" bên trong "li" */
-ul li .menu-title {
-  color: #941616; /* Màu chữ */
-  font-family: 'Agbalumo', sans-serif; /* Font-family */
-  font-size: 16px; /* Cỡ chữ */
-  transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
-}
-
-/* Hiệu ứng màu khi di chuột qua */
-ul li .menu-title:hover {
-  color: #941616;
-}
-
 </style>

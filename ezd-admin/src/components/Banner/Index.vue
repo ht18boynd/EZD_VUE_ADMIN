@@ -9,47 +9,43 @@
     <!--end header -->
 
     <!--start page wrapper  . Dữ liệu chính-->
-  
+
     <div class="page-wrapper">
       <div class="page-content">
-
-      <div class="card">
-					<div class="card-body">
-        <!--breadcrumb-->
-        <carousel :items-to-show="1">
-          <slide v-for="slide in bannerList" :key="slide" >
-          <div class="slide-content">
-            <img :src="slide.image" alt="" style="width:1300px;height:500px" />
+        <div class="card">
+          <div class="card-body">
+            <!-- Breadcrumb or other content -->
+            <div class="breadcrumb">
+              <!-- Your breadcrumb content here -->
             </div>
-            <div class="carousel-caption d-none d-md-block">
-												<h5>{{slide.name}}</h5>
-												<p>{{slide.title}}.</p>
-											</div>
-          </slide>
-
-          <template #addons>
-            <navigation />
-            <pagination />
-          </template>
-        </carousel>
-</div>
-</div>
-        <!--end row-->
+  
+            <!-- Carousel -->
+            <div class="carousel-container">
+              <carousel :items-to-show="1" :pagination="false">
+                <slide v-for="slide in bannerList" :key="slide.id">
+                  <div class="slide-content">
+                    <img :src="slide.image" alt="" class="carousel-image" />
+                  </div>
+                  <div class="carousel-caption">
+                    <div class="caption-overlay"></div>
+                    <div class="caption-text">
+                      <h3 class="slide-title">{{ slide.name }}</h3>
+                      <p class="slide-description">{{ slide.title }}</p>
+                    </div>
+                  </div>
+                </slide>
+                <template #addons>
+                  <navigation />
+                  <pagination />
+                </template>
+              </carousel>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <!--end page wrapper -->
     <!--end page wrapper -->
-    <!--start overlay-->
-    <div class="overlay toggle-icon"></div>
-    <!--end overlay-->
-    <!--Start Back To Top Button-->
-    <a href="javaScript:;" class="back-to-top"
-      ><i class="bx bxs-up-arrow-alt"></i
-    ></a>
-    <!--End Back To Top Button-->
-    <footer class="page-footer">
-      <p class="mb-0">Copyright © 2022. All right reserved.</p>
-    </footer>
   </div>
   <!--end wrapper-->
   <!-- search modal -->
@@ -92,9 +88,8 @@ export default {
         const data = response.data;
         //const data = response.data.sort((a, b) => b.id - a.id);
         // Gán giá trị cho cả bannerList và originalBannerList
-       
-        this.bannerList = data.filter(banner => banner.status === 'ACTIVE');
 
+        this.bannerList = data.filter((banner) => banner.status === "ACTIVE");
       } catch (error) {
         console.error("Lỗi khi lấy danh sách banner: ", error);
       }
@@ -136,16 +131,61 @@ export default {
 };
 </script>
 <style scoped>
-
-.slide-content {
+.page-wrapper {
+  /* Thiết lập cho page-wrapper */
+  background-color: #f5f5f5;
   display: flex;
   justify-content: center;
   align-items: center;
-  height: 500px; /* Điều chỉnh chiều cao tùy theo yêu cầu */
+  height: 100vh;
 }
 
-.slide-content img {
-  max-width: 100%;
-  max-height: 100%;
+.page-content {
+  max-width: 1200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.card {
+  /* Thiết lập cho card */
+  background-color: #fff;
+  border-radius: 15px;
+  box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.1);
+  overflow: hidden;
+}
+
+.carousel-container {
+  /* Thiết lập cho carousel-container */
+  position: relative;
+  border-radius: 15px;
+  overflow: hidden;
+}
+
+.carousel-caption {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 20px;
+}
+
+.slide-title {
+  /* Thiết lập cho slide-title */
+  color:aqua;
+  font-size: 24px;
+  font-weight: 600;
+}
+
+.slide-description {
+  /* Thiết lập cho slide-description */
+  font-size: 16px;
+}
+
+.carousel-image {
+  /* Thiết lập cho carousel-image */
+  width: 100%;
+  height: auto;
 }
 </style>
