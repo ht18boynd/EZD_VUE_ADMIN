@@ -20,13 +20,73 @@
             </nav>
           </div>
         </div>
-        <div class="card">
-          <div class="card-body">
-            <div>
-              <canvas id="myChart"></canvas>
+        <div class="row">
+          <div class="col-12 col-lg-8">
+            <div class="card radius-10">
+              <div class="card-body">
+                <div>
+                  <canvas id="myChart"></canvas>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="col-12 col-lg-3">
+            <div class="col">
+              <div class="card radius-4 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-white">Tổng Số User:</p>
+                      <h4 class="my-1 text-white">{{ totalUsers }}</h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-success ms-auto">
+                      <i class="bx bx-user-circle"></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card radius-10 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-dark">Tổng User On :</p>
+                      <h4 class="my-1 text-dark">{{ onlineUsers }}</h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-dark ms-auto">
+                      <i
+                        class="fadeIn animated bx bx-disc"
+                        style="color: green"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="col">
+              <div class="card radius-10 bg-info">
+                <div class="card-body">
+                  <div class="d-flex align-items-center">
+                    <div>
+                      <p class="mb-0 text-dark">Tổng User Off :</p>
+                      <h4 class="my-1 text-dark">
+                        {{ offlineUsers }}
+                      </h4>
+                    </div>
+                    <div class="widgets-icons bg-white text-dark ms-auto">
+                      <i
+                        class="fadeIn animated bx bx-disc"
+                        style="color: red"
+                      ></i>
+                    </div>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
+
         <h6 class="mb-0 text-uppercase">Danh Sách Tất Cả User</h6>
         <hr />
         <div class="card">
@@ -70,7 +130,11 @@
                         })
                       }}
                     </td>
-                    <td>{{ item.status }}</td>
+                    <td
+                      class="badge bg-gradient-quepal text-white shadow-sm w-100"
+                    >
+                      {{ item.status }}
+                    </td>
                     <td>{{ item.role }}</td>
                     <td>{{ item.birthDay }}</td>
                     <td>{{ item.createdDate }}</td>
@@ -140,6 +204,20 @@ export default {
   },
 
   setup() {
+    const totalUsers = ref(0);
+    const onlineUsers = ref(0);
+    const offlineUsers = ref(0);
+
+    // Function to calculate user stats
+    const calculateUserStats = () => {
+      totalUsers.value = UserList.value.length;
+      onlineUsers.value = UserList.value.filter(
+        (user) => user.status === "ON"
+      ).length;
+      offlineUsers.value = UserList.value.filter(
+        (user) => user.status === "OFF"
+      ).length;
+    };
     const currentPage = ref(1);
     const UserList = ref([]);
     const itemsPerPage = 10; // Số lượng mục hiển thị trên mỗi trang
@@ -176,6 +254,7 @@ export default {
       const ctx = document.getElementById("myChart");
       new Chart(ctx, {
         type: "line",
+
         data: {
           labels: [
             "January",
@@ -197,6 +276,7 @@ export default {
               data: data,
               fill: "start",
               borderColor: "rgb(201, 41, 230)",
+              tension: 0.1,
             },
           ],
         },
@@ -230,7 +310,12 @@ export default {
         displayedUsers.value = UserList.value.slice(startIndex, endIndex);
       }
     });
+    watch(UserList, calculateUserStats, { immediate: true });
+
     return {
+      totalUsers,
+      onlineUsers,
+      offlineUsers,
       currentPage,
       UserList,
       displayedUsers,

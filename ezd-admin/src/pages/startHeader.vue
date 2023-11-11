@@ -961,6 +961,15 @@
                 ><i class="bx bx-log-out-circle"></i><span>Logout</span>
               </router-link>
             </li>
+            <li>
+              <router-link
+                to="/test"
+               
+                class="dropdown-item d-flex align-items-center"
+                href="javascript:;"
+                ><i class="bx bx-log-out-circle"></i><span>test</span>
+              </router-link>
+            </li>
           </ul>
         </div>
       </nav>
@@ -1015,9 +1024,5 @@ console.log(this.userInfor);
     await this.findByEmail();
 
   },
-
- 
-
-
 };
 </script>

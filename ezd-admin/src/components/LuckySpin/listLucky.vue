@@ -69,15 +69,17 @@
               </div>
             </div>
           </div>
-</div>  <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
+        </div>
+        <div class="row row-cols-1 row-cols-md-2 row-cols-xl-4">
           <div class="col">
             <div class="card radius-10 bg-danger">
               <div class="card-body">
                 <div class="d-flex align-items-center">
                   <div>
                     <p class="mb-0 text-white">Số Đơn Trong Tháng:</p>
-                    <h4 class="my-1 text-white">{{itemCountInCurrentMonth}}</h4>
-                   
+                    <h4 class="my-1 text-white">
+                      {{ itemCountInCurrentMonth }}
+                    </h4>
                   </div>
                   <div class="widgets-icons bg-white text-danger ms-auto">
                     <i class="bx bxs-binoculars"></i>
@@ -92,11 +94,14 @@
                 <div class="d-flex align-items-center">
                   <div>
                     <p class="mb-0 text-dark">Số Tiền Trong Tháng:</p>
-                    <h4 class="my-1 text-dark">{{moneyInCurrentMonth.toLocaleString("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                      })}}</h4>
-                   
+                    <h4 class="my-1 text-dark">
+                      {{
+                        moneyInCurrentMonth.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      }}
+                    </h4>
                   </div>
                   <div class="widgets-icons bg-white text-dark ms-auto">
                     <i class="bx bx-dollar"></i>
@@ -111,8 +116,9 @@
                 <div class="d-flex align-items-center">
                   <div>
                     <p class="mb-0 text-dark">Số Đơn Trong Ngày:</p>
-                    <h4 class="my-1 text-dark">{{totalOrdersInCurrentDay}}</h4>
-                   
+                    <h4 class="my-1 text-dark">
+                      {{ totalOrdersInCurrentDay }}
+                    </h4>
                   </div>
                   <div class="widgets-icons bg-white text-dark ms-auto">
                     <i class="bx bx-line-chart-down"></i>
@@ -127,11 +133,14 @@
                 <div class="d-flex align-items-center">
                   <div>
                     <p class="mb-0 text-dark">Số Tiền Trong Ngày:</p>
-                    <h4 class="my-1 text-dark">{{totalMoneyInCurrentDay .toLocaleString("vi-VN", {
-                        style: "currency",
-                        currency: "VND",
-                      })}}</h4>
-                   
+                    <h4 class="my-1 text-dark">
+                      {{
+                        totalMoneyInCurrentDay.toLocaleString("vi-VN", {
+                          style: "currency",
+                          currency: "VND",
+                        })
+                      }}
+                    </h4>
                   </div>
                   <div class="widgets-icons bg-white text-dark ms-auto">
                     <i class="bx bx-dollar"></i>
@@ -262,58 +271,68 @@ export default {
 
     watch(LuckyList, calculateTotalItemCountAndMoney, { deep: true });
 
- // tổng item có trong tháng 
-// Trong phần setup() của component listLucky.vue
+    // tổng item có trong tháng
+    // Trong phần setup() của component listLucky.vue
 
-const currentDate = new Date();
-const currentMonth = currentDate.getMonth();
-const currentYear = currentDate.getFullYear();
-const startDateOfMonth = new Date(currentYear, currentMonth, 1);
-const endDate = currentDate;
+    const currentDate = new Date();
+    const currentMonth = currentDate.getMonth();
+    const currentYear = currentDate.getFullYear();
+    const startDateOfMonth = new Date(currentYear, currentMonth, 1);
+    const endDate = currentDate;
 
-const itemCountInCurrentMonth = ref(0);
-const moneyInCurrentMonth = ref(0);
+    const itemCountInCurrentMonth = ref(0);
+    const moneyInCurrentMonth = ref(0);
 
-const calculateItemCountAndMoneyForCurrentMonth = () => {
-  itemCountInCurrentMonth.value = 0;
-  moneyInCurrentMonth.value = 0;
+    const calculateItemCountAndMoneyForCurrentMonth = () => {
+      itemCountInCurrentMonth.value = 0;
+      moneyInCurrentMonth.value = 0;
 
-  LuckyList.value.forEach((lucky) => {
-    const luckyDate = new Date(lucky.luckyTime);
-    if (luckyDate >= startDateOfMonth && luckyDate <= endDate) {
-      itemCountInCurrentMonth.value++;
-      moneyInCurrentMonth.value += lucky.point;
-    }
-  });
-};
+      LuckyList.value.forEach((lucky) => {
+        const luckyDate = new Date(lucky.luckyTime);
+        if (luckyDate >= startDateOfMonth && luckyDate <= endDate) {
+          itemCountInCurrentMonth.value++;
+          moneyInCurrentMonth.value += lucky.point;
+        }
+      });
+    };
 
-watch(LuckyList, calculateItemCountAndMoneyForCurrentMonth, { deep: true });
+    watch(LuckyList, calculateItemCountAndMoneyForCurrentMonth, { deep: true });
 
+    // Tổng Tiền , Số Lượng Trong Ngày
 
-// Tổng Tiền , Số Lượng Trong Ngày
+    const startDateOfToday = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate()
+    );
+    const endDateOfToday = new Date(
+      currentDate.getFullYear(),
+      currentDate.getMonth(),
+      currentDate.getDate() + 1
+    );
 
-const startDateOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
-const endDateOfToday = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate() + 1);
+    const ordersInCurrentDay = ref([]);
+    const totalOrdersInCurrentDay = ref(0);
+    const totalMoneyInCurrentDay = ref(0);
 
-const ordersInCurrentDay = ref([]);
-const totalOrdersInCurrentDay = ref(0);
-const totalMoneyInCurrentDay = ref(0);
+    const calculateOrdersAndMoneyForCurrentDay = () => {
+      ordersInCurrentDay.value = LuckyList.value.filter((lucky) => {
+        const luckyDate = new Date(lucky.luckyTime);
+        return luckyDate >= startDateOfToday && luckyDate < endDateOfToday;
+      });
 
-const calculateOrdersAndMoneyForCurrentDay = () => {
-  ordersInCurrentDay.value = LuckyList.value.filter((lucky) => {
-    const luckyDate = new Date(lucky.luckyTime);
-    return luckyDate >= startDateOfToday && luckyDate < endDateOfToday;
-  });
+      totalOrdersInCurrentDay.value = ordersInCurrentDay.value.length;
+      totalMoneyInCurrentDay.value = ordersInCurrentDay.value.reduce(
+        (totalMoney, lucky) => totalMoney + lucky.point,
+        0
+      );
+    };
 
-  totalOrdersInCurrentDay.value = ordersInCurrentDay.value.length;
-  totalMoneyInCurrentDay.value = ordersInCurrentDay.value.reduce((totalMoney, lucky) => totalMoney + lucky.point, 0);
-};
+    watch(LuckyList, calculateOrdersAndMoneyForCurrentDay, { deep: true });
 
-watch(LuckyList, calculateOrdersAndMoneyForCurrentDay, { deep: true });
+    // Gọi hàm calculateOrdersAndMoneyForCurrentDay() trong onMounted() để tính giá trị ban đầu.
 
-// Gọi hàm calculateOrdersAndMoneyForCurrentDay() trong onMounted() để tính giá trị ban đầu.
-
-// methods get
+    // methods get
     const getAllListLuckies = async () => {
       try {
         const response = await LuckySpinService.getAllLuckSpins();
@@ -406,8 +425,8 @@ watch(LuckyList, calculateOrdersAndMoneyForCurrentDay, { deep: true });
       itemCountInCurrentMonth,
       moneyInCurrentMonth,
       ordersInCurrentDay,
-      totalOrdersInCurrentDay  ,
-      totalMoneyInCurrentDay
+      totalOrdersInCurrentDay,
+      totalMoneyInCurrentDay,
     };
   },
 };

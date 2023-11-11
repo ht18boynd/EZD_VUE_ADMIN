@@ -18,6 +18,12 @@ import FailedList from "@/components/Transaction/failedList.vue";
 import ListUser from "@/components/User/listUser.vue";
 import ListStaf from "@/components/User/listStaf.vue";
 import ListLucky from "@/components/LuckySpin/listLucky.vue"
+
+import PendingBecomeList from "@/components/BecomeForm/pendingList.vue"
+import SuccessBecomeList from "@/components/BecomeForm/successList.vue"
+import FailedBecomeList from "@/components/BecomeForm/failedList.vue"
+
+
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -36,18 +42,32 @@ const routes = [
   { path: '/admin/user/listUser', component: ListUser, meta: { requiresAuth: true } },
   { path: '/admin/user/listStaf', component: ListStaf, meta: { requiresAuth: true } },
   { path: '/admin/user/listLucky', component: ListLucky, meta: { requiresAuth: true } },
+  { path: '/admin/become', component: PendingBecomeList, meta: { requiresAuth: true } },
+  { path: '/admin/become/success', component: SuccessBecomeList, meta: { requiresAuth: true } },
+
+  { path: '/admin/become/failed', component: FailedBecomeList, meta: { requiresAuth: true } },
+
+
 
 ];
 
 const router = createRouter({ history: createWebHistory(), routes });
 
 
+
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {
     const token = localStorage.getItem('token');
     if (!token) {
-      if (to.path !== '/login') next('/login');
-      else next();
+      if (to.path !== '/login') {
+        // Use next(false) to prevent immediate redirection
+        next(false);
+        // Manually navigate to the login page after route change is confirmed
+        router.push('/login');
+      } else {
+        // If already on the login page, allow the navigation
+        next();
+      }
     } else {
       next();
     }
@@ -55,5 +75,6 @@ router.beforeEach((to, from, next) => {
     next();
   }
 });
+
 
 export default router;
