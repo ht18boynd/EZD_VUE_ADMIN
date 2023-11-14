@@ -154,6 +154,19 @@ export default {
     },
     onImageChange(event) {
       this.newBlog.image = event.target.files[0];
+      if (this.newBlog.image) {
+        // Nếu có hình ảnh được chọn, cập nhật trường "image" và imagePreviewUrl
+
+        // Tạo một đối tượng FileReader để đọc hình ảnh
+        let reader = new FileReader();
+
+        // reader.onload = (e) => {
+        //   this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+        // };
+
+        // Đọc hình ảnh được chọn
+        reader.readAsDataURL(this.newBlog.image);
+      }
     },
     async addBlog() {
       this.validatename();

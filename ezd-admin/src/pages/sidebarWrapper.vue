@@ -112,6 +112,23 @@
               </li>
             </ul>
           </li>
+          <li>
+            <a class="has-arrow" 
+              >Danh mucj FAQ</a
+            >
+            <ul>
+              <li>
+                <router-link to="/admin/quiz"
+                  >Danh Sách FAQ</router-link
+                >
+              </li>
+              <li>
+                <router-link to="/admin/quiz/create"
+                  >Tạo Mới FAQ</router-link
+                >
+              </li>
+            </ul>
+          </li>
         </ol>
       </li>
       <li>

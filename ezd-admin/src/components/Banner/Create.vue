@@ -129,7 +129,7 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in bannerList" :key="item.id">
+  <tr v-for="item in displayedBanners" :key="item.id">
                     <td>
                       {{ item.name }}
                     </td>
@@ -199,7 +199,45 @@
             </div>
           </div>
         </div>
-        <!-- </div> -->
+        <div class="pagination-container">
+          <vue-awesome-paginate
+            :total-rows="bannerList.length"
+            v-model="currentPage"
+            :per-page="itemsPerPage"
+            :number-of-pages="totalPages"
+            aria-controls="my-table"
+            @page-change="handlePageChange"
+          >
+            <template #prev-button>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+                Prev
+              </span>
+            </template>
+            <template #next-button>
+              <span>
+                Next
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+              </span>
+            </template>
+          </vue-awesome-paginate>
+        </div>
       </div>
     </div>
   </div>
@@ -220,8 +258,15 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 export default {
   name: "createBanner",
+ 
+
   data() {
     return {
+      itemsPerPage: 10, // Số lượng mục trên mỗi trang
+      totalPages: 0, // Tổng số trang
+      currentPage: 1, // Trang hiện tại
+      displayedBanners: [], // Mản
+
       errors: {
         name: "",
         title: "",
@@ -254,6 +299,22 @@ export default {
     startHeaderVue,
   },
   methods: {
+    updateDisplayedBanners() {
+      const startIndex = (this.currentPage - 1) * this.itemsPerPage;
+      const endIndex = startIndex + this.itemsPerPage;
+      this.displayedBanners = this.bannerList.slice(startIndex, endIndex);
+    },
+    handlePageChange(page) {
+      this.currentPage = page;
+      this.updateDisplayedBanners();
+    },
+
+    // Hàm này sẽ được gọi khi danh sách banner thay đổi
+    updatePagination() {
+      this.totalPages = Math.ceil(this.bannerList.length / this.itemsPerPage);
+      this.updateDisplayedBanners();
+    },
+
     validatename() {
       this.errors.name =
         this.newBanner.name.trim() === "" ? "không được bỏ trống." : "";
@@ -401,18 +462,17 @@ export default {
         imageHeight: 400,
       });
     },
-    async getAllBanners() {
-      try {
-        const response = await BannerService.getAllBanners();
-        const data = response.data;
-        //const data = response.data.sort((a, b) => b.id - a.id);
-        // Gán giá trị cho cả bannerList và originalBannerList
-        this.bannerList = data;
-        // this.originalBannerList = data;
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách banner: ", error);
-      }
-    },
+   async getAllBanners() {
+  try {
+    const response = await BannerService.getAllBanners();
+    const data = response.data;
+    this.bannerList = data;
+    this.updatePagination(); // Thêm dòng này để cập nhật phân trang
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách banner: ", error);
+  }
+},
+
     async addBanner() {
       this.validatename();
       this.validateTitle();
