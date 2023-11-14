@@ -18,7 +18,8 @@ import FailedList from "@/components/Transaction/failedList.vue";
 import ListUser from "@/components/User/listUser.vue";
 import ListStaf from "@/components/User/listStaf.vue";
 import ListLucky from "@/components/LuckySpin/listLucky.vue"
-
+import ListQuiz from '@/components/Quiz/listquiz.vue';
+import CreateQuiz from '@/components/Quiz/createquiz.vue';
 import PendingBecomeList from "@/components/BecomeForm/pendingList.vue"
 import SuccessBecomeList from "@/components/BecomeForm/successList.vue"
 import FailedBecomeList from "@/components/BecomeForm/failedList.vue"
@@ -44,9 +45,11 @@ const routes = [
   { path: '/admin/user/listLucky', component: ListLucky, meta: { requiresAuth: true } },
   { path: '/admin/become', component: PendingBecomeList, meta: { requiresAuth: true } },
   { path: '/admin/become/success', component: SuccessBecomeList, meta: { requiresAuth: true } },
+  
 
   { path: '/admin/become/failed', component: FailedBecomeList, meta: { requiresAuth: true } },
-
+  { path: '/admin/quiz', name: "listquiz", component: ListQuiz, meta: { requiresAuth: true } },
+  { path: '/admin/quiz/create', name: "createquiz", component: CreateQuiz, meta: { requiresAuth: true } },
 
 
 ];
