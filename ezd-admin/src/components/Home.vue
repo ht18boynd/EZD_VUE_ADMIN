@@ -8,8 +8,6 @@
     <startHeaderVue></startHeaderVue>
     <!--end header -->
 
-
-    
     <!--start page wrapper -->
     <div class="page-wrapper">
       <div class="page-content">
@@ -853,9 +851,6 @@
   </div>
   <!--end wrapper-->
 
-
-
-
   <!-- search modal -->
   <searchModal></searchModal>
   <!-- end search modal -->
@@ -867,21 +862,33 @@
 <script>
 import switcher from "@/pages/switcher.vue";
 import searchModal from "@/pages/searchModal.vue";
-
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
-
 import startHeaderVue from '@/pages/startHeader.vue';
+// import authService from "@/service/authService/auth.service";
+
 export default {
   name: "HomePage",
-  components: {
+    components: {
     switcher,
     searchModal,
     slibarWrapper,
     startHeaderVue
   },
+  data(){
+    return{
+      content:"",
+    }
+  },
+  computed:{
+    currentUser(){
+      return this.$store.state.auth.user;
+    }
+  },
   created(){
     const token = localStorage.getItem('token');
     console.log(token);
+    console.log(this.currentUser);
   }
+
 };
 </script>

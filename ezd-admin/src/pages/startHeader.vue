@@ -128,18 +128,19 @@
               </ul>
             </li>
             <li class="nav-item dark-mode d-none d-sm-flex">
-              <a class="nav-link dark-mode-icon" href="javascript:;"
+              <!-- <a class="nav-link dark-mode-icon" href="javascript:;"
                 ><i class="bx bx-moon"></i>
-              </a>
+              </a> -->
             </li>
 
             <li class="nav-item dropdown dropdown-app">
-              <a
+              <!-- <a
                 class="nav-link dropdown-toggle dropdown-toggle-nocaret"
                 data-bs-toggle="dropdown"
                 href="javascript:;"
-                ><i class="bx bx-grid-alt"></i
-              ></a>
+                >
+                <i class="bx bx-grid-alt"></i>
+              </a> -->
               <div class="dropdown-menu dropdown-menu-end p-0">
                 <div class="app-container p-2 my-2">
                   <div
@@ -895,16 +896,16 @@
               class="user-img"
               alt="user avatar"
             />
-            <div class="user-info">
-              <p class="user-name mb-0">Pauline Seitz</p>
-              <p class="designattion mb-0">Web Designer</p>
+            <div v-if="currentUser" class="user-info">
+              <p class="user-name mb-0">{{currentUser.email}}</p>
+              <p class="designattion mb-0">{{currentUser.accountName}}</p>
             </div>
           </a>
           <ul class="dropdown-menu dropdown-menu-end">
             <li>
               <a
                 class="dropdown-item d-flex align-items-center"
-                href="javascript:;"
+                href="/profile"
                 ><i class="bx bx-user fs-5"></i><span>Profile</span></a
               >
             </li>
@@ -945,6 +946,7 @@
               <a
                 class="dropdown-item d-flex align-items-center"
                 href="javascript:;"
+                @click.prevent="logOut"
                 ><i class="bx bx-log-out-circle"></i><span>Logout</span></a
               >
             </li>
@@ -963,7 +965,13 @@ data(){
   return {
        BASE_URL: process.env.BASE_URL,
   }
-}
+},
+  methods: {
+    logOut() {
+      this.$store.dispatch("auth/logout");
+      this.$router.push("/login");
+    },
+  },
 }
 </script>
 

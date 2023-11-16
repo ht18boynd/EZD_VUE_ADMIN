@@ -22,7 +22,7 @@
                 <li class="breadcrumb-item active" aria-current="page">
                   List Rank
                 </li>
-              </ol>
+              </ol> 
             </nav>
           </div>
         </div>
@@ -356,7 +356,7 @@ export default {
         );
 
         // Đóng Dialog và làm sạch dữ liệu editRankData sau khi cập nhật thành công
-        // this.closeEditDialog();
+        this.closeEditDialog();
 
         // Refresh danh sách ranks sau khi cập nhật
         this.getAllRanks();

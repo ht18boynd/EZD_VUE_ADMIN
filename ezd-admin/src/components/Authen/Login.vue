@@ -19,7 +19,6 @@
               </div>
             </div>
           </div>
-
           <div
             class="col-12 col-xl-5 col-xxl-4 auth-cover-right align-items-center justify-content-center"
           >
@@ -34,30 +33,35 @@
                     <p class="mb-0">Please log in to your account</p>
                   </div>
                   <div class="form-body">
-                    <form class="row g-3" @submit="login">
+                    <Form
+                      class="row g-3"
+                      @submit="handleLogin"
+                      :validation-schema="authSchema"
+                    >
                       <div class="col-12">
-                        <label for="inputEmailAddress" class="form-label"
-                          >Email</label
-                        >
-                        <input
-                          type="email"
+                        <label for="email" class="form-label">Email</label>
+                        <Field
+                          type="text"
+                          name="email"
                           class="form-control"
-                          id="inputEmailAddress"
                           placeholder="Please Input Email"
-                          v-model="userData.email"
                         />
+                        <ErrorMessage name="email" class="error-feedback" />
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label"
                           >Password</label
                         >
                         <div class="input-group" id="show_hide_password">
-                          <input
+                          <Field
                             type="password"
+                            name="password"
                             class="form-control border-end-0"
-                            id="inputChoosePassword"
-                            v-model="userData.password"
                             placeholder="Enter Password"
+                          />
+                          <ErrorMessage
+                            name="password"
+                            class="error-feedback"
                           />
                           <a
                             href="javascript:;"
@@ -85,12 +89,29 @@
                       </div>
                       <div class="col-12">
                         <div class="d-grid">
-                          <button type="submit" class="btn btn-primary">
+                          <button
+                            type="submit"
+                            class="btn btn-primary"
+                            :disabled="loading"
+                          >
+                            <span
+                              v-show="loading"
+                              class="spinner-border spinner-border-sm"
+                            ></span>
                             Sign in
                           </button>
                         </div>
                       </div>
-                    </form>
+                      <div class="form-group">
+                        <div
+                          v-if="message"
+                          class="alert alert-danger"
+                          role="alert"
+                        >
+                          {{ message }}
+                        </div>
+                      </div>
+                    </Form>
                   </div>
                   <div class="login-separater text-center mb-5">
                     <span>OR SIGN IN WITH</span>
@@ -131,51 +152,62 @@
 </template>
 
 <script>
-import { user, authInfo } from "@/store";
-import Swal from "sweetalert2";
-import AuthService from "@/service/AuthService";
-import { jwtDecode } from "jwt-decode";
+import { Form, Field, ErrorMessage } from "vee-validate";
+import * as yup from "yup";
+
 export default {
-  name: "loginAdmin",
+  name: "loginPage",
+  components: {
+    Form,
+    Field,
+    ErrorMessage,
+  },
   data() {
+    const authSchema = yup.object().shape({
+      email: yup.string().required("Email is required"),
+      password: yup.string().required("Password is required"),
+    });
     return {
-      userData: {
-        email: null,
-        password: "",
-      },
+      authSchema,
+      loading: false,
+      message: "",
     };
   },
+  computed: {
+    loggedIn() {
+      return this.$store.state.auth.status.loggedIn;
+    },
+    currentUser(){
+      return this.$store.state.auth.user;
+    }
+  },
+  created() {
+    if (this.loggedIn) {
+      this.$router.push("/");
+    }
+    const token = localStorage.getItem('user');
+    console.log(token);
+    console.log(this.currentUser);
+  },
   methods: {
-    async login(event) {
-      try {
-        event.preventDefault();
-
-        const response = await AuthService.login(this.userData);
-        const token = response.data.token;
-      
-      // Lưu JWT vào localStorage hoặc Vuex state
-      localStorage.setItem("token", token);
-      console.log(token);
-        const decoded = jwtDecode(token);
-        console.log(decoded);
-        // Gán giá trị sub vào biến user
-        user.value = decoded.sub;
-        console.log("globle :" + user.value);
-        // Fetch the complete Auth information
-        const authInfoResponse = await AuthService.findByEmail(user.value);
-        authInfo.value = authInfoResponse;
-        console.log(authInfoResponse);
-        console.log("authen globle ID: " + authInfo.value.id);
-        console.log("authen globle Name: " + authInfo.value.name);
-        this.$router.push("/");
-        Swal.fire("Login Success!", "You clicked the button!", "success");
-      } catch {
-        console.log("Error");
-        Swal.fire("Login Fail!", "You clicked the button!", "error");
-      }
+    handleLogin(user) {
+      this.loading = true;
+      this.$store.dispatch("auth/login", user).then(
+        () => {
+          this.$router.push("/");
+        },
+        (error) => {
+          this.loading = false;
+          this.message =
+            (error.response &&
+              error.response.data &&
+              error.response.data.message) ||
+            error.message ||
+            error.toString();
+        }
+      );
     },
   },
+  
 };
 </script>
-
-

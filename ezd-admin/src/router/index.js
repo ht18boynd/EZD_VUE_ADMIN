@@ -1,5 +1,6 @@
 import { createRouter, createWebHistory } from 'vue-router'
 import HomePage from '@/components/Home.vue'
+import Profile from '@/components/Profile/profile.vue'
 import listGame from '@/components/Games/listGame.vue'
 import CreateGame from '@/components/Games/createNew.vue'
 import ContactPage from '@/components/Contact.vue'
@@ -14,21 +15,24 @@ import CreateBanner from '@/components/Banner/Create.vue'
 import ListBlog from '@/components/Blog/listBlog.vue'
 import CreateBlog from '@/components/Blog/createBlog.vue'
 
-
-
 //Rank
 import CreateRank from '@/components/Rank/rankCreate.vue'
 import ListRank from '@/components/Rank/listRank.vue'
 //Item
 import createItem from '@/components/Item/createItem.vue'
 import listItem from '@/components/Item/listItem.vue'
-
+//Calendar
+import ListCalendar from '@/components/TimeCalendar/listCalendar.vue'
 const routes = [
-    {
-        path: '/',
-        component: HomePage,
-        meta: { requiresAuth: true }
-    },
+  {
+    path: "/",
+    name: "home",
+    component: HomePage,
+  },
+  {
+    path: "/home",
+    component: HomePage,
+  },
     {
         path: '/login',
         component: LoginAdmin,
@@ -40,7 +44,6 @@ const routes = [
         meta: { requiresAuth: true }
     },
 
-
     {
         path: '/admin/game',
         component: listGame,
@@ -51,6 +54,7 @@ const routes = [
         component: CreateGame,
         meta: { requiresAuth: true }
     },
+
     {
         path: '/admin/game/gameDetails/:id', // Định tuyến đến trang gameDetails với tham số ID
         component: GameDetails,
@@ -98,13 +102,24 @@ const routes = [
     //Item-Start
      {
         path:'/admin/item',
-        component:createItem
+        component:listItem
     },
     {
         path:'/admin/item/create',
-        component: listItem
+        component: createItem
     },
     //Item-End
+    //Calendar
+    {
+        path:'/admin/calendar',
+        component: ListCalendar
+    },
+    //Profile
+    {
+        path:'/profile',
+        component: Profile
+    },
+    //Calendar-end
     {
         path: '/admin/contact',
         component: ContactPage,
@@ -117,25 +132,40 @@ const router = createRouter({
     routes: routes
 })
 
-router.beforeEach((to, from, next) => {
-    // Kiểm tra nếu route yêu cầu đăng nhập và không có token, chuyển hướng đến trang đăng nhập
-    if (to.matched.some(record => record.meta.requiresAuth)) {
-      const token = localStorage.getItem('token');
-      if (!token) {
-        if (to.path !== '/login') { // Ngăn chuyển hướng lại /login nếu đã ở đó
-          next('/login');
-        } else {
-          next(); // Nếu đang ở /login, cho phép điều hướng
-        }
-      } else {
-        // Nếu có token, cho phép điều hướng
-        next();
-      }
-    } else {
-      // Trang không yêu cầu đăng nhập, cho phép điều hướng
-      next();
-    }
-  });
+// router.beforeEach((to, from, next) => {
+//     const publicPages = ['/login', '/'];
+//     const authRequired = !publicPages.includes(to.path);
+//     const loggedIn = localStorage.getItem('user');
+  
+//     // trying to access a restricted page + not logged in
+//     // redirect to login page
+//     if (authRequired && !loggedIn) {
+//       next('/login');
+//     } else {
+//       next();
+//     }
+//   });
+// router.beforeEach((to, from, next) => {
+//     const publicPages = ['/login','/']
+//     // Kiểm tra nếu route yêu cầu đăng nhập và không có token, chuyển hướng đến trang đăng nhập
+//     const authRequired = !publicPages.includes(to.path);
+//     const token = localStorage.getItem('user');
+//         if(authRequired && !token){
+//             next('/login');
+//         }else{
+//             next();
+//         }
+//         // if (to.path !== '/login') { // Ngăn chuyển hướng lại /login nếu đã ở đó
+//         //   next('/login');
+//         // } else {
+//         //   next(); // Nếu đang ở /login, cho phép điều hướng
+//         // }
+    
+//     // else {
+//     //   // Trang không yêu cầu đăng nhập, cho phép điều hướng
+//     //   next();
+//     // }
+//   });
   
 
 export default router

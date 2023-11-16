@@ -16,7 +16,7 @@
     </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-      <li>
+      <li v-if="showAdminBoard" >
         <a href="#" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
           <div class="menu-title">Dashboard</div>
@@ -41,7 +41,7 @@
       <li class="menu-label">ADMIN MANAGEMENT</li>
 
       <li>
-        <a href="javascript:;" class="has-arrow">
+        <a v-if="!showModeratorBoard" href="javascript:;" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
           <div class="menu-title">Quản Lý Trò Chơi</div>
         </a>
@@ -105,7 +105,7 @@
       </li>
 
       <!--Manager Rank Start-->
-        <li>
+      <li>
         <a href="javascript:;" class="has-arrow">
           <div class="parent-icon"><i class="lni lni-cup"></i></div>
           <div class="menu-title text-primary">Quản Lý Rank</div>
@@ -116,18 +116,18 @@
               ><i class="bx bx-radio-circle"></i>Danh Sách</a
             >
           </li>
-          
+
           <li>
             <a href="/admin/rank/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
           </li>
-         
         </ul>
       </li>
       <!--Manager Rank End-->
+
       <!--Manager Item Start-->
-        <li>
+      <li>
         <a href="javascript:;" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
           <div class="menu-title">Quản Lý Item</div>
@@ -138,16 +138,31 @@
               ><i class="bx bx-radio-circle"></i>Danh Sách</a
             >
           </li>
-          
+
           <li>
             <a href="/admin/item/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
           </li>
-         
         </ul>
       </li>
       <!--Manager Item End-->
+
+      <!--Manager Calendar Start-->
+      <li>
+        <a href="javascript:;" class="has-arrow">
+          <div class="parent-icon"><i class="bx bx-cart"></i></div>
+          <div class="menu-title">Quản lý thời gian</div>
+        </a>
+        <ul>
+          <li>
+            <a href="/admin/calendar"
+              ><i class="bx bx-radio-circle"></i>All</a
+            >
+          </li>
+        </ul>
+      </li>
+      <!--Manager Calendar End-->
 
       <li>
         <a href="widgets.html">
@@ -168,6 +183,23 @@ export default {
     return {
       BASE_URL: process.env.BASE_URL,
     };
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_ADMIN");
+      }
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_PROVIDER");
+      }
+      return false;
+    },
   },
 };
 </script>

@@ -229,8 +229,9 @@ export default {
           showConfirmButton: false,
           timer: 1500,
         });
-
-        this.$router.push("/admin/rank");
+      this.imageAvatar= null;
+      this.imageBackground = null;
+        // this.$router.push("/admin/rank/create");
       } catch (error) {
         console.error("Error creating new game:", error);
         // Hiển thị thông báo lỗi
