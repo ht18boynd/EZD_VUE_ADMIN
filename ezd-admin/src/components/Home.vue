@@ -863,32 +863,31 @@
 import switcher from "@/pages/switcher.vue";
 import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
-import startHeaderVue from '@/pages/startHeader.vue';
+import startHeaderVue from "@/pages/startHeader.vue";
 // import authService from "@/service/authService/auth.service";
 
 export default {
   name: "HomePage",
-    components: {
+  components: {
     switcher,
     searchModal,
     slibarWrapper,
-    startHeaderVue
+    startHeaderVue,
   },
-  data(){
-    return{
-      content:"",
-    }
+  data() {
+    return {
+      content: "",
+    };
   },
-  computed:{
-    currentUser(){
+  computed: {
+    currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
-  created(){
-    const token = localStorage.getItem('token');
+  created() {
+    const token = localStorage.getItem("token");
     console.log(token);
     console.log(this.currentUser);
-  }
-
+  },
 };
 </script>

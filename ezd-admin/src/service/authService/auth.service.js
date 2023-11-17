@@ -4,15 +4,15 @@ import tokenService from "./token.service";
 
 class AuthService{
 
-    login(auth) {
-        return api
+    async login(auth) {
+        return await api
           .post('/auth/signin', {
             email: auth.email,
             password: auth.password
           })
           .then(response => {
             if (response.data.accessToken) {
-              tokenService.setUser(response.data)
+              tokenService.setUser(response.data);
             }
   
             return response.data;
@@ -23,7 +23,7 @@ class AuthService{
         tokenService.removeUser();
       }
     register(auth) {
-        return api.post('/auth/signup', {
+        return api.post('/api/signup', {
           name: auth.username,
           accountName: auth.accountName,
           email: auth.email,

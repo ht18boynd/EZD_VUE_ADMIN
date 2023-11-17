@@ -22,12 +22,12 @@
                 <li class="breadcrumb-item active" aria-current="page">
                   List Rank
                 </li>
-              </ol> 
+              </ol>
             </nav>
           </div>
         </div>
         <!--end breadcrumb-->
-        <div class="row">
+        <div v-if="showAdminBoard" class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-body">
@@ -347,13 +347,13 @@ export default {
         formData.append("rank_name", this.editRankData.rank_name);
         formData.append("minimum_balance", this.editRankData.minimum_balance);
         formData.append("maximum_balance", this.editRankData.maximum_balance);
-        formData.append("adminFrameImage", this.editRankData.avatar_frame_image);
+        formData.append(
+          "adminFrameImage",
+          this.editRankData.avatar_frame_image
+        );
         formData.append("backgroundImage", this.editRankData.background_image);
 
-        await RankService.updateRank(
-          this.editRankData.rank_id,
-          formData
-        );
+        await RankService.updateRank(this.editRankData.rank_id, formData);
 
         // Đóng Dialog và làm sạch dữ liệu editRankData sau khi cập nhật thành công
         this.closeEditDialog();
@@ -398,6 +398,7 @@ export default {
         console.error("Lỗi khi lấy danh sách trò chơi: ", error);
       }
     },
+
     async deleteRank(id) {
       try {
         await RankService.deleteRank(id);
@@ -406,6 +407,23 @@ export default {
       } catch (error) {
         console.error("Lỗi khi xóa xếp hạng: ", error);
       }
+    },
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_ADMIN");
+      }
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_PROVIDER");
+      }
+      return false;
     },
   },
   created() {

@@ -16,7 +16,7 @@
     </div>
     <!--navigation-->
     <ul class="metismenu" id="menu">
-      <li v-if="showAdminBoard" >
+      <li v-if="showAdminBoard">
         <a href="#" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
           <div class="menu-title">Dashboard</div>
@@ -41,7 +41,7 @@
       <li class="menu-label">ADMIN MANAGEMENT</li>
 
       <li>
-        <a v-if="!showModeratorBoard" href="javascript:;" class="has-arrow">
+        <a href="javascript:;" class="has-arrow">
           <div class="parent-icon"><i class="bx bx-cart"></i></div>
           <div class="menu-title">Quản Lý Trò Chơi</div>
         </a>
@@ -117,7 +117,7 @@
             >
           </li>
 
-          <li>
+          <li v-if="showAdminBoard">
             <a href="/admin/rank/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
@@ -138,8 +138,7 @@
               ><i class="bx bx-radio-circle"></i>Danh Sách</a
             >
           </li>
-
-          <li>
+          <li v-if="showAdminBoard">
             <a href="/admin/item/create"
               ><i class="bx bx-radio-circle"></i>Tạo Mới</a
             >
@@ -163,7 +162,6 @@
         </ul>
       </li>
       <!--Manager Calendar End-->
-
       <li>
         <a href="widgets.html">
           <div class="parent-icon"><i class="bx bx-cookie"></i></div>
@@ -189,16 +187,16 @@ export default {
       return this.$store.state.auth.user;
     },
     showAdminBoard() {
-      if (this.currentUser && this.currentUser["roles"]) {
-        return this.currentUser["roles"].includes("ROLE_ADMIN");
+      if (this.currentUser && this.currentUser["role"]) {
+        return this.currentUser["role"].includes("ROLE_ADMIN");
       }
-      return false;
+      return true;
     },
     showModeratorBoard() {
-      if (this.currentUser && this.currentUser["roles"]) {
-        return this.currentUser["roles"].includes("ROLE_PROVIDER");
+      if (this.currentUser && this.currentUser["role"]) {
+        return this.currentUser["role"].includes("ROLE_PROVIDER");
       }
-      return false;
+      return true;
     },
   },
 };

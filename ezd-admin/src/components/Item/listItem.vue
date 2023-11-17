@@ -27,7 +27,7 @@
           </div>
         </div>
         <!--end breadcrumb-->
-        <div class="row">
+        <div v-if="showAdminBoard" class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-body">
@@ -259,12 +259,12 @@ export default {
       this.scrollToEditForm();
     },
     scrollToEditForm() {
-    this.$nextTick(() => {
-      this.$refs.editForm.scrollIntoView({
-        behavior: 'smooth',
-        block: 'start',
+      this.$nextTick(() => {
+        this.$refs.editForm.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       });
-    });
     },
     closeDialog() {
       this.isEditDialogOpen = false;
@@ -335,6 +335,23 @@ export default {
       } catch (error) {
         console.error("Lỗi khi xóa item: ", error);
       }
+    },
+  },
+  computed: {
+    currentUser() {
+      return this.$store.state.auth.user;
+    },
+    showAdminBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_ADMIN");
+      }
+      return false;
+    },
+    showModeratorBoard() {
+      if (this.currentUser && this.currentUser["roles"]) {
+        return this.currentUser["roles"].includes("ROLE_PROVIDER");
+      }
+      return false;
     },
   },
   created() {

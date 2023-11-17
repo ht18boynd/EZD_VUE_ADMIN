@@ -46,7 +46,7 @@
                           class="form-control"
                           placeholder="Please Input Email"
                         />
-                        <ErrorMessage name="email" class="error-feedback" />
+                        <ErrorMessage name="email" class="text-danger" />
                       </div>
                       <div class="col-12">
                         <label for="inputChoosePassword" class="form-label"
@@ -59,16 +59,13 @@
                             class="form-control border-end-0"
                             placeholder="Enter Password"
                           />
-                          <ErrorMessage
-                            name="password"
-                            class="error-feedback"
-                          />
                           <a
                             href="javascript:;"
                             class="input-group-text bg-transparent"
                             ><i class="bx bx-hide"></i
                           ></a>
                         </div>
+                        <ErrorMessage name="password" class="text-danger" />
                       </div>
                       <div class="col-md-6">
                         <div class="form-check form-switch">
@@ -171,27 +168,29 @@ export default {
       authSchema,
       loading: false,
       message: "",
+      // rememberMe: false,
     };
   },
   computed: {
     loggedIn() {
       return this.$store.state.auth.status.loggedIn;
     },
-    currentUser(){
+    currentUser() {
       return this.$store.state.auth.user;
-    }
+    },
   },
   created() {
     if (this.loggedIn) {
       this.$router.push("/");
     }
-    const token = localStorage.getItem('user');
+    const token = localStorage.getItem("token");
     console.log(token);
     console.log(this.currentUser);
   },
   methods: {
     handleLogin(user) {
       this.loading = true;
+
       this.$store.dispatch("auth/login", user).then(
         () => {
           this.$router.push("/");
@@ -208,6 +207,5 @@ export default {
       );
     },
   },
-  
 };
 </script>
