@@ -23,8 +23,9 @@ import CreateQuiz from '@/components/Quiz/createquiz.vue';
 import PendingBecomeList from "@/components/BecomeForm/pendingList.vue"
 import SuccessBecomeList from "@/components/BecomeForm/successList.vue"
 import FailedBecomeList from "@/components/BecomeForm/failedList.vue"
-
-
+import ListContact from "@/components/Contact/listContact.vue"
+import ContactDetails from "@/components/Contact/contactDetail.vue"
+import RelayContact from "@/components/Contact/relayContact.vue"
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -50,7 +51,9 @@ const routes = [
   { path: '/admin/become/failed', component: FailedBecomeList, meta: { requiresAuth: true } },
   { path: '/admin/quiz', name: "listquiz", component: ListQuiz, meta: { requiresAuth: true } },
   { path: '/admin/quiz/create', name: "createquiz", component: CreateQuiz, meta: { requiresAuth: true } },
-
+  { path: '/admin/contact', name: "listContact", component: ListContact, meta: { requiresAuth: true } },
+  { path: '/admin/contact/:id', name: "contactDetails", component: ContactDetails, meta: { requiresAuth: true } },
+  { path: '/admin/contact/relay/:id', name: "relayContact", component: RelayContact, meta: { requiresAuth: true } },
 
 ];
 

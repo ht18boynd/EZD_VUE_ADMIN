@@ -82,8 +82,8 @@
           <div class="col-12">
             <!-- danh sách -->
             <div>
-              <h1>Danh sách mục</h1>
-              <table class="table">
+              <h1>List Blog</h1>
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
@@ -102,7 +102,7 @@
                       {{ item.title }}
                     </td>
                     <td>
-                    <p  @click="showContent(item.name, item.content)">bấm vào để xem chi tiết</p>
+                   <button class="btn btn-link" @click="showContent(item.name, item.content)">Click!</button>
                       
                        
                     </td>

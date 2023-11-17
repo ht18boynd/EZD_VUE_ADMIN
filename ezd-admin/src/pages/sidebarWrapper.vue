@@ -129,6 +129,19 @@
               </li>
             </ul>
           </li>
+          <li>
+            <a class="has-arrow" 
+              >Danh mục Contact</a
+            >
+            <ul>
+              <li>
+                <router-link to="/admin/contact"
+                  >Danh Sách Contact</router-link
+                >
+              </li>
+              
+            </ul>
+          </li>
         </ol>
       </li>
       <li>
