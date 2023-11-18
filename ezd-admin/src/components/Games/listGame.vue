@@ -117,9 +117,6 @@
     <!--end page wrapper -->
   </div>
   <!--end wrapper-->
-  <!-- search modal -->
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
   <!--end switcher-->
@@ -130,8 +127,6 @@ import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
 import ForGameService from "@/service/ForGameService";
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
-
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 
 import startHeaderVue from "@/pages/startHeader.vue";
@@ -139,7 +134,6 @@ export default {
   name: "listGame",
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },

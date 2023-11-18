@@ -42,8 +42,6 @@
       </div>
     </div>
   </div>
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
@@ -51,7 +49,6 @@
 <script>
 import QuizService from "@/service/QuizService.js";
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 
@@ -70,7 +67,6 @@ export default {
   },
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },

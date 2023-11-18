@@ -26,6 +26,3 @@ export let userInfo = ref(null);
         console.error("Lỗi khi lấy thông tin người dùng: " + error);
       });
   }
-
-
-export const authInfo = ref(null); // Add this line to store authInfo

@@ -4,7 +4,5 @@ module.exports = {
   },
   publicPath: process.env.NODE_ENV === 'production' ? '/' : '/',
 
-  
-  transpileDependencies: true,
-  
+  transpileDependencies: true, // Các cài đặt khác ở đây
 };

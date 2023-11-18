@@ -103,23 +103,25 @@
                     <th>Name</th>
                     <th>Email</th>
                     <th>Address</th>
-                    <th>Country</th>
                     <th>Phone Number</th>
                     <th>Gender</th>
                     <th>Balance</th>
                     <th>Status</th>
-                    <th>Role</th>
                     <th>BirthDay</th>
                     <th>Created Date</th>
                   </tr>
                 </thead>
                 <tbody>
                   <tr v-for="item in displayedUsers" :key="item.id">
-                    <td>{{ item.avatar }}</td>
+                    <td>
+                      <img
+                        :src="item.avatars[0]"
+                        :style="{ width: '40px', height: '30px' }"
+                      />
+                    </td>
                     <td>{{ item.name }}</td>
                     <td>{{ item.email }}</td>
                     <td>{{ item.address }}</td>
-                    <td>{{ item.country }}</td>
                     <td>{{ item.phoneNumber }}</td>
                     <td>{{ item.gender }}</td>
                     <td>
@@ -130,14 +132,15 @@
                         })
                       }}
                     </td>
-                    <td
-                      class="badge bg-gradient-quepal text-white shadow-sm w-100"
-                    >
-                      {{ item.status }}
+                    <td v-if="item.status === 'ON' ">
+                      <img width="16" height="16" src="https://img.icons8.com/tiny-color/16/connection-status-on.png" alt="connection-status-on"/>
                     </td>
-                    <td>{{ item.role }}</td>
-                    <td>{{ item.birthDay }}</td>
-                    <td>{{ item.createdDate }}</td>
+                    <td v-else>
+                      <img width="16" height="16" src="https://img.icons8.com/tiny-color/16/000000/connection-status-on.png" alt="connection-status-on"/>
+                    </td>
+
+                    <td>{{ item.formattedBirthDay }}</td>
+                    <td>{{ item.formattedDate }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -179,17 +182,16 @@
       </div>
     </div>
   </div>
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
 
 <script>
+import { format } from "date-fns";
+
 import { ref, onMounted, watch } from "vue";
 import Chart from "chart.js/auto";
 import AuthService from "@/service/AuthService";
-import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 import switcher from "@/pages/switcher.vue";
@@ -198,7 +200,6 @@ export default {
   name: "listTransaction",
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
@@ -224,80 +225,85 @@ export default {
     const totalItems = ref(0);
     const isDataLoaded = ref(false); // Flag để kiểm tra xem dữ liệu đã được tải xong
 
-    const userCountByMonth = ref(new Array(12).fill(0));
+      const userCountByMonth = ref(new Array(12).fill(0));
 
-    const getAllUsers = async () => {
-      try {
-        const role = "USER";
-        const response = await AuthService.getAllUser(role);
-        UserList.value = response;
-        totalItems.value = UserList.value.length;
-        isDataLoaded.value = true; // Đánh dấu rằng dữ liệu đã được tải xong
-        // Sắp xếp dữ liệu theo id giảm dần
-        UserList.value.sort((a, b) => b.id - a.id);
+      const getAllUsers = async () => {
+        try {
+          const role = "USER";
+          const response = await AuthService.getAllUser(role);
+          UserList.value = response;
+          totalItems.value = UserList.value.length;
+          isDataLoaded.value = true; // Đánh dấu rằng dữ liệu đã được tải xong
+          // Sắp xếp dữ liệu theo id giảm dần
+          UserList.value.sort((a, b) => b.id - a.id);
+          UserList.value.forEach((user) => {
+            const birthDay = new Date(...user.birthDay);
+            const formattedBirthDay = format(birthDay, "dd/MM/yyyy");
+            user.formattedBirthDay = formattedBirthDay; // Thêm trường mới để lưu trữ ngày sinh đã định dạng
 
-        // Count the number of users for each month
-        UserList.value.forEach((user) => {
-          const creationDate = new Date(user.createdDate);
-          const month = creationDate.getMonth();
-          userCountByMonth.value[month]++;
+            const creationDate = new Date(...user.createdDate);
+            const formattedDate = format(creationDate, "dd/MM/yyyy HH:mm:ss");
+            user.formattedDate = formattedDate; // Thêm trường mới để lưu trữ thời gian đã định dạng
+            const month = creationDate.getMonth();
+            userCountByMonth.value[month]++;
+          });
+          // Count the number of users for each month
+
+          console.log(UserList.value);
+
+          renderChart(userCountByMonth.value);
+        } catch (error) {
+          console.error("Error fetching the user list: ", error);
+        }
+      };
+
+      const renderChart = (data) => {
+        const ctx = document.getElementById("myChart");
+        new Chart(ctx, {
+          type: "line",
+
+          data: {
+            labels: [
+              "January",
+              "February",
+              "March",
+              "April",
+              "May",
+              "June",
+              "July",
+              "August",
+              "September",
+              "October",
+              "November",
+              "December",
+            ],
+            datasets: [
+              {
+                label: "User Creation by Month",
+                data: data,
+                borderColor: "rgb(201, 41, 230)",
+                tension: 0.1,
+              },
+            ],
+          },
+          options: {
+            animations: {
+              tension: {
+                duration: 1000,
+                easing: "linear",
+                from: 1,
+                to: 0,
+                loop: true,
+              },
+            },
+            scales: {
+              y: {
+                min: 0,
+              },
+            },
+          },
         });
-        console.log(UserList.value);
-
-        renderChart(userCountByMonth.value);
-      } catch (error) {
-        console.error("Error fetching the user list: ", error);
-      }
-    };
-
-    const renderChart = (data) => {
-      const ctx = document.getElementById("myChart");
-      new Chart(ctx, {
-        type: "line",
-
-        data: {
-          labels: [
-            "January",
-            "February",
-            "March",
-            "April",
-            "May",
-            "June",
-            "July",
-            "August",
-            "September",
-            "October",
-            "November",
-            "December",
-          ],
-          datasets: [
-            {
-              label: "User Creation by Month",
-              data: data,
-              fill: "start",
-              borderColor: "rgb(201, 41, 230)",
-              tension: 0.1,
-            },
-          ],
-        },
-        options: {
-          animations: {
-            tension: {
-              duration: 1000,
-              easing: "linear",
-              from: 1,
-              to: 0,
-              loop: true,
-            },
-          },
-          scales: {
-            y: {
-              min: 0,
-            },
-          },
-        },
-      });
-    };
+      };
 
     onMounted(() => {
       getAllUsers();
