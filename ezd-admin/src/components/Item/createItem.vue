@@ -7,11 +7,8 @@
     <startHeaderVue></startHeaderVue>
     <!--end header -->
     
-    <!--Start page wrapper  . Dữ liệu chính-->
-    <!--End page wrapper  . Dữ liệu chính-->
 
-    <!-- search modal -->
-    <searchModal></searchModal>
+
     <!-- end search modal -->
     <!--start switcher-->
     <switcher></switcher>
@@ -21,7 +18,6 @@
 
 <script>
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 
@@ -29,7 +25,6 @@ export default {
     name:"CreateItem",
     components: {
         switcher,
-        searchModal,
         slibarWrapper,
         startHeaderVue
     }

@@ -40,7 +40,7 @@ a {
 
 .sidebar-header {
 	width: 250px;
-	height: 60px;
+	height: 80px;
 	display: flex;
 	align-items: center;
 	position: fixed;
@@ -126,7 +126,9 @@ a {
 .wrapper.toggled .page-footer {
 	left: 70px
 }
-
+.sidebar-wrapper{
+	background-color: #f3c1da;
+}
 .sidebar-wrapper ul {
 	padding: 0;
 	margin: 0;
@@ -135,6 +137,7 @@ a {
 }
 
 .sidebar-wrapper .metismenu {
+
 	background: 0 0;
 	display: -webkit-box;
 	display: -ms-flexbox;
@@ -177,7 +180,7 @@ a {
 	justify-content: left;
 	padding: 6px 16px;
 	font-size: 15px;
-	color: #5f5f5f;
+	color: rgb(179, 44, 156);
 	outline-width: 0;
 	text-overflow: ellipsis;
 	overflow: hidden;
@@ -187,8 +190,8 @@ a {
 }
 
 .sidebar-wrapper .metismenu a .parent-icon {
-	font-size: 24px;
-	line-height: 1
+	font-size: 30px;
+	line-height: 1.15
 }
 
 .sidebar-wrapper .metismenu a .menu-title {
@@ -205,9 +208,7 @@ a {
 	margin-right: 14px;
 }
 
-.sidebar-wrapper .metismenu ul {
-	background: #fff
-}
+
 
 .sidebar-wrapper .metismenu ul ul a {
 	padding: 8px 15px 8px 30px
@@ -221,7 +222,7 @@ a {
 .sidebar-wrapper .metismenu a:active,
 .sidebar-wrapper .metismenu a:focus,
 .sidebar-wrapper .metismenu a:hover {
-	color: #008cff;
+	color: #8f0c79;
     text-decoration: none;
     background-color: rgb(0 140 255 / 5%);
 }

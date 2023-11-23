@@ -29,14 +29,40 @@ const AuthService = {
 
   async getAllUser(role) {
     try {
-      const GET_ALL_USERS = `${baseURL}/auth/?role=${role}`;
+      const GET_ALL_USERS = `${baseURL}/auth/role?role=${role}`;
       return await axiosInstance.get(GET_ALL_USERS).then((response) => {
         return response.data;
       });
     } catch (error) {
       console.error(error);
     }
-  }
+  },
+
+  async getAllAccount() {
+    try {
+      const GET_ALL_USERS = `${baseURL}/auth/`;
+      return await axiosInstance.get(GET_ALL_USERS).then((response) => {
+        return response.data;
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+
+
+  async resetPassword(email) {
+    const RESET_API_URL = `${baseURL}/auth/reset-password?email=${email}`;
+    return await axiosInstance.post(RESET_API_URL).then((response) => {
+      return response.data;
+    });
+  },
+  async updatePassword(email,currentPassword,newPasword) {
+    const UPDATE_PASSWORD_API_URL = `${baseURL}/auth/updatePassword?email=${email}&currentPassword=${currentPassword}&newPasword=${newPasword}`;
+   
+    return await axiosInstance.post(UPDATE_PASSWORD_API_URL).then((response) => {
+      return response.data;
+    });
+  },
 };
 
 export default AuthService;

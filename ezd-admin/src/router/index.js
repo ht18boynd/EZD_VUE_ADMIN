@@ -1,5 +1,5 @@
 
-import { createRouter, createWebHistory } from 'vue-router';
+import { createRouter, createWebHistory } from "vue-router";
 
 import HomePage from '@/components/Home.vue';
 import listGame from '@/components/Games/listGame.vue';
@@ -30,8 +30,8 @@ import ListFeedback from "@/components/Feedback/listFeedback.vue"
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
-  { path: '/login', component: LoginAdmin, meta: { requiresAuth: true } },
-  { path: '/forgotpass', component: ForgotPassword, meta: { requiresAuth: true } },
+  { path: '/login', component: LoginAdmin },
+  { path: '/reset-pass', component: ForgotPassword},
   { path: '/admin/game', component: listGame, meta: { requiresAuth: true } },
   { path: '/admin/game/create', component: CreateGame, meta: { requiresAuth: true } },
   {path: '/admin/game/gameDetails/:id',component: GameDetails, name: "gameDetails",  meta: { requiresAuth: true },  props: true,  },
@@ -59,9 +59,10 @@ const routes = [
 
 ];
 
-const router = createRouter({ history: createWebHistory(), routes });
-
-
+const router = createRouter({
+  history: createWebHistory(),
+  routes: routes,
+});
 
 router.beforeEach((to, from, next) => {
   if (to.matched.some(record => record.meta.requiresAuth)) {

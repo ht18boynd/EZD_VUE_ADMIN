@@ -7,7 +7,6 @@
     <!--start header -->
     <startHeaderVue></startHeaderVue>
     <!--end header -->
-
     <!--start page wrapper  . Dữ liệu chính-->
     <div class="page-wrapper">
       <div class="page-content">
@@ -34,7 +33,7 @@
                             v-model="searchTerm"
                           />
                           <span
-                            class="position-absolute top-50 product-show translate-middle-y"
+                            class="position-absolute top-50 product-show translate-middle-y" @click="searchGames"
                             ><i class="bx bx-search"></i
                           ></span>
                         </div>
@@ -117,9 +116,6 @@
     <!--end page wrapper -->
   </div>
   <!--end wrapper-->
-  <!-- search modal -->
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
   <!--end switcher-->
@@ -130,8 +126,6 @@ import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
 import ForGameService from "@/service/ForGameService";
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
-
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 
 import startHeaderVue from "@/pages/startHeader.vue";
@@ -139,7 +133,6 @@ export default {
   name: "listGame",
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
@@ -156,108 +149,29 @@ export default {
     };
   },
   methods: {
-    // tìm kiếm
-    searchGames() {
-      // Kiểm tra giá trị nhập vào
-      if (!this.searchTerm || this.searchTerm.trim() === "") {
-        this.gamelist = [...this.originalGamelist];
-        return;
-      }
+    async searchGames() {
+  // Kiểm tra giá trị nhập vào
+  if (!this.searchTerm || this.searchTerm.trim() === "") {
+    // Nếu không có từ khóa tìm kiếm, hiển thị toàn bộ danh sách
+    this.gamelist = [...this.originalGamelist];
+    return;
+  }
 
-      const searchTermLower = this.searchTerm.toLowerCase();
+  const searchTermLower = this.searchTerm.toLowerCase();
 
-      // Tạo hàm tùy chỉnh để so sánh các trò chơi
-      const customSort = (a, b) => {
-        // So sánh theo tên Game
-        if (
-          a.nameGame.toLowerCase().includes(searchTermLower) &&
-          !b.nameGame.toLowerCase().includes(searchTermLower)
-        ) {
-          return -1;
-        } else if (
-          !a.nameGame.toLowerCase().includes(searchTermLower) &&
-          b.nameGame.toLowerCase().includes(searchTermLower)
-        ) {
-          return 1;
-        }
+  // Lọc danh sách game dựa trên từ khóa tìm kiếm
+  this.gamelist = this.originalGamelist.filter((game) => {
+    return game.nameGame.toLowerCase().includes(searchTermLower);
+  });
 
-        // So sánh theo tên Level
-        if (
-          a.levels.some((level) =>
-            level.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          !b.levels.some((level) =>
-            level.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return -1;
-        } else if (
-          !a.levels.some((level) =>
-            level.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          b.levels.some((level) =>
-            level.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return 1;
-        }
-
-        // So sánh theo tên Vai Trò (Role)
-        if (
-          a.roles.some((role) =>
-            role.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          !b.roles.some((role) =>
-            role.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return -1;
-        } else if (
-          !a.roles.some((role) =>
-            role.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          b.roles.some((role) =>
-            role.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return 1;
-        }
-
-        // Cuối cùng, so sánh theo tên Gender
-        if (
-          a.genders.some((gender) =>
-            gender.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          !b.genders.some((gender) =>
-            gender.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return -1;
-        } else if (
-          !a.genders.some((gender) =>
-            gender.name.toLowerCase().includes(searchTermLower)
-          ) &&
-          b.genders.some((gender) =>
-            gender.name.toLowerCase().includes(searchTermLower)
-          )
-        ) {
-          return 1;
-        }
-
-        // Không có sự khớp theo bất kỳ tiêu chí ưu tiên nào
-        return 0;
-      };
-
-      // Sắp xếp danh sách game bằng hàm tùy chỉnh
-      this.gamelist.sort(customSort);
-
-      if (this.gamelist.length === 0) {
-        // Không có sự khớp, hiển thị thông báo
-        Swal.fire({
-          text: "Không Tìm Thấy",
-        });
-      }
-    },
+  if (this.gamelist.length === 0) {
+    // Không có sự khớp, hiển thị thông báo
+    Swal.fire({
+      text: "Không Tìm Thấy",
+    });
+    await this.getAllGames();
+  }
+},
 
     // timf trò chơi
     async startEditingGame(gameId) {

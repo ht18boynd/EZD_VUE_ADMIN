@@ -183,7 +183,7 @@
                         })
                       }}
                     </td>
-                    <td>{{ item.luckyTime }}</td>
+                    <td>{{ item.formattedDate }}</td>
                   </tr>
                 </tbody>
               </table>
@@ -225,7 +225,6 @@
       </div>
     </div>
   </div>
-  <searchModal></searchModal>
   <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
@@ -234,17 +233,16 @@
 <script>
 import { ref, onMounted, watch } from "vue";
 import Chart from "chart.js/auto";
-import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 import switcher from "@/pages/switcher.vue";
 import LuckySpinService from "@/service/LuckySpinService";
+import { format } from "date-fns";
 
 export default {
   name: "listLucky",
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
@@ -288,7 +286,7 @@ export default {
       moneyInCurrentMonth.value = 0;
 
       LuckyList.value.forEach((lucky) => {
-        const luckyDate = new Date(lucky.luckyTime);
+        const luckyDate = new Date(...lucky.luckyTime);
         if (luckyDate >= startDateOfMonth && luckyDate <= endDate) {
           itemCountInCurrentMonth.value++;
           moneyInCurrentMonth.value += lucky.point;
@@ -342,7 +340,9 @@ export default {
 
         // Count the number of users for each month
         LuckyList.value.forEach((lucky) => {
-          const creationDate = new Date(lucky.luckyTime);
+          const creationDate = new Date(...lucky.luckyTime);
+            const formattedDate = format(creationDate, "dd/MM/yyyy ");
+            lucky.formattedDate = formattedDate; // Thêm trường mới để lưu trữ thời gian đã định dạng
           const month = creationDate.getMonth();
           userCountByMonth.value[month]++;
         });
