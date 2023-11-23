@@ -114,7 +114,7 @@
           </li>
           <li>
             <a class="has-arrow" 
-              >Danh mucj FAQ</a
+              >Danh mục FAQ</a
             >
             <ul>
               <li>
@@ -137,6 +137,19 @@
               <li>
                 <router-link to="/admin/contact"
                   >Danh Sách Contact</router-link
+                >
+              </li>
+              
+            </ul>
+          </li>
+           <li>
+            <a class="has-arrow" 
+              >Danh mục Feedback</a
+            >
+            <ul>
+              <li>
+                <router-link to="/admin/feedback"
+                  >Danh Sách Feedback</router-link
                 >
               </li>
               

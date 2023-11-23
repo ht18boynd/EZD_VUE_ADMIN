@@ -320,7 +320,7 @@ export default {
     async getAllBlogs() {
       try {
         const response = await BlogService.getAllBlogs();
-        const data = response.data;
+        const data = response.data.sort((a, b) => b.id - a.id);
         //const data = response.data.sort((a, b) => b.id - a.id);
         // Gán giá trị cho cả bannerList và originalBannerList
         this.blogList = data;

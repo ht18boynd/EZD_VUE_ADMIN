@@ -26,6 +26,7 @@ import FailedBecomeList from "@/components/BecomeForm/failedList.vue"
 import ListContact from "@/components/Contact/listContact.vue"
 import ContactDetails from "@/components/Contact/contactDetail.vue"
 import RelayContact from "@/components/Contact/relayContact.vue"
+import ListFeedback from "@/components/Feedback/listFeedback.vue"
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -54,6 +55,7 @@ const routes = [
   { path: '/admin/contact', name: "listContact", component: ListContact, meta: { requiresAuth: true } },
   { path: '/admin/contact/:id', name: "contactDetails", component: ContactDetails, meta: { requiresAuth: true } },
   { path: '/admin/contact/relay/:id', name: "relayContact", component: RelayContact, meta: { requiresAuth: true } },
+  { path: '/admin/feedback', name: "listFeedback", component: ListFeedback, meta: { requiresAuth: true } },
 
 ];
 

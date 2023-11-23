@@ -9,7 +9,7 @@
       <div class="page-content">
         <!--end header -->
 
-        <h1>List Contact</h1>
+        <h1>List Feedback</h1>
         <div class="d-md-flex align-items-center email-message px-3 py-1">
           <div class="d-flex align-items-center email-actions">
             <p class="mb-0"><b>FullName</b></p>
@@ -21,35 +21,41 @@
             <p class="mb-0 email-time"></p>
           </div>
         </div>
+        <br>
         <div class="email-content">
-        <div class="">
-          <div class="email-wrapper">
-            <div class="email-list">
-            <div class=""  v-for="a in contact" :key="a.id">
-              <a @click="viewDetails(a.id)">
-                <div
-                  class="d-md-flex align-items-center email-message px-3 py-1"
-                >
-                  <div class="d-flex align-items-center email-actions">
-                    <input class="form-check-input" type="checkbox" value="" />
-                    <i class="bx bx-star font-20 mx-2 email-star"></i>
-                    <p class="mb-0">
-                      <b>{{ a.fullName }}</b>
-                    </p>
-                  </div>
-                  <div class="">
-                    <p class="mb-0">
-                      {{ a.title }}
-                    </p>
-                  </div>
-                  <div class="ms-auto">
-                    <p class="mb-0 email-time"></p>
+          <div class="">
+            <div class="email-wrapper">
+              <div class="email-list">
+                <div class="" v-for="a in listFeedback" :key="a.id">
+                  <div
+                    class="d-md-flex align-items-center email-message px-3 py-1"
+                  >
+                  
+                    <div class="d-flex align-items-center email-actions">
+                      <p class="mb-0">
+                        <b>{{ a.userName }}</b>
+                      </p>
+                    </div>
+                    <div class=" d-flex align-items- email-actions">
+                      <p class="mb-0">
+                        <template
+                          v-for="i in Array.from({ length: a.rating })"
+                          :key="i"
+                        >
+                          <i class="bx bx-star font-18 mx-2 email-star"></i>
+                        </template>
+                      </p>
+                    </div>
+
+                    <div class="d-flex align-items- email-actions">
+                      <p class="mb-auto ">
+                        {{ a.comment }}
+                      </p>
+                    </div>
                   </div>
                 </div>
-              </a>
-               </div>
+              </div>
             </div>
-          </div>
           </div>
         </div>
       </div>
@@ -72,13 +78,13 @@ import switcher from "@/pages/switcher.vue";
 import searchModal from "@/pages/searchModal.vue";
 // import Swal from "sweetalert2";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
-import ContactService from "@/service/ContactService.js";
+import FeedbackService from "@/service/FeedbackService.js";
 import startHeaderVue from "@/pages/startHeader.vue";
 export default {
-  name: "listContact",
+  name: "listFeedback",
   data() {
     return {
-      contact: [],
+      listFeedback: [],
     };
   },
   components: {
@@ -88,17 +94,11 @@ export default {
     startHeaderVue,
   },
   methods: {
-    viewDetails(contactId) {
-      // Chuyển hướng đến trang xem chi tiết, có thể sử dụng Vue Router hoặc window.location
-      // Ví dụ sử dụng Vue Router:
-      this.$router.push({ name: "contactDetails", params: { id: contactId } });
-    },
     async getAllContacts() {
       try {
-        const response = await ContactService.getAllContacts();
+        const response = await FeedbackService.getAllFeedbacks();
 
-        this.contact = response.data.sort((a, b) => b.id - a.id);
-        console.log(this.contact);
+        this.listFeedback = response.data;
       } catch (error) {
         console.error("Lỗi khi lấy danh sách Contact: ", error);
       }

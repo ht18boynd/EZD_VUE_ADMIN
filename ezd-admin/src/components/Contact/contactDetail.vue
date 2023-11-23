@@ -62,7 +62,7 @@
                 </p>
                
                 <hr />
-                 <button class="btn btn-success"  @click="viewRelay(contact.id)">Relay</button>
+                 <button class="btn btn-success"  @click="viewRelay(contact.id)">Reply</button>
               </div>
             </div>
           

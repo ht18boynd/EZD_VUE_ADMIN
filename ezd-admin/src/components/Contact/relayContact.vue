@@ -46,6 +46,7 @@ import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import ContactService from "@/service/ContactService.js";
 import startHeaderVue from "@/pages/startHeader.vue";
+import Swal from "sweetalert2";
 
 export default {
   name: "relayContact",
@@ -92,9 +93,16 @@ export default {
 
         // Handle the response as needed, e.g., show success message
 
-        console.log("Email sent successfully.");
+        Swal.fire({
+            icon: "success",
+            title: "success",
+          });
+          this.$router.push("/admin/contact");
       } catch (error) {
-        console.error("Error sending email:", error);
+        Swal.fire({
+            icon: "error",
+            title: "success",
+          });
       }
     },
     updateContent(event, editor) {

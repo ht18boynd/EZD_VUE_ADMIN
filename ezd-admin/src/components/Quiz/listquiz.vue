@@ -8,7 +8,7 @@
       <div class="page-content">
         <div class="container">
          <button class="btn btn-outline-dark">
-                  <router-link to="/admin/quiz/create">Tạo Mới FAQ</router-link>
+                  <router-link to="quiz/create">Tạo Mới FAQ</router-link>
                 </button>
           <div class="row">
           

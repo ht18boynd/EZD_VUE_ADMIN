@@ -104,6 +104,7 @@
                     :src="editedBanner.image"
                   />
                 </div>
+                 
                 <div class="form-group">
                   <label></label>
                   <button type="submit" class="btn btn-primary">Update</button>
@@ -312,7 +313,7 @@
           <div class="col-12">
             <!-- danh sách -->
             <h1>List Banner DISABLE</h1>
-            <div v-if="displayedUsers === null">
+            <div v-if="listdisable.length === 0">
               <p>No data available</p>
             </div>
             <div v-else>
@@ -326,7 +327,7 @@
                     <th scope="col"></th>
                   </tr>
                 </thead>
-                <tbody v-for="item in displayedUsers" :key="item.id">
+                <tbody v-for="item in displayedBanners" :key="item.id">
                   <tr v-if="item.status === 'DISABLE'">
                     <td>
                       {{ item.name }}
@@ -401,7 +402,7 @@
               </table>
             </div>
           </div>
-          <div class="pagination-container">
+          <!-- <div class="pagination-container">
             <vue-awesome-paginate :total-items="100" v-model="currentPage">
               <template #prev-button>
                 <span>
@@ -432,7 +433,7 @@
                 </span>
               </template>
             </vue-awesome-paginate>
-          </div>
+          </div> -->
         </div>
       </div>
     </div>
@@ -555,6 +556,7 @@ export default {
         image: "",
       },
       imagePreviewUrl: null,
+      imagePreviewUrlupdate: null,
       submitted: false,
       newBanner: {
         name: "",
@@ -655,9 +657,10 @@ export default {
     },
     handleImageChange(event) {
       const selectedImage = event.target.files[0]; // Lấy hình ảnh đầu tiên trong danh sách chọn
-
+    
       if (selectedImage) {
         // Nếu có hình ảnh được chọn, cập nhật trường "image" và imagePreviewUrl
+        
         this.editedBanner.image = selectedImage;
         // this.editedBanner.image = URL.createObjectURL(selectedImage);
 
@@ -665,8 +668,8 @@ export default {
         let reader = new FileReader();
 
         reader.onload = (e) => {
-          // this.imagePreviewUr = this.imagePreviewUrl;
-          this.imagePreviewUr = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+         
+          this.imagePreviewUrlupdate = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
         };
 
         // Đọc hình ảnh được chọn
@@ -692,6 +695,7 @@ export default {
     async updateBanner() {
       // Thực hiện logic cập nhật banner dựa trên this.editedBanner
       // Gọi API hoặc sử dụng BannerService.editBanner để cập nhật banner
+      
       try {
         // Gọi API hoặc BannerService.editBanner để cập nhật banner
 
