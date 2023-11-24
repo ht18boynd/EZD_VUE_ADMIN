@@ -294,6 +294,9 @@
 
     <!--End page wrapper  . Dữ liệu chính-->
 
+    <!-- search modal -->
+    <searchModal></searchModal>
+    <!-- end search modal -->
     <!--start switcher-->
     <switcher></switcher>
     <!--end switcher-->
@@ -302,6 +305,7 @@
 
 <script>
 import switcher from "@/pages/switcher.vue";
+import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 
@@ -309,7 +313,6 @@ import ItemService from "@/service/ItemService";
 import Swal from "sweetalert2";
 
 export default {
-
   name: "ListItem",
   components: {
     switcher,
@@ -363,16 +366,7 @@ export default {
       this.imageReview = null;
       this.isImageSelected = true;
     },
-=======
-    name:"ListItem",
-    components: {
-        switcher,
-        slibarWrapper,
-        startHeaderVue
-    }
-}
-</script>
-<style>
+
     async getItemById(id) {
       try {
         const response = await ItemService.getItemById(id);
