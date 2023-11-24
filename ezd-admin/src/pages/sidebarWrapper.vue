@@ -15,7 +15,7 @@
       <div class="toggle-icon ms-auto"><i class="bx bx-arrow-back"></i></div>
     </div>
     <!--navigation-->
-    <ul class="metismenu" id="menu" >
+    <ul class="metismenu" id="menu">
       <li>
         <router-link to="/">
           <div class="parent-icon"><i class="bx bx-line-chart"></i></div>
@@ -23,15 +23,13 @@
         </router-link>
       </li>
       <li>
-        <a class="has-arrow"  @click="clicknguoidung =!clicknguoidung">
+        <a class="has-arrow" @click="clicknguoidung = !clicknguoidung">
           <div class="parent-icon"><i class="bx bx-user-circle"></i></div>
           <div class="menu-title">Quản Lý Người Dùng</div>
-        </a >
+        </a>
         <ol v-if="clicknguoidung">
           <li>
-            <a class="has-arrow" 
-              >Quản Lý User</a
-            >
+            <a class="has-arrow">Quản Lý User</a>
             <ul>
               <li>
                 <router-link to="/admin/user/listUser"
@@ -41,9 +39,7 @@
             </ul>
           </li>
           <li>
-            <a class="has-arrow" 
-              >Quản Lý Idol</a
-            >
+            <a class="has-arrow">Quản Lý Idol</a>
             <ul>
               <li>
                 <router-link to="/admin/user/listStaf"
@@ -56,37 +52,49 @@
       </li>
 
       <li>
-        <a class="has-arrow"  @click="clickhomepage =!clickhomepage">
+        <a class="has-arrow" @click="clickhomepage = !clickhomepage">
           <div class="parent-icon"><i class="bx bx-home-alt"></i></div>
           <div class="menu-title">Quản Lý Home Page</div>
         </a>
         <ol v-if="clickhomepage">
           <li>
-            <a class="has-arrow" 
-              >Danh Mục Game</a
-            >
+            <a class="has-arrow">Danh Mục Game</a>
             <ul>
               <li>
-                <router-link to="/admin/game"
-                  >Danh Sách Game</router-link
-                >
+                <router-link to="/admin/game">Danh Sách Game</router-link>
               </li>
               <li>
-                <router-link to="/admin/game/create"
-                  >Tạo Mới Game</router-link
-                >
+                <router-link to="/admin/game/create">Tạo Mới Game</router-link>
               </li>
             </ul>
           </li>
           <li>
-            <a class="has-arrow" 
-              >Danh Mục Banner</a
-            >
+            <a class="has-arrow">Danh Mục Item</a>
             <ul>
               <li>
-                <router-link to="/admin/banner"
-                  >Danh Sách Banner</router-link
-                >
+                <router-link to="/admin/item">Danh Sách Item</router-link>
+              </li>
+              <li>
+                <router-link to="/admin/item/create">Tạo Mới Item</router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow">Danh Mục Rank</a>
+            <ul>
+              <li>
+                <router-link to="/admin/rank">Danh Sách Rank</router-link>
+              </li>
+              <li>
+                <router-link to="/admin/rank/create">Tạo Mới Rank</router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow">Danh Mục Banner</a>
+            <ul>
+              <li>
+                <router-link to="/admin/banner">Danh Sách Banner</router-link>
               </li>
               <li>
                 <router-link to="/admin/banner/create"
@@ -96,59 +104,48 @@
             </ul>
           </li>
           <li>
-            <a class="has-arrow" 
-              >Danh Mục Blog</a
-            >
+            <a class="has-arrow">Danh Mục Blog</a>
             <ul>
               <li>
-                <router-link to="/admin/blog"
-                  >Danh Sách Blog</router-link
-                >
+                <router-link to="/admin/blog">Danh Sách Blog</router-link>
               </li>
               <li>
-                <router-link to="/admin/blog/create"
-                  >Tạo Mới Blog</router-link
-                >
+                <router-link to="/admin/blog/create">Tạo Mới Blog</router-link>
               </li>
             </ul>
           </li>
           <li>
-            <a class="has-arrow" 
-              >Danh mucj FAQ</a
-            >
+            <a class="has-arrow">Danh mục FAQ</a>
             <ul>
               <li>
-                <router-link to="/admin/quiz"
-                  >Danh Sách FAQ</router-link
-                >
+                <router-link to="/admin/quiz">Danh Sách FAQ</router-link>
               </li>
               <li>
-                <router-link to="/admin/quiz/create"
-                  >Tạo Mới FAQ</router-link
-                >
+                <router-link to="/admin/quiz/create">Tạo Mới FAQ</router-link>
               </li>
             </ul>
           </li>
         </ol>
       </li>
       <li>
-        
-        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" @click="clickDon=!clickDon">
+        <a
+          class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative"
+          @click="clickDon = !clickDon"
+        >
           <div class="parent-icon">
             <span class="alert-count">10</span>
-            <i class="bx bx-bell" style="color:red"></i></div>
-          <div class="menu-title"> Quản Lý Đơn</div>
+            <i class="bx bx-bell" style="color: red"></i>
+          </div>
+          <div class="menu-title">Quản Lý Đơn</div>
         </a>
         <ol v-if="clickDon">
           <li>
-            <a class="has-arrow"  @click="DangKyIdol=!DangKyIdol"
+            <a class="has-arrow" @click="DangKyIdol = !DangKyIdol"
               >Đăng Ký Idol</a
             >
             <ul v-if="DangKyIdol">
               <li>
-                <router-link to="/admin/become"
-                  >Danh Sách Chờ</router-link
-                >
+                <router-link to="/admin/become">Danh Sách Chờ</router-link>
               </li>
               <li>
                 <router-link to="/admin/become/success"
@@ -163,29 +160,23 @@
             </ul>
           </li>
           <li>
-            <a class="has-arrow"  @click="DangKySanPham=!DangKySanPham"
+            <a class="has-arrow" @click="DangKySanPham = !DangKySanPham"
               >Đăng Ký Sản Phẩm</a
             >
             <ul v-if="DangKySanPham">
               <li>
-                <router-link to="#"
-                  >Danh Sách Đơn Chờ</router-link
-                >
+                <router-link to="#">Danh Sách Đơn Chờ</router-link>
               </li>
               <li>
-                <router-link to="#"
-                  >Danh Sách Từ Chối</router-link
-                >
+                <router-link to="#">Danh Sách Từ Chối</router-link>
               </li>
               <li>
-                <router-link to="#"
-                  >Danh Sách Chấp Nhận</router-link
-                >
+                <router-link to="#">Danh Sách Chấp Nhận</router-link>
               </li>
             </ul>
           </li>
           <li>
-            <a class="has-arrow"  @click="DanhSachNap=!DanhSachNap"
+            <a class="has-arrow" @click="DanhSachNap = !DanhSachNap"
               >Danh Sách Nạp Coin</a
             >
             <ul v-if="DanhSachNap">
@@ -207,14 +198,12 @@
             </ul>
           </li>
           <li>
-            <a class="has-arrow" @click="DanhSachLucky=!DanhSachLucky"
+            <a class="has-arrow" @click="DanhSachLucky = !DanhSachLucky"
               >Danh Sách Lucky Spin</a
             >
             <ul v-if="DanhSachLucky">
               <li>
-                <router-link to="/admin/user/listLucky"
-                  >Danh Sách</router-link
-                >
+                <router-link to="/admin/user/listLucky">Danh Sách</router-link>
               </li>
             </ul>
           </li>
@@ -227,7 +216,7 @@
 </template>
 
 <script>
-import {userInfo} from "@/store"
+import { userInfo } from "@/store";
 
 export default {
   name: "slibarWrapper",
@@ -235,9 +224,13 @@ export default {
     return {
       BASE_URL: process.env.BASE_URL,
       role: userInfo.value,
-      clicknguoidung:false,clickhomepage:false,clickDon:false,
-      DangKyIdol:false,DangKySanPham:false,DanhSachNap:false,DanhSachLucky:false
-      
+      clicknguoidung: false,
+      clickhomepage: false,
+      clickDon: false,
+      DangKyIdol: false,
+      DangKySanPham: false,
+      DanhSachNap: false,
+      DanhSachLucky: false,
     };
   },
 };
@@ -251,7 +244,6 @@ li .menu-title {
   font-size: 16px; /* Cỡ chữ */
   transition: color 0.2s; /* Hiệu ứng màu khi di chuột qua */
   color: rgb(251, 146, 60);
-
 }
 ul li a {
   font-family: "Times New Roman Bold";

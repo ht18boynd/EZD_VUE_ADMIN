@@ -129,7 +129,7 @@
                   </tr>
                 </thead>
                 <tbody>
-  <tr v-for="item in displayedBanners" :key="item.id">
+                  <tr v-for="item in displayedBanners" :key="item.id">
                     <td>
                       {{ item.name }}
                     </td>
@@ -258,7 +258,6 @@ import "sweetalert2/dist/sweetalert2.min.css";
 
 export default {
   name: "createBanner",
- 
 
   data() {
     return {
@@ -462,16 +461,16 @@ export default {
         imageHeight: 400,
       });
     },
-   async getAllBanners() {
-  try {
-    const response = await BannerService.getAllBanners();
-    const data = response.data;
-    this.bannerList = data;
-    this.updatePagination(); // Thêm dòng này để cập nhật phân trang
-  } catch (error) {
-    console.error("Lỗi khi lấy danh sách banner: ", error);
-  }
-},
+    async getAllBanners() {
+      try {
+        const response = await BannerService.getAllBanners();
+        const data = response.data;
+        this.bannerList = data;
+        this.updatePagination(); // Thêm dòng này để cập nhật phân trang
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách banner: ", error);
+      }
+    },
 
     async addBanner() {
       this.validatename();

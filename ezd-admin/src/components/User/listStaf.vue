@@ -108,8 +108,10 @@
                     <th>Balance</th>
                     <th>Status</th>
                     <th>Role</th>
+                    <th>Rank Name</th>
                     <th>BirthDay</th>
                     <th>Created Date</th>
+                    
                   </tr>
                 </thead>
                 <tbody>
@@ -135,6 +137,7 @@
                       {{ item.status }}
                     </td>
                     <td>{{ item.role }}</td>
+                    <td>{{ item.currentRank.rank_name }}</td>
                     <td>{{ item.birthDay }}</td>
                     <td>{{ item.createdDate }}</td>
                   </tr>
