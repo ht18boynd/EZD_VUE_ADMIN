@@ -26,3 +26,4 @@ export let userInfo = ref(null);
         console.error("Lỗi khi lấy thông tin người dùng: " + error);
       });
   }
+  // Mutation để cập nhật userInfo

@@ -4,11 +4,7 @@
     <div class="topbar d-flex align-items-center">
       <nav class="navbar navbar-expand gap-3">
         <div class="top-menu">
-         
-          <!-- <img
-          :src="BASE_URL + 'assets/images/county/02.png'"
-          width="22"
-        /> -->
+         <h4 style="color:rebeccapurple">Xin Chào :   {{user.name}}</h4>
         </div>
         <div class="top-menu ms-auto">
           <router-link to="/login" @click="Logout"
@@ -23,13 +19,13 @@
 
 <script>
 import Swal from "sweetalert2";
-
+import { userInfo } from "@/store";
 export default {
   name: "startHeader",
   data() {
     return {
       BASE_URL: process.env.BASE_URL,
-    };
+      user: userInfo.value,    };
   },
   
   methods: {
@@ -49,5 +45,7 @@ export default {
       });
     },
   },
+
+
 };
 </script>

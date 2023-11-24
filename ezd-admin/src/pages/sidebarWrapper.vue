@@ -201,13 +201,9 @@
 
       <!-- Quản Lý Đơn -->
       <li>
-        <a
-          class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative"
-          @click="clickDon = !clickDon"
-        >
-        <a class="nav-link dropdown-toggle dropdown-toggle-nocaret position-relative" @click="toggleCategory('don')">
+        <a class="has-arrow" @click="toggleCategory('don')">
+
           <div class="parent-icon">
-            <span class="alert-count">10</span>
             <i class="bx bx-bell" style="color: red"></i>
           </div>
           <div class="menu-title">Quản Lý Đơn</div>
