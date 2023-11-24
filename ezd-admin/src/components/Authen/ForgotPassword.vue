@@ -64,8 +64,9 @@
                       </button>
                     </form>
                   </div>
+                  <hr>
                   <div>
-                    <router-link to="/login" class="btn btn-light"
+                    <router-link to="/login"
                       ><i class="bx bx-arrow-back me-1"></i>Back to
                       Login</router-link
                     >
