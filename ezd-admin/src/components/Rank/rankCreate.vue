@@ -32,7 +32,12 @@
             <h5 class="card-title">Tạo rank mới</h5>
             <hr />
             <div class="form-body mt-4">
-              <form @submit.prevent="confirmCreateNewRank">
+              <form
+                class="row g-3 needs-validation was-validated"
+                novalidate
+                enctype="multipart/form-data"
+                @submit.prevent="confirmCreateNewRank"
+              >
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="border border-3 p-4 rounded">
@@ -46,7 +51,12 @@
                           id="rankName"
                           class="form-control"
                           placeholder="Enter product title"
+                          required
                         />
+                        <div class="valid-feedback">Hợp lệ</div>
+                        <div class="invalid-feedback">
+                          Vui Lòng Nhập Tên Xếp Hạng
+                        </div>
                       </div>
                       <div class="mb-3">
                         <div class="row g-3">
@@ -55,20 +65,30 @@
                               >Số Tiền Tối Thiểu</label
                             >
                             <input
-                              v-model="rankData.minimum_balance"
-                              type="number"
+                              type="text"
+                              v-model="formattedPriceMinimum"
                               id="minimumBalance"
+                              required
                             />
+                            <div class="valid-feedback">Hợp lệ</div>
+                            <div class="invalid-feedback">
+                              Vui Lòng Nhập Số Tiền Nhỏ Nhất
+                            </div>
                           </div>
                           <div class="col-md-3">
                             <label for="maximumBalance"
                               >Số Tiền Đạt Theo Yêu Cầu</label
                             >
                             <input
-                              v-model="rankData.maximum_balance"
-                              type="number"
+                              v-model="formattedPriceMaximum"
+                              type="text"
                               id="maximumBalance"
+                              required
                             />
+                            <div class="valid-feedback">Hợp lệ</div>
+                            <div class="invalid-feedback">
+                              Vui Lòng Nhập Số Tiền Lớn Nhất
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -205,6 +225,41 @@ export default {
     },
     async createNewRank() {
       try {
+        if (
+          !this.rankData.rank_name ||
+          !this.rankData.minimum_balance ||
+          !this.rankData.maximum_balance ||
+          !this.rankData.avatar_frame_image
+        ) {
+          // Sử dụng thư viện Swal để hiển thị thông báo lỗi
+          await Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Không được bỏ trống. Vui lòng nhập tên Xếp Hạng",
+          });
+          return; // Ngừng thực hiện hàm nếu có lỗi
+        }
+        // Kiểm tra minimum_balance
+        if (parseFloat(this.rankData.minimum_balance) < 0) {
+          await Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Minimum balance phải lớn hơn hoặc bằng 0",
+          });
+          return;
+        }
+        // Kiểm tra maximum_balance
+        if (
+          parseFloat(this.rankData.maximum_balance) <=
+          parseFloat(this.rankData.minimum_balance)
+        ) {
+          await Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Maximum balance phải lớn hơn minimum balance, nhập maxium trước để tránh lỗi xảy ra. Vui lòng nhập lại.",
+          });
+          return;
+        }
         const formData = new FormData();
         formData.append("rank_name", this.rankData.rank_name);
         formData.append("minimum_balance", this.rankData.minimum_balance);
@@ -257,7 +312,64 @@ export default {
       }
     },
   },
-
+  computed: {
+    formattedPriceMinimum: {
+      get() {
+        // Hiển thị giá trị theo định dạng số thập phân và thêm đơn vị VNĐ
+        return parseFloat(this.rankData.minimum_balance).toLocaleString(
+          "en-US",
+          {
+            // style: "currency",
+            // currency: "VND",
+            minimumFractionDigits: 0, // Số lượng số thập phân tối thiểu
+            maximumFractionDigits: 2,
+          }
+        );
+        // Đưa đơn vị tiền "VNĐ" về sau số thập phân
+      },
+      set(value) {
+        // Lưu giá trị dưới dạng số khi người dùng nhập
+        this.rankData.minimum_balance = parseFloat(
+          value.replace(/[^\d.]/g, "")
+        );
+        if (this.rankData.minimum_balance > 999999999) {
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Giá tiền rank không được vượt quá 1 tỷ",
+          });
+          return (this.rankData.minimum_balance = 0);
+        }
+      },
+    },
+    formattedPriceMaximum: {
+      get() {
+        // Hiển thị giá trị theo định dạng số thập phân và thêm đơn vị VNĐ
+        return parseFloat(this.rankData.maximum_balance).toLocaleString(
+          "en-US",
+          {
+            minimumFractionDigits: 0, // Số lượng số thập phân tối thiểu
+            maximumFractionDigits: 2,
+          }
+        );
+        // Đưa đơn vị tiền "VNĐ" về sau số thập phân
+      },
+      set(value) {
+        // Lưu giá trị dưới dạng số khi người dùng nhập
+        this.rankData.maximum_balance = parseFloat(
+          value.replace(/[^\d.]/g, "")
+        );
+        if (this.rankData.maximum_balance > 999999999) {
+          Swal.fire({
+            icon: "error",
+            title: "Lỗi",
+            text: "Giá tiền rank không được vượt quá 1 tỷ",
+          });
+          return (this.rankData.maximum_balance = 0);
+        }
+      },
+    },
+  },
   created() {
     // this.createNewRank();
   },

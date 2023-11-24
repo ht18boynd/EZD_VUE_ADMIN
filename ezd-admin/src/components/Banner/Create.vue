@@ -230,8 +230,12 @@
                     <th scope="col"></th>
                   </tr>
                 </thead>
+                <tbody>
+                  <tr v-for="item in displayedBanners" :key="item.id">
+
                 <tbody v-for="item in displayedBanners" :key="item.id">
                   <tr v-if="item.status === 'PENDING'">
+
                     <td>
                       {{ item.name }}
                     </td>
@@ -546,6 +550,7 @@ export default {
     };
   },
 
+
   data() {
     return {
       // displayedBanners: [], // Mản
@@ -754,6 +759,18 @@ export default {
         imageHeight: 400,
       });
     },
+
+    async getAllBanners() {
+      try {
+        const response = await BannerService.getAllBanners();
+        const data = response.data;
+        this.bannerList = data;
+        this.updatePagination(); // Thêm dòng này để cập nhật phân trang
+      } catch (error) {
+        console.error("Lỗi khi lấy danh sách banner: ", error);
+      }
+    },
+
     // async getAllBanners() {
     //   try {
     //     const response = await BannerService.getAllBanners();

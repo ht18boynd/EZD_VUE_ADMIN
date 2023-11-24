@@ -107,6 +107,9 @@
                     <th>Gender</th>
                     <th>Balance</th>
                     <th>Status</th>
+
+                    <th>Role</th>
+                    <th>Rank Name</th>
                     <th>BirthDay</th>
                     <th>Created Date</th>
                   </tr>
@@ -135,6 +138,10 @@
                     <td v-if="item.status === 'ON' ">
                       <img width="16" height="16" src="https://img.icons8.com/tiny-color/16/connection-status-on.png" alt="connection-status-on"/>
                     </td>
+                    <td>{{ item.role }}</td>
+                    <td>{{ item.currentRank.rank_name }}</td>
+                    <td>{{ item.birthDay }}</td>
+                    <td>{{ item.createdDate }}</td>
                     <td v-else>
                       <img width="16" height="16" src="https://img.icons8.com/tiny-color/16/000000/connection-status-on.png" alt="connection-status-on"/>
                     </td>

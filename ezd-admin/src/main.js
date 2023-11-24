@@ -6,7 +6,7 @@ import "vue-awesome-paginate/dist/style.css";
 
 import router from './router/index'
 
-const app = createApp(App)
-app.use(router)
+createApp(App)
+.use(router)
 .use(VueAwesomePaginate)
-app.mount('#app')
+.mount('#app')
