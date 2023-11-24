@@ -27,7 +27,7 @@
           </div>
         </div>
         <!--end breadcrumb-->
-        <!-- <div class="row">
+        <div class="row">
           <div class="col-12">
             <div class="card">
               <div class="card-body">
@@ -43,19 +43,14 @@
               </div>
             </div>
           </div>
-        </div> -->
+        </div>
         <!-- Start Edit Rank -->
-        <div v-if="isEditDialogOpen" ref="editForm" class="card">
+        <div v-if="isEditDialogOpen" class="card">
           <div class="card-body p-4">
             <h5 class="card-title">Cập nhật rank</h5>
             <hr />
             <div class="form-body mt-4">
-              <form
-                class="row g-3 needs-validation was-validated"
-                novalidate
-                enctype="multipart/form-data"
-                @submit.prevent="updateRank"
-              >
+              <form @submit.prevent="updateRank">
                 <div class="row">
                   <div class="col-lg-12">
                     <div class="border border-3 p-4 rounded">
@@ -71,10 +66,6 @@
                           class="form-control"
                           placeholder="Enter product title"
                         />
-                        <div class="valid-feedback">Hợp lệ</div>
-                        <div class="invalid-feedback">
-                          Vui Lòng Nhập Tên Xếp Hạng
-                        </div>
                       </div>
                       <div class="mb-3">
                         <div class="row g-3">
@@ -83,34 +74,20 @@
                               >Số Tiền Tối Thiểu</label
                             >
                             <input
-                              v-bind="listRanks.minimum_balance"
-                              v-model="formattedMinimumBalance"
-                              type="text"
+                              v-model="editRankData.minimum_balance"
+                              type="number"
                               id="minimumBalance"
-                              class="form-control"
-                              placeholder="Enter product title"
                             />
-                            <div class="valid-feedback">Hợp lệ</div>
-                            <div class="invalid-feedback">
-                              Vui Lòng Nhập Giá Tiền Nhỏ Nhất
-                            </div>
                           </div>
                           <div class="col-md-3">
                             <label for="maximumBalance"
                               >Số Tiền Đạt Theo Yêu Cầu</label
                             >
                             <input
-                              v-bind="listRanks.maximum_balance"
-                              v-model="formattedMaximumBalance"
-                              type="text"
+                              v-model="editRankData.maximum_balance"
+                              type="number"
                               id="maximumBalance"
-                              class="form-control"
-                              placeholder="Enter product title"
                             />
-                            <div class="valid-feedback">Hợp lệ</div>
-                            <div class="invalid-feedback">
-                              Vui Lòng Nhập Giá Tiền Lớn Nhất
-                            </div>
                           </div>
                         </div>
                       </div>
@@ -132,7 +109,7 @@
                             <img
                               id="previewImage"
                               class="img-fluid"
-                              v-if="avatarImage"
+                              v-if="editRankData.imageAvatar"
                               :src="imageAvatar"
                               alt="Preview"
                             />
@@ -157,7 +134,7 @@
                             <img
                               id="previewImage"
                               class="img-fluid"
-                              v-if="backgroundImage"
+                              v-if="editRankData.imageBackground"
                               :src="imageBackground"
                               alt="Preview"
                             />
@@ -165,23 +142,12 @@
                         </div>
                       </div>
                     </div>
-                    <br/>
-                    <div class="row">
-                      <div class="col-md-6 text-md-end">
-                        <button type="submit" class="btn btn-primary">
-                          Cập nhật
-                        </button>
-                      </div>
-                      <div class="col-md-6 text-md-start">
-                        <button
-                          type="submit"
-                          class="btn btn-danger"
-                          @click="closeEditDialog"
-                        >
-                          Đóng
-                        </button>
-                      </div>
-                    </div>
+                    <button
+                      type="submit"
+                      class="btn btn-primary px-5 radius-30"
+                    >
+                      Lưu Xếp Hạng
+                    </button>
                   </div>
                 </div>
               </form>
@@ -191,21 +157,28 @@
         <!-- End Edit Rank -->
         <hr />
         <h6 class="mb-0 text-uppercase">Danh sách Rank đã tạo</h6>
-        <br />
+        <hr />
         <div class="card">
           <div class="card-body">
             <div class="table-responsive">
               <div class="row">
                 <div class="col-sm-12 col-md-6">
                   <div class="dataTables_length" id="example_length">
-                    <a
-                      href="/admin/rank/create"
-                      class="btn btn-primary mb-3 mb-lg-0"
-                      ><i class="bx bxs-plus-square"></i>Tạo rank mới</a
-                    >
+                    <label>
+                      <select
+                        class="form-select form-select-sm"
+                        aria-controls="example"
+                        name="example_length"
+                      >
+                        <option value="10">10</option>
+                        <option value="25">25</option>
+                        <option value="50">50</option>
+                        <option value="100">100</option>
+                      </select>
+                    </label>
                   </div>
                 </div>
-                <!-- <div class="col-sm-12 col-md-6">
+                <div class="col-sm-12 col-md-6">
                   <div class="dataTables_filter">
                     <input
                       type="search"
@@ -214,7 +187,7 @@
                       aria-controls="example"
                     />
                   </div>
-                </div> -->
+                </div>
               </div>
               <br />
               <div class="row">
@@ -226,72 +199,40 @@
                   >
                     <thead>
                       <tr>
-                        <th class="align-middle text-center">Tên xếp hạng</th>
-                        <th class="align-middle text-center">
-                          Số tiền tối thiểu
-                        </th>
-                        <th class="align-middle text-center">
-                          Số tiền cần đạt
-                        </th>
-                        <th class="align-middle text-center">Khung Avatar</th>
-                        <th class="align-middle text-center">Hình nền</th>
-                        <th class="align-middle text-center">Action</th>
+                        <th>Tên xếp hạng</th>
+                        <th>Số tiền tối thiểu</th>
+                        <th>Số tiền cần đạt</th>
+                        <th>Khung Avatar</th>
+                        <th>Hình nền</th>
+                        <th>Action</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr v-for="rank in paginatedList" :key="rank.id">
-                        <!-- <td> {{rank.id}}</td> -->
-                        <td class="align-middle">{{ rank.rank_name }}</td>
-                        <td class="align-middle text-center">
-                          {{
-                            rank.minimum_balance.toLocaleString("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            })
-                          }}
-                        </td>
-                        <td class="align-middle text-center">
-                          {{
-                            rank.maximum_balance.toLocaleString("vi-VN", {
-                              style: "currency",
-                              currency: "VND",
-                            })
-                          }}
-                        </td>
-                        <td class="align-middle text-center">
-                          <img
-                            :src="rank.avatar_frame_image"
-                            width="150"
-                            height="150"
-                            class="border rounded cursor-pointer"
-                          />
-                        </td>
-                        <td class="align-middle text-center">
-                          <img
-                            :src="rank.background_image"
-                            width="200"
-                            height="50"
-                            class="border rounded cursor-pointer"
-                          />
-                        </td>
-                        <td class="align-middle text-center">
-                          <div class="d-flex justify-content-center">
-                            <div class="me-3">
+                      <tr v-for="rank in listRanks" :key="rank.rank_id">
+                        <!-- <td> {{rank.rank_id}}</td> -->
+                        <td>{{ rank.rank_name }}</td>
+                        <td>{{ rank.minimum_balance }}</td>
+                        <td>{{ rank.maximum_balance }}</td>
+                        <td><img :src="rank.avatar_frame_image" /></td>
+                        <td><img :src="rank.background_image" /></td>
+                        <td>
+                          <div class="row row-cols-auto g-3">
+                            <div class="col">
                               <button
                                 type="button"
                                 class="btn btn-outline-success"
                               >
                                 <i
                                   class="lni lni-pencil me-0"
-                                  @click="openEditDialog(rank.id)"
+                                  @click="openEditDialog(rank.rank_id)"
                                 ></i>
                               </button>
                             </div>
-                            <div class="me-3">
+                            <div class="col">
                               <button
                                 type="button"
                                 class="btn btn-outline-danger"
-                                @click="deleteRank(rank.id)"
+                                @click="deleteRank(rank.rank_id)"
                               >
                                 <i class="lni lni-trash me-0"></i>
                               </button>
@@ -303,47 +244,7 @@
                   </table>
                 </div>
               </div>
-              <!-- Phân trang -->
-              <nav aria-label="Page navigation example">
-                <ul class="pagination">
-                  <li
-                    class="page-item"
-                    :class="{ disabled: currentPage === 1 }"
-                  >
-                    <a
-                      class="page-link"
-                      @click="changePage(currentPage - 1)"
-                      aria-label="Previous"
-                    >
-                      <span aria-hidden="true">&laquo;</span>
-                    </a>
-                  </li>
-
-                  <li
-                    v-for="page in pages"
-                    :key="page"
-                    class="page-item"
-                    :class="{ active: page === currentPage }"
-                  >
-                    <a class="page-link" @click="changePage(page)">{{
-                      page
-                    }}</a>
-                  </li>
-
-                  <li
-                    class="page-item"
-                    :class="{ disabled: currentPage === totalPages }"
-                  >
-                    <a
-                      class="page-link"
-                      @click="changePage(currentPage + 1)"
-                      aria-label="Next"
-                    >
-                      <span aria-hidden="true">&raquo;</span>
-                    </a>
-                  </li>
-                </ul>
-              </nav>
+              <div class="row"></div>
             </div>
           </div>
         </div>
@@ -380,12 +281,9 @@ export default {
   data() {
     return {
       isEditDialogOpen: false,
-      isLoading: false,
-      itemsPerPage: 3,
-      currentPage: 1,
       listRanks: [],
       editRankData: {
-        id: null,
+        rank_id: null,
         rank_name: "",
         minimum_balance: 0,
         maximum_balance: 0,
@@ -394,7 +292,6 @@ export default {
       },
       avatarImage: null,
       backgroundImage: null,
-      isImageSelected: false,
     };
   },
 
@@ -403,23 +300,14 @@ export default {
       // Mở Dialog và gán dữ liệu của rank vào editRankData
       this.getRankById(rank);
       this.isEditDialogOpen = true;
-      this.scrollToEditForm();
       this.editRankData = { ...rank };
-      this.isImageSelected = true;
     },
-    scrollToEditForm() {
-      this.$nextTick(() => {
-        this.$refs.editForm.scrollIntoView({
-          behavior: "smooth",
-          block: "start",
-        });
-      });
-    },
+
     closeEditDialog() {
       // Đóng Dialog và làm sạch dữ liệu editRankData
       this.isEditDialogOpen = false;
       this.editRankData = {
-        id: null,
+        rank_id: null,
         rank_name: "",
         minimum_balance: 0,
         maximum_balance: 0,
@@ -427,7 +315,6 @@ export default {
         background_image: null,
       };
       (this.avatarImage = null), (this.backgroundImage = null);
-      this.isImageSelected = true;
     },
 
     async getRankById(id) {
@@ -446,107 +333,34 @@ export default {
       if (file) {
         // Check which type of image is being uploaded and update the corresponding property
         if (type === "avatarImage") {
-          this.avatarImage = file;
-          this.editRankData.avatar_frame_image = null;
+          this.editRankData.avatar_frame_image = file;
           this.imageAvatar = URL.createObjectURL(file);
         } else if (type === "backgroundImage") {
-          this.backgroundImage = file;
-          this.editRankData.avatar_frame_image = null;
+          this.editRankData.background_image = file;
           this.imageBackground = URL.createObjectURL(file);
         }
       }
     },
     async updateRank() {
-      if (!this.editRankData.maximum_balance) {
-        // Sử dụng thư viện Swal để hiển thị thông báo lỗi
-        await Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: "Vui lòng nhập số tiền lớn nhất!",
-        });
-        return; // Ngừng thực hiện hàm nếu có lỗi
-      }
-      if (!this.editRankData.minimum_balance) {
-        // Sử dụng thư viện Swal để hiển thị thông báo lỗi
-        await Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: "Vui lòng nhập số tiền nhỏ nhất!",
-        });
-        return; // Ngừng thực hiện hàm nếu có lỗi
-      }
-      if (!this.editRankData.rank_name) {
-        // Sử dụng thư viện Swal để hiển thị thông báo lỗi
-        await Swal.fire({
-          icon: "error",
-          title: "Lỗi",
-          text: "Vui lòng nhập tên xếp hạng!",
-        });
-        return; // Ngừng thực hiện hàm nếu có lỗi
-      }
-      if (!this.avatarImage) {
-        await Swal.fire({
-          icon: "warning",
-          text: "Vui lòng chọn lại khung viền của avatar",
-        });
-        return;
-      }
-      if (!this.backgroundImage) {
-        await Swal.fire({
-          icon: "warning",
-          text: "Vui lòng chọn bảng hiệu rank",
-        });
-        return;
-      }
-
       try {
-        Swal.fire({
-          html: '<div class="spinner-border" style="width: 3rem; height: 3rem;" role="status"><span class="visually-hidden">Loading...</span></div>',
-          showCancelButton: false,
-          showConfirmButton: false,
-          allowOutsideClick: false,
-          willOpen: async () => {
-            try {
-              this.isLoading = true;
-              const formData = new FormData();
-              formData.append("rank_name", this.editRankData.rank_name);
-              formData.append(
-                "minimum_balance",
-                this.editRankData.minimum_balance
-              );
-              formData.append(
-                "maximum_balance",
-                this.editRankData.maximum_balance
-              );
-              formData.append("adminFrameImage", this.avatarImage);
-              formData.append("backgroundImage", this.backgroundImage);
+        const formData = new FormData();
+        formData.append("rank_name", this.editRankData.rank_name);
+        formData.append("minimum_balance", this.editRankData.minimum_balance);
+        formData.append("maximum_balance", this.editRankData.maximum_balance);
+        formData.append("adminFrameImage", this.editRankData.avatar_frame_image);
+        formData.append("backgroundImage", this.editRankData.background_image);
 
-              await RankService.updateRank(this.editRankData.id, formData);
+        await RankService.updateRank(
+          this.editRankData.rank_id,
+          formData
+        );
 
-              // Đóng Dialog và làm sạch dữ liệu editRankData sau khi cập nhật thành công
-              this.closeEditDialog();
+        // Đóng Dialog và làm sạch dữ liệu editRankData sau khi cập nhật thành công
+        // this.closeEditDialog();
 
-              // Refresh danh sách ranks sau khi cập nhật
-              await this.getAllRanks();
-
-              Swal.close();
-              await Swal.fire({
-                icon: "success",
-                title: "Thành công",
-                text: "Rank đã được cập nhật thành công!",
-              });
-            } catch (error) {
-              console.error("Error updating rank:", error);
-              Swal.close();
-              await Swal.fire({
-                icon: "error",
-                text: "Error updating rank: " + error.message,
-              });
-            } finally {
-              this.isLoading = false;
-            }
-          },
-        });
+        // Refresh danh sách ranks sau khi cập nhật
+        this.getAllRanks();
+        this.$router.push("/admin/rank");
       } catch (error) {
         console.error("Error updating rank:", error);
       }
@@ -593,85 +407,7 @@ export default {
         console.error("Lỗi khi xóa xếp hạng: ", error);
       }
     },
-    changePage(page) {
-      if (page >= 1 && page <= this.totalPages) {
-        this.currentPage = page;
-      }
-    },
   },
-
-  computed: {
-    formattedMinimumBalance: {
-      get() {
-        // Hiển thị giá trị theo định dạng số thập phân và thêm đơn vị VNĐ
-        return parseFloat(this.editRankData.minimum_balance).toLocaleString(
-          "en-US",
-          {
-            // style: "currency",
-            // currency: "VND",
-            minimumFractionDigits: 0, // Số lượng số thập phân tối thiểu
-            maximumFractionDigits: 2,
-          }
-        );
-        // Đưa đơn vị tiền "VNĐ" về sau số thập phân
-      },
-      set(value) {
-        // Lưu giá trị dưới dạng số khi người dùng nhập
-        this.editRankData.minimum_balance = parseFloat(
-          value.replace(/[^\d.]/g, "")
-        );
-        if (this.editRankData.minimum_balance > 999999999) {
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: "Giá tiền vượt quá giới hạn khi nhập",
-          });
-        }
-        return (this.editRankData.minimum_balance = 0);
-      },
-    },
-    formattedMaximumBalance: {
-      get() {
-        // Hiển thị giá trị theo định dạng số thập phân và thêm đơn vị VNĐ
-        return parseFloat(this.editRankData.maximum_balance).toLocaleString(
-          "en-US",
-          {
-            // style: "currency",
-            // currency: "VND",
-            minimumFractionDigits: 0, // Số lượng số thập phân tối thiểu
-            maximumFractionDigits: 2,
-          }
-        );
-        // Đưa đơn vị tiền "VNĐ" về sau số thập phân
-      },
-      set(value) {
-        // Lưu giá trị dưới dạng số khi người dùng nhập
-        this.editRankData.maximum_balance = parseFloat(
-          value.replace(/[^\d.]/g, "")
-        );
-        if (this.editRankData.maximum_balance > 999999999) {
-          Swal.fire({
-            icon: "error",
-            title: "Lỗi",
-            text: "Giá tiền vượt quá giới hạn khi nhập",
-          });
-          return (this.editRankData.maximum_balance = 0);
-        }
-      },
-    },
-    paginatedList() {
-      const start = (this.currentPage - 1) * this.itemsPerPage;
-      const end = start + this.itemsPerPage;
-      return this.listRanks.slice(start, end);
-    },
-    totalPages() {
-      return Math.ceil(this.listRanks.length / this.itemsPerPage);
-    },
-    pages() {
-      return Array.from({ length: this.totalPages }, (_, index) => index + 1);
-    },
-  },
-
   created() {
     this.getAllRanks();
   },
