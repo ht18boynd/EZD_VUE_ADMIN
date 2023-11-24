@@ -74,6 +74,32 @@
             </ul>
           </li>
           <li>
+            <a class="has-arrow" @click="toggleSubCategory('item')">
+              <div class="menu-title">Danh Mục Item</div>
+            </a>
+            <ul v-if="subCategories.item.visible">
+              <li>
+                <router-link to="/admin/item">Danh Sách Item</router-link>
+              </li>
+              <li>
+                <router-link to="/admin/item/create">Tạo Mới Item</router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
+            <a class="has-arrow" @click="toggleSubCategory('rank')">
+              <div class="menu-title">Danh Mục Rank</div>
+            </a>
+            <ul v-if="subCategories.rank.visible">
+              <li>
+                <router-link to="/admin/rank">Danh Sách Rank</router-link>
+              </li>
+              <li>
+                <router-link to="/admin/rank/create">Tạo Mới Rank</router-link>
+              </li>
+            </ul>
+          </li>
+          <li>
             <a class="has-arrow" @click="toggleSubCategory('banner')">
               <div class="menu-title">Danh Mục Banner</div>
             </a>
@@ -198,6 +224,8 @@ export default {
         user: { visible: false },
         idol: { visible: false },
         game: { visible: false },
+        item: { visible: false },
+        rank: { visible: false },
         banner: { visible: false },
         blog: { visible: false },
         faq: { visible: false },
