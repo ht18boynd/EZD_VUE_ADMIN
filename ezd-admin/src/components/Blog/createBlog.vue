@@ -100,16 +100,12 @@
       <div class="page-content"></div>
     </div>
   </div>
-
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
 
 <script>
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 import Swal from "sweetalert2";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import BlogService from "@/service/BlogService.js";
@@ -135,22 +131,21 @@ export default {
   },
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
   methods: {
     validatename() {
       this.errors.name =
-        this.newBlog.name.trim() === "" ? "không được bỏ trống." : "";
+        this.newBlog.name.trim() === "" ? "No Blank." : "";
     },
     validatecontent() {
       this.errors.content =
-        this.newBlog.content.trim() === "" ? "không được bỏ trống." : "";
+        this.newBlog.content.trim() === "" ? "No Blank." : "";
     },
     validateTitle() {
       this.errors.title =
-        this.newBlog.title.trim() === "" ? "Không được bỏ trống." : "";
+        this.newBlog.title.trim() === "" ? "No Blank." : "";
     },
     onImageChange(event) {
       this.newBlog.image = event.target.files[0];
@@ -211,6 +206,7 @@ export default {
         console.error("Lỗi khi lấy danh sách banner: ", error);
       }
     },
+    
     async created() {
       await this.getAllBlogs();
     },

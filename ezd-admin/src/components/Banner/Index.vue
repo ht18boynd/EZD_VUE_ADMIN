@@ -48,9 +48,7 @@
     <!--end page wrapper -->
   </div>
   <!--end wrapper-->
-  <!-- search modal -->
-  <searchModal></searchModal>
-  <!-- end search modal -->
+ 
   <!--start switcher-->
   <switcher></switcher>
   <!--end switcher-->
@@ -59,7 +57,6 @@
 import "vue3-carousel/dist/carousel.css";
 import { Carousel, Slide, Pagination, Navigation } from "vue3-carousel";
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import BannerService from "@/service/BannerService.js";
@@ -73,7 +70,6 @@ export default {
   },
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
     Carousel,

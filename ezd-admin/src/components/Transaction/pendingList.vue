@@ -200,8 +200,6 @@
     </div>
   </div>
  
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
@@ -210,7 +208,6 @@
 import { ref } from "vue";
 
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 import Swal from "sweetalert2";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
@@ -236,7 +233,6 @@ export default {
   },
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
     

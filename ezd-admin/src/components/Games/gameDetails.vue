@@ -13,7 +13,7 @@
       <div class="page-content">
         <!--breadcrumb-->
         <div class="page-breadcrumb d-none d-sm-flex align-items-center mb-3">
-          <div class="breadcrumb-title pe-3">eCommerce</div>
+          <div class="breadcrumb-title pe-3">Danh Sách Game</div>
           <div class="ps-3">
             <nav aria-label="breadcrumb">
               <ol class="breadcrumb mb-0 p-0">
@@ -21,7 +21,7 @@
                   <a href="javascript:;"><i class="bx bx-home-alt"></i></a>
                 </li>
                 <li class="breadcrumb-item active" aria-current="page">
-                  Products Details
+                  Game Chi Tiết
                 </li>
               </ol>
             </nav>
@@ -174,7 +174,7 @@
             <hr />
             <div class="form-body mt-4">
               <div class="row">
-                <div class="container">
+                
                 <!-- Form for editing the game name -->
                 <div class="col-sm-4">
                   <form
@@ -210,14 +210,14 @@
                   </form>
                 </div>
 
-                <div class="col-sm-8">
+                <div class="col-sm-4">
                   <form
                     class="row g-3 needs-validation was-validated"
                     novalidate
                     enctype="multipart/form-data"
                     @submit.prevent="updateGameImage"
                   >
-                    <div class="col-lg-6">
+                    <div class="col-lg-12">
                       <div class="mb-3">
                         <label for="image" class="form-label"
                           >Ảnh Trò Chơi</label
@@ -234,29 +234,8 @@
                         <div class="invalid-feedback">Vui Lòng Chọn File</div>
                       </div>
                     </div>
-                    <div class="col-lg-6">
-                      <div class="mb-3" v-if="!imagePreviewUrl">
-                        <label for="image" class="form-label"
-                          >Image Review</label
-                        >
-
-                        <img
-                          :src="game.imageName"
-                          style="width: 200px; height: 160px"
-                        />
-                      </div>
-                      <div class="mb-3" v-if="imagePreviewUrl">
-                        <label for="image" class="form-label"
-                          >Image Review</label
-                        >
-
-                        <img
-                          :src="imagePreviewUrl"
-                          style="width: 200px; height: 160px"
-                        />
-                      </div>
-                    </div>
-                    <div class="col-lg-2">
+                    
+                    <div class="col-lg-4">
                       <div class="d-grid">
                         <button type="submit" class="btn btn-primary">
                           Lưu
@@ -266,7 +245,23 @@
                   </form>
                 </div>
                 <!-- Form for editing the game image -->
-              </div>
+                <div class="col-sm-4">
+                <div class="col-lg-12">
+                  <div class="mb-3" v-if="!imagePreviewUrl">
+                  
+                    <img
+                      :src="game.imageName"
+                      style="width: 200px; height: 160px"
+                    />
+                  </div>
+                  <div class="mb-3" v-if="imagePreviewUrl">
+                    <img
+                      :src="imagePreviewUrl"
+                      style="width: 200px; height: 160px"
+                    />
+                  </div>
+                </div>
+                </div>
                 <hr />
               </div>
               <div class="row">
@@ -421,9 +416,6 @@
     </footer>
   </div>
   <!--end wrapper-->
-  <!-- search modal -->
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
   <!--end switcher-->
@@ -435,7 +427,6 @@ import GameService from "@/service/GameService";
 import Swal from "sweetalert2";
 
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 export default {
@@ -443,7 +434,6 @@ export default {
   props: ["id"], // Nhận tham số id từ URL
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },

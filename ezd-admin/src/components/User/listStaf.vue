@@ -137,9 +137,13 @@
                       {{ item.status }}
                     </td>
                     <td>{{ item.role }}</td>
+
                     <td>{{ item.currentRank.rank_name }}</td>
                     <td>{{ item.birthDay }}</td>
                     <td>{{ item.createdDate }}</td>
+                    <td>{{ item.formattedBirthDay }}</td>
+                    <td>{{ item.formattedDate }}</td>
+
                   </tr>
                 </tbody>
               </table>
@@ -181,17 +185,15 @@
       </div>
     </div>
   </div>
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
 
 <script>
 import { ref, onMounted, watch } from "vue";
+import { format } from "date-fns";
 import Chart from "chart.js/auto";
 import AuthService from "@/service/AuthService";
-import searchModal from "@/pages/searchModal.vue";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import startHeaderVue from "@/pages/startHeader.vue";
 import switcher from "@/pages/switcher.vue";
@@ -200,7 +202,6 @@ export default {
   name: "listStaff",
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
@@ -238,8 +239,15 @@ export default {
 
         // Count the number of users for each month
         UserList.value.forEach((user) => {
-          const creationDate = new Date(user.createdDate);
-          const month = creationDate.getMonth();
+          const birthDay = new Date(...user.birthDay);
+            const formattedBirthDay = format(birthDay, "dd/MM/yyyy");
+            user.formattedBirthDay = formattedBirthDay; // Thêm trường mới để lưu trữ ngày sinh đã định dạng
+
+            const creationDate = new Date(...user.createdDate);
+            const formattedDate = format(creationDate, "dd/MM/yyyy");
+            user.formattedDate = formattedDate; // Thêm trường mới để lưu trữ thời gian đã định dạng
+        
+            const month = creationDate.getMonth();
           userCountByMonth.value[month]++;
         });
         console.log(UserList.value);

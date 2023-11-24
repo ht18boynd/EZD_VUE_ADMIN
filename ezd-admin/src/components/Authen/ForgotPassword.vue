@@ -12,9 +12,9 @@
             >
               <div class="card-body">
                 <img
-                  src="assets/images/login-images/forgot-password-cover.svg"
+                  src="assets/images/login-images/Foget.gif"
                   class="img-fluid"
-                  width="600"
+                  width="500"
                   alt=""
                 />
               </div>
@@ -28,8 +28,9 @@
                 <div class="p-3">
                   <div class="text-center">
                     <img
-                      src="assets/images/icons/forgot-2.png"
-                      width="100"
+                      src="assets/images/login-images/LoginPage.gif"
+                      class="img-fluid"
+                      width="450"
                       alt=""
                     />
                   </div>
@@ -37,18 +38,36 @@
                   <p class="text-muted">
                     Enter your registered email ID to reset the password
                   </p>
-                  <div class="my-4">
-                    <label class="form-label">Email id</label>
-                    <input
-                      type="text"
-                      class="form-control"
-                      placeholder="example@user.com"
-                    />
+                  <div class="form-body">
+                    <form
+                      @submit.prevent="resetPasswordUser"
+                      class="row g-3 was-validated"
+                      novalidate
+                    >
+                      <div class="col-12">
+                        <label class="form-label">Email :</label>
+                        <input
+                          type="text"
+                          class="form-control"
+                          placeholder="example@user.com"
+                          v-model="email"
+                          required
+                        />
+                        <div v-if="emailError" class="invalid-feedback">
+                          {{ emailError }}
+                        </div>
+                        <div v-else class="valid-feedback">Looks good!</div>
+                      </div>
+
+                      <button type="submit" class="btn btn-primary">
+                        Send
+                      </button>
+                    </form>
                   </div>
-                  <div class="d-grid gap-2">
-                    <button type="button" class="btn btn-primary">Send</button>
-                    <a href="/login" class="btn btn-light"
-                      ><i class="bx bx-arrow-back me-1"></i>Back to Login</a
+                  <div>
+                    <router-link to="/login" class="btn btn-light"
+                      ><i class="bx bx-arrow-back me-1"></i>Back to
+                      Login</router-link
                     >
                   </div>
                 </div>
@@ -64,9 +83,46 @@
 </template>
 
 <script>
+import Swal from "sweetalert2";
+import AuthService from "@/service/AuthService";
 export default {
   name: "forgotPassword",
+  data() {
+    return {
+      BASE_URL: process.env.BASE_URL,
+      email: "",
+
+      emailError: null,
+    };
+  },
+  methods: {
+    async resetPasswordUser() {
+      // Reset previous error message
+      if (!this.email) {
+          this.emailError = "Email is required";
+        } else if (!/\S+@\S+\.\S+/.test(this.email)) {
+          this.emailError = "Invalid email format";
+        } else {
+          this.emailError = null;
+        }
+      try {
+        // Call resetPassword only if email is valid
+        await AuthService.resetPassword(this.email);
+        console.log("email:" + this.email);
+
+        Swal.fire(
+          "Login Success!",
+          "Reset Password Success, Check Email!",
+          "success"
+        );
+        this.email = "";
+
+        this.$router.push("/login");
+      } catch (error) {
+        console.error("Error resetting password:", error);
+        Swal.fire("Reset Password Failed", "Please try again later", "error");
+      }
+    },
+  },
 };
 </script>
-
-<style></style>

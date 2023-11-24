@@ -82,8 +82,8 @@
           <div class="col-12">
             <!-- danh sách -->
             <div>
-              <h1>Danh sách mục</h1>
-              <table class="table">
+              <h1>List Blog</h1>
+              <table class="table table-striped table-bordered">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
@@ -102,7 +102,7 @@
                       {{ item.title }}
                     </td>
                     <td>
-                    <p  @click="showContent(item.name, item.content)">bấm vào để xem chi tiết</p>
+                   <button class="btn btn-link" @click="showContent(item.name, item.content)">Click!</button>
                       
                        
                     </td>
@@ -145,16 +145,12 @@
       <div class="page-content"></div>
     </div>
   </div>
-
-  <searchModal></searchModal>
-  <!-- end search modal -->
   <!--start switcher-->
   <switcher></switcher>
 </template>
 
 <script>
 import switcher from "@/pages/switcher.vue";
-import searchModal from "@/pages/searchModal.vue";
 import Swal from "sweetalert2";
 import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import BlogService from "@/service/BlogService.js";
@@ -182,7 +178,6 @@ export default {
   },
   components: {
     switcher,
-    searchModal,
     slibarWrapper,
     startHeaderVue,
   },
@@ -320,7 +315,7 @@ export default {
     async getAllBlogs() {
       try {
         const response = await BlogService.getAllBlogs();
-        const data = response.data;
+        const data = response.data.sort((a, b) => b.id - a.id);
         //const data = response.data.sort((a, b) => b.id - a.id);
         // Gán giá trị cho cả bannerList và originalBannerList
         this.blogList = data;
