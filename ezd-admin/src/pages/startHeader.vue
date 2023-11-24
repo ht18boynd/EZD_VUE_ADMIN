@@ -4,7 +4,7 @@
     <div class="topbar d-flex align-items-center">
       <nav class="navbar navbar-expand gap-3">
         <div class="top-menu">
-         <h4 style="color:rebeccapurple">Xin Chào :   {{user.name}}</h4>
+         <h4 style="color:rebeccapurple">Xin Chào : </h4>
         </div>
         <div class="top-menu ms-auto">
           <router-link to="/login" @click="Logout"

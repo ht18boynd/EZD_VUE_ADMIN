@@ -47,7 +47,14 @@
                   />
 
                   <label for="correctAnswerIndex">Correct Answer :</label>
-
+                  <!-- <input
+            type="number"
+             
+            v-model="newQuiz.correctAnswerIndex"
+            required
+            min="0"
+            max="2"
+          /> -->
                   <select
                     class="form-control"
                     v-model="newQuiz.correctAnswerIndex"

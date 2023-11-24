@@ -137,15 +137,15 @@ export default {
   methods: {
     validatename() {
       this.errors.name =
-        this.newBlog.name.trim() === "" ? "No Blank." : "";
+        this.newBlog.name.trim() === "" ? "không được bỏ trống." : "";
     },
     validatecontent() {
       this.errors.content =
-        this.newBlog.content.trim() === "" ? "No Blank." : "";
+        this.newBlog.content.trim() === "" ? "không được bỏ trống." : "";
     },
     validateTitle() {
       this.errors.title =
-        this.newBlog.title.trim() === "" ? "No Blank." : "";
+        this.newBlog.title.trim() === "" ? "Không được bỏ trống." : "";
     },
     onImageChange(event) {
       this.newBlog.image = event.target.files[0];
@@ -206,7 +206,6 @@ export default {
         console.error("Lỗi khi lấy danh sách banner: ", error);
       }
     },
-    
     async created() {
       await this.getAllBlogs();
     },

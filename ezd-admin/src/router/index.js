@@ -23,14 +23,8 @@ import CreateQuiz from '@/components/Quiz/createquiz.vue';
 import PendingBecomeList from "@/components/BecomeForm/pendingList.vue"
 import SuccessBecomeList from "@/components/BecomeForm/successList.vue"
 import FailedBecomeList from "@/components/BecomeForm/failedList.vue"
-import listItem from "@/components/Item/listItem.vue"
-import createItem from "@/components/Item/createItem.vue"
-import listRank from "@/components/Rank/listRank.vue"
-import createRank from "@/components/Rank/rankCreate.vue"
-import ListContact from "@/components/Contact/listContact.vue"
-import ContactDetails from "@/components/Contact/contactDetail.vue"
-import RelayContact from "@/components/Contact/relayContact.vue"
-import ListFeedback from "@/components/Feedback/listFeedback.vue"
+
+
 const routes = [
   { path: '/', component: HomePage, meta: { requiresAuth: true } },
   { path: '/test', component: testAdmin },
@@ -51,33 +45,12 @@ const routes = [
   { path: '/admin/user/listLucky', component: ListLucky, meta: { requiresAuth: true } },
   { path: '/admin/become', component: PendingBecomeList, meta: { requiresAuth: true } },
   { path: '/admin/become/success', component: SuccessBecomeList, meta: { requiresAuth: true } },
-  {
-    path: '/admin/item',
-    component:listItem,
-    meta:{requiresAuth:true}
-  },
-  {
-    path: '/admin/item/create',
-    component:createItem,
-    meta:{requiresAuth:true}
-  },
-  {
-    path: '/admin/rank',
-    component:listRank,
-    meta:{requiresAuth:true}
-  },
-  {
-    path: '/admin/rank/create',
-    component:createRank,
-    meta:{requiresAuth:true}
-  },
+  
+
   { path: '/admin/become/failed', component: FailedBecomeList, meta: { requiresAuth: true } },
   { path: '/admin/quiz', name: "listquiz", component: ListQuiz, meta: { requiresAuth: true } },
   { path: '/admin/quiz/create', name: "createquiz", component: CreateQuiz, meta: { requiresAuth: true } },
-  { path: '/admin/contact', name: "listContact", component: ListContact, meta: { requiresAuth: true } },
-  { path: '/admin/contact/:id', name: "contactDetails", component: ContactDetails, meta: { requiresAuth: true } },
-  { path: '/admin/contact/relay/:id', name: "relayContact", component: RelayContact, meta: { requiresAuth: true } },
-  { path: '/admin/feedback', name: "listFeedback", component: ListFeedback, meta: { requiresAuth: true } },
+
 
 ];
 

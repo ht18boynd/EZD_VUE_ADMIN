@@ -104,7 +104,6 @@
                     :src="editedBanner.image"
                   />
                 </div>
-                 
                 <div class="form-group">
                   <label></label>
                   <button type="submit" class="btn btn-primary">Update</button>
@@ -114,113 +113,12 @@
             </div>
           </div>
         </div>
-        <br />
         <div class="row">
           <div class="col-12">
             <!-- danh sách -->
-            <h1>List Banner ACTIVE</h1>
-            <div v-if="listactive.length === 0">
-              <p>No data available</p>
-            </div>
-            <div v-else>
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">status</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody v-for="item in displayedBanners" :key="item.id">
-                  <tr v-if="item.status === 'ACTIVE'">
-                    <td>
-                      {{ item.name }}
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-link"
-                        @click="showContent(item.name, item.title)"
-                      >
-                        Show more..!
-                      </button>
-                    </td>
-                    <td>
-                      <img
-                        :src="item.image"
-                        class="d-block"
-                        style="height: 120px; width: 250px"
-                        alt="..."
-                        @click="showImage(item.name, item.image)"
-                      />
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-outline-danger"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'DISABLE')
-                        "
-                        :disabled="item.status === 'DISABLE'"
-                        style="margin-right: 5px"
-                      >
-                        Disable
-                      </button>
-                      <button
-                        class="btn btn-outline-success"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'PENDING')
-                        "
-                        :disabled="item.status === 'PENDING'"
-                        style="margin-right: 5px"
-                      >
-                        Pending
-                      </button>
-                      <button
-                        class="btn btn-outline-primary"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'ACTIVE')
-                        "
-                        :disabled="item.status === 'ACTIVE'"
-                      >
-                        Active
-                      </button>
-                    </td>
-
-                    <td>
-                      <a
-                        class="btn btn-success"
-                        @click="startEditingBanner(item.id)"
-                      >
-                        {{ item.editing ? "Save" : "Edit" }}
-                      </a>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-danger"
-                        @click="deleteBanner(item.id)"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-        </div>
-        <hr />
-        <br />
-        <!-- Pending -->
-        <div class="row">
-          <div class="col-12">
-            <!-- danh sách -->
-            <h1>List Banner PENDING</h1>
-            <div v-if="listpending.length === 0">
-              <p>No data available</p>
-            </div>
-            <div v-else>
-              <table class="table table-striped table-bordered">
+            <div>
+              <h1>Danh sách mục</h1>
+              <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
@@ -231,21 +129,12 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="item in displayedBanners" :key="item.id">
-
-                <tbody v-for="item in displayedBanners" :key="item.id">
-                  <tr v-if="item.status === 'PENDING'">
-
+  <tr v-for="item in displayedBanners" :key="item.id">
                     <td>
                       {{ item.name }}
                     </td>
                     <td>
-                      <button
-                        class="btn btn-link"
-                        @click="showContent(item.name, item.title)"
-                      >
-                        Show more..!
-                      </button>
+                      {{ item.title }}
                     </td>
                     <td>
                       <img
@@ -310,134 +199,44 @@
             </div>
           </div>
         </div>
-        <hr />
-        <br />
-        <!-- Disable -->
-        <div class="row">
-          <div class="col-12">
-            <!-- danh sách -->
-            <h1>List Banner DISABLE</h1>
-            <div v-if="listdisable.length === 0">
-              <p>No data available</p>
-            </div>
-            <div v-else>
-              <table class="table table-striped table-bordered">
-                <thead>
-                  <tr>
-                    <th scope="col">Name</th>
-                    <th scope="col">Title</th>
-                    <th scope="col">Image</th>
-                    <th scope="col">status</th>
-                    <th scope="col"></th>
-                  </tr>
-                </thead>
-                <tbody v-for="item in displayedBanners" :key="item.id">
-                  <tr v-if="item.status === 'DISABLE'">
-                    <td>
-                      {{ item.name }}
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-link"
-                        @click="showContent(item.name, item.title)"
-                      >
-                        Show more..!
-                      </button>
-                    </td>
-                    <td>
-                      <img
-                        :src="item.image"
-                        class="d-block"
-                        style="height: 120px; width: 250px"
-                        alt="..."
-                        @click="showImage(item.name, item.image)"
-                      />
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-outline-danger"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'DISABLE')
-                        "
-                        :disabled="item.status === 'DISABLE'"
-                        style="margin-right: 5px"
-                      >
-                        Disable
-                      </button>
-                      <button
-                        class="btn btn-outline-success"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'PENDING')
-                        "
-                        :disabled="item.status === 'PENDING'"
-                        style="margin-right: 5px"
-                      >
-                        Pending
-                      </button>
-                      <button
-                        class="btn btn-outline-primary"
-                        @click="
-                          showChangeStatusConfirmDialog(item.id, 'ACTIVE')
-                        "
-                        :disabled="item.status === 'ACTIVE'"
-                      >
-                        Active
-                      </button>
-                    </td>
-
-                    <td>
-                      <a
-                        class="btn btn-success"
-                        @click="startEditingBanner(item.id)"
-                      >
-                        {{ item.editing ? "Save" : "Edit" }}
-                      </a>
-                    </td>
-                    <td>
-                      <button
-                        class="btn btn-danger"
-                        @click="deleteBanner(item.id)"
-                      >
-                        Delete
-                      </button>
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-          <!-- <div class="pagination-container">
-            <vue-awesome-paginate :total-items="100" v-model="currentPage">
-              <template #prev-button>
-                <span>
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="black"
-                    width="8"
-                    height="8"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
-                  </svg>
-                  Prev
-                </span>
-              </template>
-              <template #next-button>
-                <span>
-                  Next
-                  <svg
-                    xmlns="http://www.w3.org/2000/svg"
-                    fill="black"
-                    width="8"
-                    height="8"
-                    viewBox="0 0 24 24"
-                  >
-                    <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
-                  </svg>
-                </span>
-              </template>
-            </vue-awesome-paginate>
-          </div> -->
+        <div class="pagination-container">
+          <vue-awesome-paginate
+            :total-rows="bannerList.length"
+            v-model="currentPage"
+            :per-page="itemsPerPage"
+            :number-of-pages="totalPages"
+            aria-controls="my-table"
+            @page-change="handlePageChange"
+          >
+            <template #prev-button>
+              <span>
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+                Prev
+              </span>
+            </template>
+            <template #next-button>
+              <span>
+                Next
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  fill="black"
+                  width="8"
+                  height="8"
+                  viewBox="0 0 24 24"
+                >
+                  <path d="M8.122 24l-4.122-4 8-8-8-8 4.122-4 11.878 12z" />
+                </svg>
+              </span>
+            </template>
+          </vue-awesome-paginate>
         </div>
       </div>
     </div>
@@ -456,104 +255,17 @@ import slibarWrapper from "@/pages/sidebarWrapper.vue";
 import BannerService from "@/service/BannerService.js";
 import startHeaderVue from "@/pages/startHeader.vue";
 import "sweetalert2/dist/sweetalert2.min.css";
-import { ref, watch, onMounted } from "vue";
+
 export default {
   name: "createBanner",
-
-  setup() {
-    const activeBanners = ref(0);
-    const pendingBanners = ref(0);
-    const disableBanners = ref(0);
-
-    // Function to calculate banner stats
-    const calculateBannerStats = () => {
-      totalBanners.value = displayedBanners.value.length;
-      activeBanners.value = displayedBanners.value.filter(
-        (banner) => banner.status === "ACTIVE"
-      ).length;
-      pendingBanners.value = displayedBanners.value.filter(
-        (banner) => banner.status === "PENDING"
-      ).length;
-      disableBanners.value = displayedBanners.value.filter(
-        (banner) => banner.status === "DISABLE"
-      ).length;
-    };
-
-    const displayedBanners = ref([]);
-    const totalBanners = ref(0);
-    const itemsPerPage = 10;
-    const currentPage = ref(1);
-    const isDataLoaded = ref(false);
-    const listactive = ref([]);
-    const listpending = ref([]);
-    const listdisable = ref([]);
-
-    const getAllBanners = async () => {
-      try {
-        // Fetch your banner data from the server
-        const response = await BannerService.getAllBanners();
-        displayedBanners.value = response.data;
-        totalBanners.value = displayedBanners.value.length;
-
-        // Clear the lists
-        listactive.value = [];
-        listpending.value = [];
-        listdisable.value = [];
-
-        // Categorize banners based on their status
-        displayedBanners.value.forEach((banner) => {
-          if (banner.status === "ACTIVE") {
-            listactive.value.push(banner);
-          } else if (banner.status === "PENDING") {
-            listpending.value.push(banner);
-          } else if (banner.status === "DISABLE") {
-            listdisable.value.push(banner);
-          }
-        });
-
-        isDataLoaded.value = true;
-
-        // Sorting banners by id in descending order
-        displayedBanners.value.sort((a, b) => b.id - a.id);
-
-        // Implement any additional logic you need
-      } catch (error) {
-        console.error("Error fetching the banner list: ", error);
-      }
-    };
-    const displayedUsers = ref([]);
-    watch([currentPage, isDataLoaded], () => {
-      if (isDataLoaded.value) {
-        const startIndex = (currentPage.value - 1) * itemsPerPage;
-        const endIndex = startIndex + itemsPerPage;
-        displayedUsers.value = displayedBanners.value.slice(startIndex, endIndex);
-        // getAllBanners();
-      }
-    });
-
-    watch(displayedBanners, calculateBannerStats, { deep: true });
-
-    onMounted(async () => {
-      await getAllBanners();
-    });
-
-    return {
-      displayedBanners,
-      totalBanners,
-      itemsPerPage,
-      currentPage,
-      isDataLoaded,
-      getAllBanners,
-      listactive,
-      listpending,
-      listdisable,
-    };
-  },
-
+ 
 
   data() {
     return {
-      // displayedBanners: [], // Mản
+      itemsPerPage: 10, // Số lượng mục trên mỗi trang
+      totalPages: 0, // Tổng số trang
+      currentPage: 1, // Trang hiện tại
+      displayedBanners: [], // Mản
 
       errors: {
         name: "",
@@ -561,7 +273,6 @@ export default {
         image: "",
       },
       imagePreviewUrl: null,
-      imagePreviewUrlupdate: null,
       submitted: false,
       newBanner: {
         name: "",
@@ -587,12 +298,6 @@ export default {
     startHeaderVue,
   },
   methods: {
-    showContent(name, title) {
-      Swal.fire({
-        title: name,
-        html: title,
-      });
-    },
     updateDisplayedBanners() {
       const startIndex = (this.currentPage - 1) * this.itemsPerPage;
       const endIndex = startIndex + this.itemsPerPage;
@@ -661,10 +366,9 @@ export default {
     },
     handleImageChange(event) {
       const selectedImage = event.target.files[0]; // Lấy hình ảnh đầu tiên trong danh sách chọn
-    
+
       if (selectedImage) {
         // Nếu có hình ảnh được chọn, cập nhật trường "image" và imagePreviewUrl
-        
         this.editedBanner.image = selectedImage;
         // this.editedBanner.image = URL.createObjectURL(selectedImage);
 
@@ -672,8 +376,7 @@ export default {
         let reader = new FileReader();
 
         reader.onload = (e) => {
-         
-          this.imagePreviewUrlupdate = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
+          this.imagePreviewUrl = e.target.result; // Cập nhật imagePreviewUrl với dữ liệu hình ảnh
         };
 
         // Đọc hình ảnh được chọn
@@ -699,7 +402,6 @@ export default {
     async updateBanner() {
       // Thực hiện logic cập nhật banner dựa trên this.editedBanner
       // Gọi API hoặc sử dụng BannerService.editBanner để cập nhật banner
-      
       try {
         // Gọi API hoặc BannerService.editBanner để cập nhật banner
 
@@ -759,50 +461,16 @@ export default {
         imageHeight: 400,
       });
     },
-
-    async getAllBanners() {
-      try {
-        const response = await BannerService.getAllBanners();
-        const data = response.data;
-        this.bannerList = data;
-        this.updatePagination(); // Thêm dòng này để cập nhật phân trang
-      } catch (error) {
-        console.error("Lỗi khi lấy danh sách banner: ", error);
-      }
-    },
-
-    // async getAllBanners() {
-    //   try {
-    //     const response = await BannerService.getAllBanners();
-    //     const data = response.data;
-    //     this.bannerList = data;
-
-    //     // Clear existing lists
-    //     this.listactive = [];
-    //     this.listpending = [];
-    //     this.listdisable = [];
-
-    //     // Categorize items based on status
-    //     this.bannerList.forEach((item) => {
-    //       if (item.status === "ACTIVE") {
-    //         this.listactive.push(item);
-    //       } else if (item.status === "PENDING") {
-    //         this.listpending.push(item);
-    //       } else if (item.status === "DISABLE") {
-    //         this.listdisable.push(item);
-    //       }
-    //     });
-
-    //     // Log the lists after processing
-    //     console.log("listactive: ", this.listactive);
-    //     console.log("listpending: ", this.listpending);
-    //     console.log("listdisable: ", this.listdisable);
-
-    //     this.updatePagination(); // Thêm dòng này để cập nhật phân trang
-    //   } catch (error) {
-    //     console.error("Lỗi khi lấy danh sách banner: ", error);
-    //   }
-    // },
+   async getAllBanners() {
+  try {
+    const response = await BannerService.getAllBanners();
+    const data = response.data;
+    this.bannerList = data;
+    this.updatePagination(); // Thêm dòng này để cập nhật phân trang
+  } catch (error) {
+    console.error("Lỗi khi lấy danh sách banner: ", error);
+  }
+},
 
     async addBanner() {
       this.validatename();

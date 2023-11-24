@@ -82,8 +82,8 @@
           <div class="col-12">
             <!-- danh sách -->
             <div>
-              <h1>List Blog</h1>
-              <table class="table table-striped table-bordered">
+              <h1>Danh sách mục</h1>
+              <table class="table">
                 <thead>
                   <tr>
                     <th scope="col">Name</th>
@@ -102,7 +102,7 @@
                       {{ item.title }}
                     </td>
                     <td>
-                   <button class="btn btn-link" @click="showContent(item.name, item.content)">Click!</button>
+                    <p  @click="showContent(item.name, item.content)">bấm vào để xem chi tiết</p>
                       
                        
                     </td>
@@ -315,7 +315,7 @@ export default {
     async getAllBlogs() {
       try {
         const response = await BlogService.getAllBlogs();
-        const data = response.data.sort((a, b) => b.id - a.id);
+        const data = response.data;
         //const data = response.data.sort((a, b) => b.id - a.id);
         // Gán giá trị cho cả bannerList và originalBannerList
         this.blogList = data;
