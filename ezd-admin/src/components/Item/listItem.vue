@@ -301,6 +301,7 @@
       <switcher></switcher>
       <!--end switcher-->
     </div>
+
   </template>
   
   <script>
@@ -319,6 +320,7 @@
       searchModal,
       slibarWrapper,
       startHeaderVue,
+
     },
     data() {
       return {
