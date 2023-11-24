@@ -15,13 +15,6 @@ class RankService {
     }
     async getRankById(id) {
         return await axiosInstance.get(`${RANK_GAME_API_BASE_URL}${id}`);
-        // try {
-        //     const response = await axiosInstance.get(`${RANK_GAME_API_BASE_URL}${id}`);
-        //     return response.data;
-        //   } catch (error) {
-        //     console.error('Error getting rank by ID:', error);
-        //     throw error;
-        //   }
     }
 
     async deleteRank(id) {
