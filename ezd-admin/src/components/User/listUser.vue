@@ -227,35 +227,37 @@ export default {
 
       const userCountByMonth = ref(new Array(12).fill(0));
 
+      
       const getAllUsers = async () => {
-        try {
-          const role = "USER";
-          const response = await AuthService.getAllUser(role);
-          UserList.value = response;
-          totalItems.value = UserList.value.length;
-          isDataLoaded.value = true; // Đánh dấu rằng dữ liệu đã được tải xong
-          // Sắp xếp dữ liệu theo id giảm dần
-          UserList.value.sort((a, b) => b.id - a.id);
-          UserList.value.forEach((user) => {
-            const birthDay = new Date(...user.birthDay);
-            const formattedBirthDay = format(birthDay, "dd/MM/yyyy");
-            user.formattedBirthDay = formattedBirthDay; // Thêm trường mới để lưu trữ ngày sinh đã định dạng
+  try {
+    const role = "USER";
+    const response = await AuthService.getAllUser(role);
+    UserList.value = response;
+    totalItems.value = UserList.value.length;
+    isDataLoaded.value = true;
 
-            const creationDate = new Date(...user.createdDate);
-            const formattedDate = format(creationDate, "dd/MM/yyyy HH:mm:ss");
-            user.formattedDate = formattedDate; // Thêm trường mới để lưu trữ thời gian đã định dạng
-            const month = creationDate.getMonth();
-            userCountByMonth.value[month]++;
-          });
-          // Count the number of users for each month
+    // Sort the user list by id
+    UserList.value.sort((a, b) => b.id - a.id);
 
-          console.log(UserList.value);
+    UserList.value.forEach((user) => {
+      // Format birthDay directly as a string
+      user.formattedBirthDay = format(new Date(user.birthDay), "dd/MM/yyyy");
 
-          renderChart(userCountByMonth.value);
-        } catch (error) {
-          console.error("Error fetching the user list: ", error);
-        }
-      };
+      const creationDate = new Date(...user.createdDate);
+      const formattedDate = format(creationDate, "dd/MM/yyyy ");
+      user.formattedDate = formattedDate;
+
+      const month = creationDate.getMonth();
+      userCountByMonth.value[month]++;
+    });
+
+    console.log(UserList.value);
+
+    renderChart(userCountByMonth.value);
+  } catch (error) {
+    console.error("Error fetching the user list: ", error);
+  }
+};
 
       const renderChart = (data) => {
         const ctx = document.getElementById("myChart");
